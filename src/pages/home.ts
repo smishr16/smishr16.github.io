@@ -1,35 +1,28 @@
 import { AppRoutes } from '../contracts'
 import { courses } from '../content/courses'
 import { renderFooter, renderHeader } from '../ui/siteChrome'
-
-function levelShort(level: string): string {
-  if (level === 'undergraduate+graduate') return 'UG · Grad'
-  if (level === 'graduate') return 'Grad'
-  return 'UG'
-}
+import { levelLabel, statusBadgeHtml, statusLabel } from '../ui/status'
 
 export function renderHome(): string {
   const cards = courses
     .map((c) => {
       const cta =
         c.status === 'soon'
-          ? ''
+          ? `<span class="card-cta muted">Coming soon · syllabus scaffold</span>`
           : `<span class="card-cta">${c.moduleCount} modules · ${c.liveLabCount} live labs →</span>`
 
       const inner = `
         <div class="card-meta">
-          <span class="badge ${c.status === 'live' ? 'badge-live' : c.status === 'partial' ? 'badge-partial' : ''}">${
-            c.status === 'soon' ? 'Soon' : c.status === 'partial' ? 'Partial' : 'Open'
-          }</span>
+          ${statusBadgeHtml(c.status)}
           <span class="muted track">${c.track}</span>
-          <span class="muted track">${levelShort(c.level)}</span>
+          <span class="muted track">${levelLabel(c.level, 'short')}</span>
         </div>
         <h3>${c.title}</h3>
         <p>${c.blurb}</p>
         ${cta}`
 
       if (c.status === 'soon') {
-        return `<div class="course-card soon" aria-disabled="true">${inner}</div>`
+        return `<div class="course-card soon" aria-label="${c.title} (${statusLabel(c.status)})">${inner}</div>`
       }
       return `<a class="course-card live" href="${AppRoutes.course(c.id)}">${inner}</a>`
     })
@@ -37,14 +30,12 @@ export function renderHome(): string {
 
   return `
   ${renderHeader('home')}
-  <main>
+  <main class="page-shell" id="main">
     <section class="hero">
       <h1>Core CSE courses, made interactive.</h1>
       <p class="lede">
-        <strong>Learn</strong> follows a real undergraduate path: Data Structures, Algorithms,
-        Computer Organization, Operating Systems, and the rest of the required core—
-        <em>not</em> intro-to-programming, and not one micro-course per algorithm.
-        <strong>Lab</strong> is the instrumentation layer shared across those courses.
+        Degree-path courses—Data Structures, Algorithms, systems, AI, ML—with instrumented labs.
+        Not intro programming; not one micro-course per algorithm.
       </p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="${AppRoutes.learn}">Course catalog →</a>

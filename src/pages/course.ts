@@ -1,25 +1,7 @@
 import { AppRoutes, type CourseWork } from '../contracts'
 import { getCourse } from '../content/courses'
 import { renderFooter, renderHeader } from '../ui/siteChrome'
-
-function levelLabel(level: string): string {
-  switch (level) {
-    case 'undergraduate':
-      return 'Undergraduate'
-    case 'graduate':
-      return 'Graduate'
-    case 'undergraduate+graduate':
-      return 'Undergraduate · Graduate extensions'
-    default:
-      return level
-  }
-}
-
-function statusBadge(status: string): string {
-  if (status === 'live') return `<span class="badge badge-live">Live</span>`
-  if (status === 'partial') return `<span class="badge badge-partial">Partial</span>`
-  return `<span class="badge">Soon</span>`
-}
+import { levelLabel, statusBadgeHtml } from '../ui/status'
 
 function workAction(w: CourseWork): string {
   const canLab =
@@ -32,9 +14,9 @@ function workAction(w: CourseWork): string {
     return `<a class="btn btn-primary" href="${AppRoutes.assignmentLab(w.labId!, w.id)}">Open lab →</a>`
   }
   if (w.kind === 'analysis' || w.kind === 'reading') {
-    return `<span class="btn btn-ghost" title="Written / reading work">On paper</span>`
+    return `<p class="status-text">On paper · written work</p>`
   }
-  return `<span class="btn" aria-disabled="true">Soon</span>`
+  return `<p class="status-text">Lab not published yet</p>`
 }
 
 function kindLabel(kind: CourseWork['kind']): string {
@@ -64,8 +46,8 @@ export function renderCourse(courseId: string): string | null {
           return `
           <article class="work-card work-${w.status}">
             <div class="work-meta">
-              ${statusBadge(w.status)}
-              <span class="badge">${kindLabel(w.kind)}</span>
+              ${statusBadgeHtml(w.status)}
+              <span class="chip">${kindLabel(w.kind)}</span>
             </div>
             <h4>${w.title}</h4>
             <p class="work-objective"><strong>Objective.</strong> ${w.objective}</p>
@@ -102,18 +84,19 @@ export function renderCourse(courseId: string): string | null {
 
   return `
   ${renderHeader('learn')}
-  <main class="page-shell page-course">
+  <main class="page-shell page-course" id="main">
     <nav class="breadcrumbs" aria-label="Breadcrumb">
-      <a href="${AppRoutes.learn}">Courses</a>
-      <span aria-hidden="true">/</span>
-      <span>${course.title}</span>
+      <ol>
+        <li><a href="${AppRoutes.learn}">Courses</a></li>
+        <li aria-current="page">${course.title}</li>
+      </ol>
     </nav>
 
     <header class="page-intro course-hero">
-      <p class="eyebrow">${course.track} · ${levelLabel(course.level)}</p>
+      <p class="eyebrow">${course.track} · ${levelLabel(course.level, 'long')}</p>
       <div class="title-row">
         <h1>${course.title}</h1>
-        ${statusBadge(course.status)}
+        ${statusBadgeHtml(course.status)}
       </div>
       ${course.academicNote ? `<p class="academic-note">${course.academicNote}</p>` : ''}
       <p class="lede">${course.overview}</p>

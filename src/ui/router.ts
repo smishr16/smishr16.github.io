@@ -30,13 +30,18 @@ export function startRouter(onRoute: RouteHandler): () => void {
 /** Intercept internal links (including query strings). */
 export function bindLinkInterception(root: ParentNode = document): void {
   root.addEventListener('click', (e) => {
+    if (!(e instanceof MouseEvent)) return
+    if (e.defaultPrevented) return
+    if (e.button !== 0) return
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+
     const t = e.target
     if (!(t instanceof Element)) return
     const a = t.closest('a')
     if (!a) return
     const href = a.getAttribute('href')
-    if (!href || href.startsWith('http') || href.startsWith('mailto:') || a.target === '_blank')
-      return
+    if (!href || href.startsWith('http') || href.startsWith('mailto:')) return
+    if (a.target === '_blank' || a.hasAttribute('download')) return
     if (href.startsWith('/')) {
       e.preventDefault()
       navigate(href)

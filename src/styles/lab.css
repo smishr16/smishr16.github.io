@@ -1,20 +1,11 @@
-/* ==========================================================================
-   Lab IDE — responsive structure
-   Breakpoints (common devices):
-     · phone   ≤480
-     · tablet  ≤768
-     · laptop  ≤1024
-     · desktop ≤1440
-     · wide    >1440
-   ========================================================================== */
+/* Lab IDE — unified grid shell (single + compare). Density: tool UI. */
 
 .ide {
-  --lab-rail: 56px;
-  /* min plot height; canvas flexes up to fill the card */
-  --lab-chart-h: clamp(140px, 28vh, 260px);
+  --lab-rail: var(--rail-width, 3.5rem);
+  --lab-gutter: var(--space-2, 0.5rem);
   display: grid;
   grid-template-columns: var(--lab-rail) minmax(0, 1fr);
-  min-height: 100dvh;
+  height: 100dvh;
   max-height: 100dvh;
   background: var(--bg);
   overflow: hidden;
@@ -25,20 +16,19 @@
   flex-direction: column;
   min-width: 0;
   min-height: 0;
+  height: 100%;
   max-height: 100dvh;
 }
-
-/* ---- chrome ---- */
 
 .lab-context-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem 0.65rem;
+  gap: var(--space-2) var(--space-3);
   align-items: center;
-  padding: 0.4rem 0.85rem;
+  padding: var(--space-2) var(--space-3);
   border-bottom: 1px solid var(--border);
-  font-size: 0.8rem;
-  background: rgba(10, 13, 18, 0.72);
+  font-size: var(--text-sm);
+  background: var(--bg-overlay);
   flex-shrink: 0;
 }
 
@@ -54,38 +44,39 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 0.75rem 1rem;
-  padding: 0.7rem 0.9rem;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
   border-bottom: 1px solid var(--border);
   background: linear-gradient(90deg, rgba(125, 211, 192, 0.08), transparent 70%);
   flex-shrink: 0;
 }
 
 .assignment-banner .eyebrow {
-  margin: 0 0 0.15rem;
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   color: var(--accent);
+  font-weight: var(--weight-semibold);
 }
 
 .assignment-banner strong {
   display: block;
-  margin-bottom: 0.2rem;
-  font-size: 0.95rem;
+  margin-bottom: var(--space-1);
+  font-size: var(--text-md);
 }
 
 .assignment-banner p.muted {
   margin: 0;
   max-width: 40rem;
-  font-size: 0.82rem;
-  line-height: 1.4;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
 }
 
 .assignment-banner-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: var(--space-2);
   align-items: center;
 }
 
@@ -94,8 +85,7 @@
   color: var(--accent) !important;
 }
 
-/* ---- rail ---- */
-
+/* Rail */
 .ide-rail {
   width: var(--lab-rail);
   background: var(--bg-elevated);
@@ -103,21 +93,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.65rem 0.3rem;
-  gap: 0.55rem;
+  padding: var(--space-3) var(--space-1);
+  gap: var(--space-2);
   overflow-y: auto;
 }
 
 .ide-rail .mark {
-  width: 36px;
-  height: 36px;
-  border-radius: 9px;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-md);
   background: var(--accent-dim);
   color: var(--accent);
   display: grid;
   place-items: center;
-  font-weight: 700;
-  font-size: 0.7rem;
+  font-weight: var(--weight-bold);
+  font-size: var(--text-xs);
   text-decoration: none;
   flex-shrink: 0;
 }
@@ -127,8 +117,8 @@
   font-size: 0.6rem;
   text-align: center;
   text-decoration: none;
-  padding: 0.3rem 0.2rem;
-  border-radius: 6px;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
   width: 100%;
   line-height: 1.2;
 }
@@ -139,23 +129,22 @@
   background: rgba(125, 211, 192, 0.08);
 }
 
-/* ---- toolbar ---- */
-
+/* Toolbar */
 .ide-top {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.4rem 0.5rem;
-  padding: 0.5rem 0.75rem;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
   border-bottom: 1px solid var(--border);
-  background: rgba(18, 24, 32, 0.92);
+  background: rgba(18, 24, 32, 0.94);
   backdrop-filter: blur(8px);
   flex-shrink: 0;
 }
 
 .algo-tabs {
   display: flex;
-  gap: 0.2rem;
+  gap: 0.15rem;
   flex-wrap: wrap;
 }
 
@@ -165,9 +154,9 @@
   background: transparent;
   color: var(--text-muted);
   font: inherit;
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   padding: 0.3rem 0.55rem;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
 }
 
@@ -183,29 +172,24 @@
 }
 
 .ide-top .btn {
-  font-size: 0.8rem;
-  padding: 0.35rem 0.65rem;
+  font-size: var(--text-sm);
+  padding: 0.32rem 0.6rem;
 }
 
 .ide-top label.muted {
-  font-size: 0.78rem !important;
+  font-size: var(--text-sm) !important;
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: var(--space-1);
 }
 
-.ide-top select,
-.ide-top input[type='number'] {
-  font-size: 0.8rem;
-}
-
-/* ---- main workspace ---- */
-
+/* ===== Main: ALWAYS CSS grid (single + compare) ===== */
 .ide-main {
   flex: 1 1 auto;
   min-height: 0;
+  min-width: 0;
   display: grid;
-  grid-template-columns: minmax(200px, 0.95fr) minmax(0, 1.15fr);
+  grid-template-columns: minmax(12rem, min(34%, 26rem)) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
   overflow: hidden;
 }
@@ -214,161 +198,72 @@
   grid-template-columns: 2.5rem minmax(0, 1fr);
 }
 
-/* Stage holds one or two chart cards — fills remaining IDE space */
+.ide-main.compare-layout:not(.code-collapsed) {
+  grid-template-columns: minmax(11rem, min(28%, 20rem)) minmax(0, 1fr);
+}
+
+/* Stage fills its grid cell completely */
 .viz-stage {
   min-width: 0;
   min-height: 0;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: stretch;
-  align-content: stretch;
-  align-items: stretch;
-  gap: 0.75rem 1rem;
-  padding: 0.75rem 0.9rem;
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: var(--lab-gutter);
+  padding: var(--lab-gutter);
   overflow: hidden;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(61, 139, 253, 0.04), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(61, 139, 253, 0.035), transparent 55%),
     var(--bg);
 }
 
-/* Compare: code + stage as row; stage owns leftover width */
-.ide-main.compare-layout {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  overflow: hidden;
-  background: var(--bg);
-  padding: 0;
-  gap: 0;
-}
-
-.ide-main.compare-layout .editor-pane {
-  flex: 0 0 auto;
-  width: min(22rem, 36vw);
-  max-width: 22rem;
-  border-right: 1px solid var(--border);
-  border-radius: 0;
-  max-height: 100%;
-}
-
-.ide-main.compare-layout.code-collapsed .editor-pane {
-  width: 2.5rem;
-  max-width: 2.5rem;
-  flex: 0 0 2.5rem;
-}
-
 .ide-main.compare-layout .viz-stage {
-  flex: 1 1 auto;
-  min-width: 0;
-  width: auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
 }
 
-/* Chart cards — grow to fill stage; bars stay density-capped in canvas code */
+/* Chart card fills stage cell */
 .viz-pane {
-  flex: 1 1 0;
   min-width: 0;
-  max-width: none;
-  width: auto;
-  display: flex;
-  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
   background: var(--bg-elevated);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
-  min-height: 0;
-  height: 100%;
 }
 
-/* Single: one chart fills the entire stage */
-.ide-main:not(.compare-layout) .viz-stage {
-  display: grid;
-  grid-template-columns: 1fr;
-  padding: 0.65rem 0.75rem;
-}
-
-.ide-main:not(.compare-layout) .viz-pane {
-  width: 100%;
-  max-width: none;
-  height: 100%;
-  min-height: 0;
-}
-
-/* Single + code open: still fill the viz column fully */
-.ide-main:not(.compare-layout):not(.code-collapsed) .viz-pane {
-  width: 100%;
-  max-width: none;
-}
-
-/* Compare: two equal columns sharing full stage width */
-.ide-main.compare-layout .viz-stage {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.85rem;
-  align-items: stretch;
-}
-
-.ide-main.compare-layout .viz-pane {
-  width: 100%;
-  max-width: none;
-  flex: unset;
-  min-width: 0;
-  height: 100%;
-}
-
-/* Prefer taller plot when code is collapsed (more vertical budget) */
-.ide-main.code-collapsed {
-  --lab-chart-h: clamp(160px, 38vh, 320px);
-}
-
-.ide-main.compare-layout.code-collapsed {
-  --lab-chart-h: clamp(140px, 32vh, 280px);
-}
-
-/* Canvas grows with the card instead of a fixed tiny band */
 .viz-wrap {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
   min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
   background: var(--bg-panel);
 }
 
 .viz-canvas {
   display: block;
   width: 100%;
-  flex: 1 1 auto;
-  min-height: var(--lab-chart-h);
-  height: auto;
-  max-height: none;
-}
-
-.ide-pane {
+  height: 100%;
   min-height: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.editor-pane {
-  min-height: 0;
-  border-right: 1px solid var(--border);
-  background: var(--bg-panel);
+  min-width: 0;
 }
 
 .pane-label {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   color: var(--text-muted);
-  padding: 0.4rem 0.65rem;
+  padding: var(--space-2) var(--space-3);
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.18);
 }
 
 .pane-label .pane-title {
@@ -385,10 +280,10 @@
   color: var(--text-muted);
   font: inherit;
   font-size: 0.65rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   text-transform: none;
-  padding: 0.18rem 0.4rem;
-  border-radius: 4px;
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   white-space: nowrap;
 }
@@ -396,6 +291,17 @@
 .btn-pane-toggle:hover {
   border-color: var(--accent);
   color: var(--accent);
+}
+
+.editor-pane {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  background: var(--bg-panel);
+  overflow: hidden;
 }
 
 .editor-body {
@@ -409,18 +315,14 @@
   display: none;
 }
 
-.editor-pane.editor-collapsed {
-  max-width: 2.5rem;
-}
-
 .editor-pane.editor-collapsed .pane-label {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.55rem;
+  gap: var(--space-3);
   height: 100%;
   border-bottom: none;
-  padding: 0.5rem 0.2rem;
+  padding: var(--space-2) var(--space-1);
 }
 
 .editor-pane.editor-collapsed .pane-title {
@@ -432,23 +334,23 @@
 
 .editor-host {
   flex: 1;
-  min-height: 120px;
+  min-height: 0;
   overflow: hidden;
 }
 
 .editor-host .cm-editor {
   height: 100%;
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
 }
 
 .concept {
-  padding: 0.5rem 0.65rem;
-  font-size: 0.78rem;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
   color: var(--text-muted);
   border-top: 1px solid var(--border);
-  max-height: 5.5rem;
+  max-height: 5rem;
   overflow: auto;
-  line-height: 1.4;
+  line-height: var(--leading-relaxed);
   flex-shrink: 0;
 }
 
@@ -456,19 +358,17 @@
   color: var(--text);
 }
 
-/* ---- chart meta (plot area rules above) ---- */
-
 .viz-status {
-  padding: 0.35rem 0.65rem;
-  font-size: 0.75rem;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
   color: var(--text-muted);
   border-top: 1px solid var(--border);
   line-height: 1.35;
-  min-height: 2.1rem;
+  min-height: 2rem;
 }
 
 .viz-stats {
-  padding: 0.3rem 0.65rem 0.45rem;
+  padding: var(--space-1) var(--space-3) var(--space-2);
   font-size: 0.7rem;
   color: var(--text-muted);
   border-top: 1px solid var(--border);
@@ -479,11 +379,9 @@
 .viz-stats strong {
   color: var(--text);
   font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 0.72rem;
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-xs);
 }
-
-/* ---- transport + console ---- */
 
 .transport-bar {
   border-top: 1px solid var(--border);
@@ -494,36 +392,36 @@
 .transport {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
-  padding: 0.45rem 0.75rem;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
   align-items: center;
 }
 
 .transport .btn {
-  font-size: 0.78rem;
-  padding: 0.32rem 0.6rem;
+  font-size: var(--text-sm);
+  padding: 0.3rem 0.55rem;
 }
 
 .compare-summary {
-  padding: 0.3rem 0.75rem 0.5rem;
-  font-size: 0.78rem;
+  padding: var(--space-1) var(--space-3) var(--space-2);
+  font-size: var(--text-sm);
   border-top: 1px solid var(--border);
   line-height: 1.4;
 }
 
 .compare-summary strong {
   color: var(--accent);
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
 }
 
 .ide-console {
   border-top: 1px solid var(--border);
   background: var(--bg-panel);
-  max-height: 5.5rem;
+  max-height: 4.5rem;
   overflow: auto;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  padding: 0.4rem 0.75rem;
+  font-size: var(--text-xs);
+  padding: var(--space-2) var(--space-3);
   color: var(--text-muted);
   flex-shrink: 0;
   line-height: 1.4;
@@ -538,98 +436,54 @@
   color: var(--accent);
 }
 
-/* ==========================================================================
-   Breakpoints
-   ========================================================================== */
+/* —— Breakpoints —— */
 
-/* Wide desktop: slightly roomier charts, still capped */
-@media (min-width: 1440px) {
-  .ide {
-    --lab-rail: 60px;
-    --lab-chart-h: clamp(160px, 30vh, 300px);
-  }
-}
-
-/* Laptop / small desktop */
-@media (max-width: 1100px) {
-  .ide {
-    --lab-chart-h: clamp(120px, 26vh, 220px);
-  }
-
-  .ide-main:not(.compare-layout) {
-    grid-template-columns: minmax(180px, 0.9fr) minmax(0, 1.1fr);
-  }
-
-  .ide-main.compare-layout .editor-pane:not(.editor-collapsed) {
-    width: min(18rem, 32vw);
-  }
-}
-
-/* Tablet landscape / small laptop */
 @media (max-width: 900px) {
   .ide {
-    --lab-rail: 100%;
     grid-template-columns: 1fr;
     grid-template-rows: auto minmax(0, 1fr);
-    max-height: none;
-    min-height: 100dvh;
-    overflow: auto;
-  }
-
-  .ide-column {
-    max-height: none;
-    min-height: 0;
+    height: 100dvh;
   }
 
   .ide-rail {
     width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
     border-right: none;
     border-bottom: 1px solid var(--border);
-    padding: 0.4rem 0.5rem;
-    gap: 0.35rem;
-    overflow: visible;
+    padding: var(--space-2);
+    gap: var(--space-1);
   }
 
   .ide-rail a.rail-link {
     width: auto;
-    font-size: 0.72rem;
-    padding: 0.3rem 0.5rem;
+    font-size: var(--text-xs);
+    padding: var(--space-1) var(--space-2);
   }
 
   .ide-main,
-  .ide-main.code-collapsed {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(12rem, 1fr);
-    min-height: 50vh;
-  }
-
-  .ide-main.compare-layout,
+  .ide-main.code-collapsed,
+  .ide-main.compare-layout:not(.code-collapsed),
   .ide-main.compare-layout.code-collapsed {
-    flex-direction: column;
-    overflow: visible;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
   }
 
-  .ide-main.compare-layout .editor-pane,
-  .ide-main.compare-layout.code-collapsed .editor-pane {
-    width: 100%;
-    max-width: none;
-    flex: 0 0 auto;
+  .editor-pane {
     border-right: none;
     border-bottom: 1px solid var(--border);
+    max-height: 40vh;
   }
 
   .editor-pane.editor-collapsed {
-    max-width: none;
+    max-height: none;
   }
 
   .editor-pane.editor-collapsed .pane-label {
     flex-direction: row;
     height: auto;
     border-bottom: 1px solid var(--border);
-    padding: 0.4rem 0.65rem;
+    padding: var(--space-2) var(--space-3);
   }
 
   .editor-pane.editor-collapsed .pane-title {
@@ -637,79 +491,30 @@
     transform: none;
   }
 
-  .editor-pane.editor-collapsed .editor-body {
-    display: none;
-  }
-
   .ide-main.compare-layout .viz-stage {
-    padding: 0.65rem;
-    /* stack charts full-width on tablet; still fill the column */
     grid-template-columns: 1fr;
-    gap: 0.65rem;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
     overflow: auto;
-  }
-
-  .ide-main.compare-layout .viz-pane,
-  .ide-main:not(.compare-layout) .viz-pane {
-    width: 100%;
-    max-width: none;
-    height: auto;
-    min-height: calc(var(--lab-chart-h) + 4.5rem);
-  }
-
-  .ide-main:not(.compare-layout) .viz-stage {
-    min-height: 40vh;
-  }
-
-  .editor-host {
-    min-height: 8rem;
-    max-height: 12rem;
   }
 }
 
-/* Phone */
 @media (max-width: 480px) {
-  .ide {
-    --lab-chart-h: clamp(110px, 30vw, 160px);
-  }
-
   .ide-top {
-    padding: 0.45rem 0.5rem;
+    padding: var(--space-2);
   }
 
   .algo-tabs button {
-    font-size: 0.72rem;
-    padding: 0.28rem 0.45rem;
-  }
-
-  .transport {
-    gap: 0.3rem;
-  }
-
-  .assignment-banner {
-    padding: 0.55rem 0.65rem;
-  }
-
-  .ide-console {
-    max-height: 4.5rem;
+    font-size: var(--text-xs);
+    padding: 0.25rem 0.4rem;
   }
 }
 
-/* Short viewports (landscape phones, short laptops) */
 @media (max-height: 640px) {
-  .ide {
-    --lab-chart-h: clamp(88px, 28vh, 130px);
-  }
-
   .concept {
-    max-height: 3.5rem;
+    max-height: 3rem;
   }
 
   .ide-console {
-    max-height: 3.2rem;
-  }
-
-  .editor-host {
-    min-height: 6rem;
+    max-height: 3rem;
   }
 }

@@ -26,9 +26,15 @@
   text-decoration: none;
 }
 
-.nav-links a:hover,
-.nav-links a[aria-current='page'] {
+.nav-links a:hover {
   color: var(--text);
+}
+
+.nav-links a[aria-current='page'],
+.brand[aria-current='page'] {
+  color: var(--text);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--accent);
 }
 
 .hero {
@@ -122,8 +128,16 @@
 
 .course-card.live:hover {
   border-color: var(--accent);
-  transform: translateY(-1px);
   text-decoration: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .course-card.live {
+    transition: border-color var(--duration-normal, 0.2s) var(--ease-out, ease);
+  }
+  .course-card.live:hover {
+    transform: translateY(-1px);
+  }
 }
 
 .course-card-lg {
@@ -166,7 +180,14 @@
 }
 
 .course-card.soon {
-  opacity: 0.55;
+  opacity: 1;
+  border-style: dashed;
+  background: transparent;
+}
+
+.course-card.soon h3,
+.course-card.soon p {
+  opacity: 1;
 }
 
 .site-footer {
@@ -204,16 +225,40 @@
 }
 
 .breadcrumbs {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
   font-size: 0.9rem;
   color: var(--text-muted);
   margin-bottom: 1.25rem;
 }
 
+.breadcrumbs ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  align-items: center;
+}
+
+.breadcrumbs li:not(:last-child)::after {
+  content: '/';
+  margin-left: 0.5rem;
+  opacity: 0.6;
+}
+
 .breadcrumbs a {
   color: var(--text-muted);
+}
+
+.hero,
+.section-block {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.page-shell .course-grid {
+  padding: 0 0 2rem;
 }
 
 .goal-list {
