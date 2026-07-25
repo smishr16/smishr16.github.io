@@ -29,13 +29,23 @@ npm run preview
 
 ## Deploy (GitHub Pages)
 
-1. `npm run build` → output in `dist/`  
-2. Publish `dist` to the `master` branch root **or** use GitHub Actions to deploy from `dist`  
-3. Repo Settings → Pages → source as configured  
+Production is built from source via GitHub Actions (`.github/workflows/deploy-pages.yml`):
 
-For a user site (`username.github.io`), `vite.config.ts` uses `base: '/'`.
+1. Push to `master` (or run the workflow manually).
+2. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+3. Site serves the `dist/` artifact at https://smishr16.github.io
+
+Local production check:
+
+```bash
+npm run build
+npm run preview
+```
+
+`vite.config.ts` uses `base: '/'` (user site). Build also writes `dist/404.html` for SPA routes.
 
 **Do not commit** `.superpowers/` (local brainstorm sessions).
+
 
 ## Stack
 

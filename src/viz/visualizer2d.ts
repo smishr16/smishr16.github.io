@@ -6,6 +6,7 @@ export class Visualizer2D {
   private statusEl: HTMLElement
   private unsub: (() => void) | null = null
   private reducedMotion: boolean
+  private last: EngineSnapshot | null = null
 
   constructor(canvas: HTMLCanvasElement, statusEl: HTMLElement) {
     const ctx = canvas.getContext('2d')
@@ -21,12 +22,19 @@ export class Visualizer2D {
     this.unsub = engine.subscribe((snap) => this.render(snap))
   }
 
+  /** Redraw last frame (e.g. window resize) without resetting the engine. */
+  redraw(): void {
+    if (this.last) this.render(this.last)
+  }
+
   destroy(): void {
     this.unsub?.()
     this.unsub = null
+    this.last = null
   }
 
   private render(snap: EngineSnapshot): void {
+    this.last = snap
     this.statusEl.textContent = snap.statusText
     const { width, height } = this.canvas
     const dpr = window.devicePixelRatio || 1

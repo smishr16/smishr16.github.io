@@ -12,7 +12,7 @@ import { StepEngine } from '../core/stepEngine'
 import { Visualizer2D } from '../viz/visualizer2d'
 import { labBridge } from '../lab/labBridge'
 import { pyodideBridge } from '../lab/pyodideBridge'
-import { DEFAULT_TEMPLATE } from '../lab/templates'
+import { templateFor } from '../lab/templates'
 import { sortingContent } from '../content/lessons'
 
 export type LabCleanup = () => void
@@ -92,10 +92,17 @@ export function mountSortingLab(root: HTMLElement): LabCleanup {
 
   const editorHost = root.querySelector('#editor') as HTMLElement
   editor = new EditorView({
-    doc: DEFAULT_TEMPLATE,
+    doc: templateFor(algoId),
     extensions: [basicSetup, python(), oneDark, EditorView.lineWrapping],
     parent: editorHost,
   })
+
+  function setEditorDoc(text: string): void {
+    if (!editor) return
+    editor.dispatch({
+      changes: { from: 0, to: editor.state.doc.length, insert: text },
+    })
+  }
 
   const canvas = root.querySelector('#viz') as HTMLCanvasElement
   const statusEl = root.querySelector('#viz-status') as HTMLElement
@@ -133,6 +140,7 @@ export function mountSortingLab(root: HTMLElement): LabCleanup {
       b.setAttribute('aria-selected', String((b as HTMLElement).dataset.algo === algoId))
     })
     updateConcept()
+    setEditorDoc(templateFor(algoId))
     if (mode === 'reference') loadReference()
   }
   root.querySelector('.algo-tabs')!.addEventListener('click', onAlgo)
@@ -199,11 +207,7 @@ export function mountSortingLab(root: HTMLElement): LabCleanup {
     }
   })
 
-  const onResize = () => {
-    // trigger redraw via engine snapshot
-    engine.reset()
-    if (mode === 'reference') loadReference()
-  }
+  const onResize = () => viz?.redraw()
   window.addEventListener('resize', onResize)
 
   return () => {
