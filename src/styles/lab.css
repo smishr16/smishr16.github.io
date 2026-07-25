@@ -156,29 +156,41 @@
 
 .ide-main {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(240px, 1fr) minmax(0, 1.2fr);
   min-height: 0;
   overflow: hidden;
   gap: 0;
 }
 
-/* Compare mode: charts stacked vertically so bars align on the same width */
+/* Code collapsed: thin strip + full viz */
+.ide-main.code-collapsed {
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+}
+
+/* Compare: compact charts side-by-side with separation */
 .ide-main.compare-layout {
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 1.25rem;
-  padding: 1rem 1.15rem 0.75rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  padding: 0.75rem 0.9rem;
   background: var(--bg);
-  align-items: stretch;
+  align-items: start;
   overflow: auto;
+}
+
+.ide-main.compare-layout.code-collapsed {
+  grid-template-columns: 2.75rem 1fr 1fr;
+}
+
+.ide-main.compare-layout:not(.code-collapsed) {
+  grid-template-columns: minmax(200px, 0.75fr) 1fr 1fr;
 }
 
 .ide-main.compare-layout .viz-pane {
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
   background: var(--bg-elevated);
-  min-height: 240px;
+  min-height: 0;
   border-right: none;
 }
 
@@ -186,13 +198,30 @@
   border-right: none;
 }
 
-.ide.is-compare #pane-viz-a,
-.ide.is-compare #pane-viz-b {
-  min-height: 240px;
+.ide-main.compare-layout .viz-wrap {
+  min-height: 0;
 }
 
 .ide-main.compare-layout .viz-canvas {
-  min-height: 160px;
+  flex: 0 0 auto;
+  height: 132px;
+  min-height: 132px;
+  max-height: 132px;
+}
+
+.ide-main.compare-layout .pane-label {
+  padding: 0.35rem 0.65rem;
+}
+
+.ide-main.compare-layout .viz-status {
+  min-height: 0;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.78rem;
+}
+
+.ide-main.compare-layout .viz-stats {
+  padding: 0.3rem 0.65rem 0.45rem;
+  font-size: 0.72rem;
 }
 
 #btn-compare[aria-pressed='true'] {
@@ -212,17 +241,86 @@
 }
 
 .pane-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
   font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-muted);
   padding: 0.5rem 0.75rem;
   border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.pane-label .pane-title {
+  min-width: 0;
+}
+
+.btn-pane-toggle {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-pane-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.editor-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Collapsed code: vertical label strip */
+.editor-pane.editor-collapsed {
+  border-right: 1px solid var(--border);
+  max-width: 2.75rem;
+}
+
+.editor-pane.editor-collapsed .editor-body {
+  display: none;
+}
+
+.editor-pane.editor-collapsed .pane-label {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.65rem;
+  height: 100%;
+  border-bottom: none;
+  padding: 0.55rem 0.25rem;
+  writing-mode: horizontal-tb;
+}
+
+.editor-pane.editor-collapsed .pane-title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: 0.12em;
+}
+
+.editor-pane.editor-collapsed .btn-pane-toggle {
+  writing-mode: horizontal-tb;
+  padding: 0.35rem 0.2rem;
+  font-size: 0.65rem;
 }
 
 .editor-host {
   flex: 1;
-  min-height: 220px;
+  min-height: 160px;
   overflow: hidden;
 }
 
@@ -235,14 +333,14 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 220px;
+  min-height: 160px;
   background: var(--bg-panel);
 }
 
 .viz-canvas {
   flex: 1;
   width: 100%;
-  min-height: 180px;
+  min-height: 140px;
   display: block;
 }
 
@@ -339,14 +437,33 @@
     padding: 0.5rem;
   }
 
-  .ide-main {
+  .ide-main,
+  .ide-main.code-collapsed {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
   }
 
-  .ide-main.compare-layout {
+  .ide-main.compare-layout,
+  .ide-main.compare-layout.code-collapsed,
+  .ide-main.compare-layout:not(.code-collapsed) {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+    gap: 0.75rem;
+  }
+
+  .editor-pane.editor-collapsed {
+    max-width: none;
+  }
+
+  .editor-pane.editor-collapsed .pane-label {
+    flex-direction: row;
+    height: auto;
+    border-bottom: 1px solid var(--border);
+    padding: 0.45rem 0.75rem;
+  }
+
+  .editor-pane.editor-collapsed .pane-title {
+    writing-mode: horizontal-tb;
+    transform: none;
   }
 
   .ide-pane {

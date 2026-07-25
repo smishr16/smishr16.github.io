@@ -61,6 +61,8 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
   let vizB: Visualizer2D | null = null
   let mode: 'reference' | 'python' = cfg.runMode ?? 'reference'
   let compareMode = Boolean(cfg.compare)
+  /** Code pane collapsed — default collapsed in compare for chart space */
+  let codeCollapsed = compareMode
   const isAssignment = options.context === 'assignment' && options.assignment
 
   const assignmentBanner = isAssignment
@@ -126,16 +128,24 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
             <option value="python" ${mode === 'python' ? 'selected' : ''}>Python lab</option>
           </select>
         </label>
+        <button type="button" class="btn" id="btn-toggle-code-top" title="Collapse or expand the code pane">Code</button>
         <button type="button" class="btn btn-primary" id="btn-run">Run</button>
       </div>
-      <div class="ide-main ${compareMode ? 'compare-layout' : ''}" id="ide-main">
-        <section class="ide-pane single-only" aria-label="Code editor" id="pane-editor" ${compareMode ? 'hidden' : ''}>
-          <div class="pane-label">Editor · Python template</div>
-          <div class="editor-host" id="editor"></div>
-          <div class="concept" id="concept"></div>
+      <div class="ide-main ${compareMode ? 'compare-layout' : ''} ${codeCollapsed ? 'code-collapsed' : ''}" id="ide-main">
+        <section class="ide-pane editor-pane ${codeCollapsed ? 'editor-collapsed' : ''}" aria-label="Code editor" id="pane-editor">
+          <div class="pane-label">
+            <span class="pane-title">Editor · Python</span>
+            <button type="button" class="btn-pane-toggle" id="btn-toggle-code" aria-expanded="${!codeCollapsed}" aria-controls="editor-body">
+              ${codeCollapsed ? 'Expand' : 'Collapse'}
+            </button>
+          </div>
+          <div class="editor-body" id="editor-body">
+            <div class="editor-host" id="editor"></div>
+            <div class="concept" id="concept"></div>
+          </div>
         </section>
         <section class="ide-pane viz-pane" aria-label="Visualization A" id="pane-viz-a">
-          <div class="pane-label" id="label-a">Visualizer · 2D</div>
+          <div class="pane-label"><span class="pane-title" id="label-a">Visualizer · 2D</span></div>
           <div class="viz-wrap">
             <canvas class="viz-canvas" id="viz-a" role="img" aria-label="Sorting visualization A"></canvas>
             <div class="viz-status" id="viz-status-a" aria-live="polite">Ready.</div>
@@ -143,7 +153,7 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
           </div>
         </section>
         <section class="ide-pane viz-pane compare-only" aria-label="Visualization B" id="pane-viz-b" ${compareMode ? '' : 'hidden'}>
-          <div class="pane-label" id="label-b">Visualizer B</div>
+          <div class="pane-label"><span class="pane-title" id="label-b">Visualizer B</span></div>
           <div class="viz-wrap">
             <canvas class="viz-canvas" id="viz-b" role="img" aria-label="Sorting visualization B"></canvas>
             <div class="viz-status" id="viz-status-b" aria-live="polite">Ready.</div>
@@ -198,9 +208,11 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
   const compareBtn = root.querySelector('#btn-compare') as HTMLButtonElement
   const algoBSelect = root.querySelector('#algo-b') as HTMLSelectElement
   const vsLabel = root.querySelector('#vs-label') as HTMLElement
-  const runModeLabel = root.querySelector('.single-only') as HTMLElement
+  const runModeLabel = root.querySelector('label.single-only') as HTMLElement | null
   const playBtn = root.querySelector('#btn-play') as HTMLButtonElement
   const stepBtn = root.querySelector('#btn-step') as HTMLButtonElement
+  const toggleCodeBtn = root.querySelector('#btn-toggle-code') as HTMLButtonElement
+  const toggleCodeTop = root.querySelector('#btn-toggle-code-top') as HTMLButtonElement
 
   vizA = new Visualizer2D(canvasA, statusA)
   vizA.bind(engineA)
@@ -283,11 +295,24 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
     )
   }
 
+  function applyCodeCollapse(): void {
+    paneEditor.classList.toggle('editor-collapsed', codeCollapsed)
+    ideMain.classList.toggle('code-collapsed', codeCollapsed)
+    toggleCodeBtn.setAttribute('aria-expanded', String(!codeCollapsed))
+    toggleCodeBtn.textContent = codeCollapsed ? 'Expand' : 'Collapse'
+    toggleCodeTop.classList.toggle('btn-active', !codeCollapsed)
+    toggleCodeTop.textContent = codeCollapsed ? 'Show code' : 'Hide code'
+    requestAnimationFrame(() => {
+      vizA?.redraw()
+      if (compareMode) vizB?.redraw()
+    })
+  }
+
   function applyLayout(): void {
     const ide = root.querySelector('#ide-root') as HTMLElement
     ide.classList.toggle('is-compare', compareMode)
     paneB.hidden = !compareMode
-    paneEditor.hidden = compareMode
+    paneEditor.hidden = false
     summaryEl.hidden = !compareMode
     vsLabel.hidden = !compareMode
     if (runModeLabel) runModeLabel.hidden = compareMode
@@ -307,6 +332,8 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
       algoBSelect.value = algoBId
     }
 
+    applyCodeCollapse()
+
     if (compareMode) {
       mode = 'reference'
       loadCompare()
@@ -322,6 +349,11 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
       }
       requestAnimationFrame(() => vizA?.redraw())
     }
+  }
+
+  function toggleCodePane(): void {
+    codeCollapsed = !codeCollapsed
+    applyCodeCollapse()
   }
 
   updateConcept()
@@ -367,8 +399,13 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
 
   compareBtn.addEventListener('click', () => {
     compareMode = !compareMode
+    // Free space for side-by-side charts when entering compare
+    if (compareMode) codeCollapsed = true
     applyLayout()
   })
+
+  toggleCodeBtn.addEventListener('click', toggleCodePane)
+  toggleCodeTop.addEventListener('click', toggleCodePane)
 
   root.querySelector('#btn-shuffle')!.addEventListener('click', () => {
     size = clampArraySize(Number((root.querySelector('#arr-size') as HTMLInputElement).value))
