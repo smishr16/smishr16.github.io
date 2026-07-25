@@ -1,77 +1,153 @@
-import { AppRoutes } from '../contracts'
+import { AppRoutes, type CourseWork } from '../contracts'
 import { getCourse } from '../content/courses'
 import { renderFooter, renderHeader } from '../ui/siteChrome'
+
+function levelLabel(level: string): string {
+  switch (level) {
+    case 'undergraduate':
+      return 'Undergraduate'
+    case 'graduate':
+      return 'Graduate'
+    case 'undergraduate+graduate':
+      return 'Undergraduate · Graduate extensions'
+    default:
+      return level
+  }
+}
+
+function statusBadge(status: string): string {
+  if (status === 'live') return `<span class="badge badge-live">Live</span>`
+  if (status === 'partial') return `<span class="badge badge-partial">Partial</span>`
+  return `<span class="badge">Soon</span>`
+}
+
+function workAction(w: CourseWork): string {
+  const canLab =
+    (w.status === 'live' || w.status === 'partial') &&
+    w.labId &&
+    w.config &&
+    (w.kind === 'lab' || w.kind === 'implementation' || w.kind === 'project')
+
+  if (canLab) {
+    return `<a class="btn btn-primary" href="${AppRoutes.assignmentLab(w.labId!, w.id)}">Open lab →</a>`
+  }
+  if (w.kind === 'analysis' || w.kind === 'reading') {
+    return `<span class="btn btn-ghost" title="Written / reading work">On paper</span>`
+  }
+  return `<span class="btn" aria-disabled="true">Soon</span>`
+}
+
+function kindLabel(kind: CourseWork['kind']): string {
+  const map: Record<CourseWork['kind'], string> = {
+    reading: 'Reading',
+    analysis: 'Analysis',
+    lab: 'Lab',
+    implementation: 'Implement',
+    project: 'Project',
+  }
+  return map[kind]
+}
 
 export function renderCourse(courseId: string): string | null {
   const course = getCourse(courseId)
   if (!course) return null
 
+  const prereqs = course.prerequisites.map((p) => `<li>${p}</li>`).join('')
   const goals = course.learningGoals.map((g) => `<li>${g}</li>`).join('')
-  const assignments = course.assignments
-    .map((a, i) => {
-      const href =
-        a.status === 'live'
-          ? AppRoutes.assignmentLab(a.labId, a.id)
-          : '#'
-      const action =
-        a.status === 'live'
-          ? `<a class="btn btn-primary" href="${href}">Start in lab →</a>`
-          : `<span class="btn" aria-disabled="true">Soon</span>`
-      const tags: string[] = []
-      if (a.config.compare) tags.push('Compare')
-      if (a.config.runMode === 'python') tags.push('Python')
-      else tags.push('Visualizer')
-      if (a.config.algoId) tags.push(a.config.algoId)
-      if (a.config.algoBId) tags.push(`vs ${a.config.algoBId}`)
+
+  const modules = course.modules
+    .map((mod) => {
+      const topics = mod.topics.map((t) => `<li>${t}</li>`).join('')
+      const outcomes = mod.outcomes.map((o) => `<li>${o}</li>`).join('')
+      const work = mod.work
+        .map((w) => {
+          return `
+          <article class="work-card work-${w.status}">
+            <div class="work-meta">
+              ${statusBadge(w.status)}
+              <span class="badge">${kindLabel(w.kind)}</span>
+            </div>
+            <h4>${w.title}</h4>
+            <p class="work-objective"><strong>Objective.</strong> ${w.objective}</p>
+            <p class="muted">${w.brief}</p>
+            <div class="work-action">${workAction(w)}</div>
+          </article>`
+        })
+        .join('')
 
       return `
-      <article class="assignment-card ${a.status === 'soon' ? 'soon' : ''}">
-        <div class="assignment-index">${String(i + 1).padStart(2, '0')}</div>
-        <div class="assignment-body">
-          <h3>${a.title}</h3>
-          <p>${a.brief}</p>
-          <div class="assignment-tags">
-            ${tags.map((t) => `<span class="badge">${t}</span>`).join('')}
+      <section class="module-block" id="${mod.id}">
+        <header class="module-head">
+          <span class="module-code">${mod.code}</span>
+          <div>
+            <h3>${mod.title}</h3>
+            <p class="muted">${mod.summary}</p>
+          </div>
+        </header>
+        <div class="module-grid">
+          <div>
+            <h4 class="subhead">Topics</h4>
+            <ul class="topic-list">${topics}</ul>
+            <h4 class="subhead">Outcomes</h4>
+            <ul class="topic-list">${outcomes}</ul>
+          </div>
+          <div>
+            <h4 class="subhead">Coursework</h4>
+            <div class="work-list">${work}</div>
           </div>
         </div>
-        <div class="assignment-action">${action}</div>
-      </article>`
+      </section>`
     })
     .join('')
 
   return `
   ${renderHeader('learn')}
-  <main class="page-shell">
+  <main class="page-shell page-course">
     <nav class="breadcrumbs" aria-label="Breadcrumb">
       <a href="${AppRoutes.learn}">Courses</a>
       <span aria-hidden="true">/</span>
       <span>${course.title}</span>
     </nav>
-    <header class="page-intro">
-      <p class="eyebrow">${course.track} · Course</p>
-      <h1>${course.title}</h1>
+
+    <header class="page-intro course-hero">
+      <p class="eyebrow">${course.track} · ${levelLabel(course.level)}</p>
+      <div class="title-row">
+        <h1>${course.title}</h1>
+        ${statusBadge(course.status)}
+      </div>
+      ${course.academicNote ? `<p class="academic-note">${course.academicNote}</p>` : ''}
       <p class="lede">${course.overview}</p>
     </header>
 
-    <section class="section-block">
-      <h2>What you’ll learn</h2>
-      <ul class="goal-list">${goals}</ul>
+    <section class="section-block two-col-info">
+      <div>
+        <h2>Prerequisites</h2>
+        <ul class="goal-list">${prereqs}</ul>
+      </div>
+      <div>
+        <h2>Learning goals</h2>
+        <ul class="goal-list">${goals}</ul>
+      </div>
     </section>
 
-    <section class="section-block">
+    <section class="section-block syllabus">
       <div class="section-head">
-        <h2>Assignments</h2>
-        <p class="muted">Each opens the lab preconfigured. Complete in order or jump around.</p>
+        <h2>Syllabus</h2>
+        <p class="muted">
+          Modules are topic units (as in a university course), not single-algorithm “lessons.”
+          Labs open the shared visualizer preconfigured for experiments—theory and analysis remain first-class.
+        </p>
       </div>
-      <div class="assignment-list" role="list">
-        ${assignments}
-      </div>
+      ${modules}
     </section>
 
     <section class="section-block callout">
-      <h2>Open playground</h2>
-      <p class="muted">Skip the syllabus and use the sorting visualizer freely — compare algos, shuffle data, run Python.</p>
-      <p><a class="btn" href="${AppRoutes.labSorting}">Open Sorting lab →</a></p>
+      <h2>Lab as instrument, not the course</h2>
+      <p class="muted">
+        The sorting visualizer is available anytime for free exploration. The course is the syllabus,
+        arguments, and experimental discipline—not a sequence of toy demos.
+      </p>
+      <p><a class="btn" href="${AppRoutes.labSorting}">Open sorting visualizer →</a></p>
     </section>
   </main>
   ${renderFooter()}

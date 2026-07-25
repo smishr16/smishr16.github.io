@@ -290,11 +290,163 @@
   margin-top: 0;
 }
 
+.level-line {
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+.academic-note {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  color: var(--accent);
+  opacity: 0.9;
+}
+
+.title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.title-row h1 {
+  margin: 0;
+}
+
+.two-col-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding-top: 0;
+}
+
+.page-course .section-block {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.module-block {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem 1.35rem 1.35rem;
+  margin-bottom: 1.15rem;
+  background: rgba(18, 24, 32, 0.45);
+}
+
+.module-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.module-code {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.95rem;
+  padding-top: 0.2rem;
+}
+
+.module-head h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.2rem;
+}
+
+.module-head p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.module-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 1.5rem;
+}
+
+.subhead {
+  margin: 0 0 0.45rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.topic-list {
+  margin: 0 0 1rem;
+  padding-left: 1.1rem;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.topic-list li {
+  margin-bottom: 0.3rem;
+}
+
+.work-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.work-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  background: var(--bg-elevated);
+}
+
+.work-card.work-soon {
+  opacity: 0.55;
+}
+
+.work-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.45rem;
+}
+
+.work-card h4 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+}
+
+.work-objective {
+  margin: 0 0 0.4rem;
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.45;
+}
+
+.work-card .muted {
+  margin: 0 0 0.65rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.work-action {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .not-found {
   max-width: 520px;
   margin: 3rem auto;
   padding: 0 1.5rem;
   text-align: center;
+}
+
+@media (max-width: 860px) {
+  .two-col-info,
+  .module-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .not-found .btn {

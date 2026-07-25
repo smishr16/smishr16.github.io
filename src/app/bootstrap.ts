@@ -61,10 +61,12 @@ export function bootstrap(app: HTMLElement): () => void {
       if (assignmentId) {
         const found = findAssignmentById(assignmentId)
         if (found) {
+          const mod = found.course.modules.find((m) => m.id === found.moduleId)
           labCleanup = mountSortingLab(host, {
             context: 'assignment',
             assignment: found.assignment,
             courseTitle: found.course.title,
+            moduleTitle: mod ? `${mod.code} ${mod.title}` : undefined,
             config: found.assignment.config,
           })
           return

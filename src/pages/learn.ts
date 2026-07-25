@@ -2,26 +2,35 @@ import { AppRoutes } from '../contracts'
 import { courses } from '../content/courses'
 import { renderFooter, renderHeader } from '../ui/siteChrome'
 
+function levelLabel(level: string): string {
+  if (level === 'undergraduate+graduate') return 'UG + grad extensions'
+  if (level === 'graduate') return 'Graduate'
+  return 'Undergraduate'
+}
+
 export function renderLearn(): string {
   const cards = courses
     .map((c) => {
       const inner = `
         <div class="card-meta">
-          <span class="badge ${c.status === 'live' ? 'badge-live' : ''}">${c.status === 'live' ? 'Open' : 'Soon'}</span>
+          <span class="badge ${
+            c.status === 'live' ? 'badge-live' : c.status === 'partial' ? 'badge-partial' : ''
+          }">${c.status === 'soon' ? 'Soon' : c.status === 'partial' ? 'Partial' : 'Open'}</span>
           <span class="muted track">${c.track}</span>
         </div>
         <h3>${c.title}</h3>
+        <p class="level-line muted">${levelLabel(c.level)}</p>
         <p>${c.blurb}</p>
         ${
-          c.status === 'live'
-            ? `<span class="card-cta">${c.labCount} assignments · enter course →</span>`
-            : `<span class="card-cta muted">Coming soon</span>`
+          c.status === 'soon'
+            ? `<span class="card-cta muted">Syllabus forthcoming</span>`
+            : `<span class="card-cta">${c.moduleCount} modules · enter course →</span>`
         }`
 
-      if (c.status === 'live') {
-        return `<a class="course-card live course-card-lg" href="${AppRoutes.course(c.id)}">${inner}</a>`
+      if (c.status === 'soon') {
+        return `<div class="course-card soon course-card-lg" aria-disabled="true">${inner}</div>`
       }
-      return `<div class="course-card soon course-card-lg" aria-disabled="true">${inner}</div>`
+      return `<a class="course-card live course-card-lg" href="${AppRoutes.course(c.id)}">${inner}</a>`
     })
     .join('')
 
@@ -30,14 +39,15 @@ export function renderLearn(): string {
   <main class="page-shell">
     <header class="page-intro">
       <p class="eyebrow">Learn</p>
-      <h1>Courses</h1>
+      <h1>Course catalog</h1>
       <p class="lede">
-        Courses package ideas into a path. Assignments open the lab with the right algorithm,
-        mode, and (when useful) side-by-side compare — so you spend time thinking, not configuring.
+        Courses mirror how CS is taught in degree programs: multi-module syllabi with prerequisites,
+        learning goals, analysis work, and labs. A course is <em>Sorting Algorithms</em> or
+        <em>Operating Systems</em>—not “intro to one named procedure.”
       </p>
       <p class="muted">
-        Prefer free exploration?
-        <a href="${AppRoutes.lab}">Use the Lab visualizer</a> without enrolling in a course.
+        Need an instrument without a syllabus?
+        <a href="${AppRoutes.lab}">Open the Lab</a> visualizers directly.
       </p>
     </header>
     <div class="course-grid course-grid-lg" aria-label="Course catalog">

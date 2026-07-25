@@ -104,3 +104,16 @@ a:hover {
   border-color: var(--accent-dim);
   background: var(--accent-dim);
 }
+
+.badge-partial {
+  color: #f0b429;
+  border-color: rgba(240, 180, 41, 0.35);
+  background: rgba(240, 180, 41, 0.12);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-style: dashed;
+  opacity: 0.85;
+  cursor: default;
+}

@@ -5,8 +5,8 @@ import {
   ARRAY_SIZE_DEFAULT,
   AppRoutes,
   clampArraySize,
-  type Assignment,
   type AssignmentConfig,
+  type CourseWork,
   type ISortingAlgorithm,
 } from '../contracts'
 import { sortingAlgorithms, getAlgorithm } from '../core/algorithms'
@@ -21,10 +21,11 @@ import { sortingContent } from '../content/sortingContent'
 export type LabCleanup = () => void
 
 export interface SortingLabOptions {
-  /** Free visualizer vs course assignment */
+  /** Free visualizer vs course coursework */
   context: 'visualizer' | 'assignment'
-  assignment?: Assignment
+  assignment?: CourseWork
   courseTitle?: string
+  moduleTitle?: string
   config?: AssignmentConfig
 }
 
@@ -63,23 +64,26 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
   const isAssignment = options.context === 'assignment' && options.assignment
 
   const assignmentBanner = isAssignment
-    ? `<div class="assignment-banner" role="region" aria-label="Assignment">
+    ? `<div class="assignment-banner" role="region" aria-label="Coursework">
         <div>
-          <p class="eyebrow">Assignment${options.courseTitle ? ` · ${options.courseTitle}` : ''}</p>
+          <p class="eyebrow">${options.courseTitle ?? 'Course'}${
+            options.moduleTitle ? ` · ${options.moduleTitle}` : ''
+          }</p>
           <strong>${options.assignment!.title}</strong>
+          <p class="muted"><strong>Objective.</strong> ${options.assignment!.objective}</p>
           <p class="muted">${options.assignment!.brief}</p>
         </div>
         <div class="assignment-banner-actions">
-          <a class="btn" href="${AppRoutes.course('sorting')}">Back to course</a>
-          <a class="btn" href="${AppRoutes.labSorting}">Open free visualizer</a>
+          <a class="btn" href="${AppRoutes.course('sorting')}">Back to syllabus</a>
+          <a class="btn" href="${AppRoutes.labSorting}">Dismiss to free lab</a>
         </div>
       </div>`
     : `<div class="lab-context-bar">
-        <span class="muted">Lab · Sorting visualizer</span>
+        <span class="muted">Lab · Sorting visualizer (free exploration)</span>
         <span class="muted">·</span>
         <a href="${AppRoutes.lab}">All labs</a>
         <span class="muted">·</span>
-        <a href="${AppRoutes.learn}">Courses</a>
+        <a href="${AppRoutes.course('sorting')}">Sorting Algorithms course</a>
       </div>`
 
   root.innerHTML = `

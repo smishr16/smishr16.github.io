@@ -33,12 +33,12 @@ export function renderLabHub(): string {
       <p class="eyebrow">Lab</p>
       <h1>Visualizer workspace</h1>
       <p class="lede">
-        Use the lab as a playground: visualize algorithms, data structures, and other CS concepts
-        in action. No assignment required — configure freely, compare side-by-side, or run Python.
+        Labs are instruments: visualize algorithms, structures, and systems concepts in action.
+        No syllabus required—compare, shuffle, step, and implement freely.
       </p>
       <p class="muted">
-        Want a guided path?
-        <a href="${AppRoutes.learn}">Start a course</a> — assignments open these same labs preconfigured.
+        Prefer a full topic syllabus (degree-style depth)?
+        <a href="${AppRoutes.learn}">Open the course catalog</a> — coursework can deep-link here preconfigured.
       </p>
     </header>
     <div class="course-grid course-grid-lg" aria-label="Labs">
