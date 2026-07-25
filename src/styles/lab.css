@@ -162,13 +162,15 @@
   gap: 0;
 }
 
-/* Side-by-side compare: generous gap so charts don't feel cramped */
+/* Compare mode: charts stacked vertically so bars align on the same width */
 .ide-main.compare-layout {
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
   gap: 1.25rem;
-  padding: 1rem 1.15rem 0.5rem;
+  padding: 1rem 1.15rem 0.75rem;
   background: var(--bg);
   align-items: stretch;
+  overflow: auto;
 }
 
 .ide-main.compare-layout .viz-pane {
@@ -176,8 +178,8 @@
   border-radius: 12px;
   overflow: hidden;
   background: var(--bg-elevated);
-  min-height: 320px;
-  border-right: 1px solid var(--border);
+  min-height: 240px;
+  border-right: none;
 }
 
 .ide-main.compare-layout .ide-pane {
@@ -186,7 +188,11 @@
 
 .ide.is-compare #pane-viz-a,
 .ide.is-compare #pane-viz-b {
-  min-height: 320px;
+  min-height: 240px;
+}
+
+.ide-main.compare-layout .viz-canvas {
+  min-height: 160px;
 }
 
 #btn-compare[aria-pressed='true'] {
@@ -333,7 +339,11 @@
     padding: 0.5rem;
   }
 
-  .ide-main,
+  .ide-main {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+
   .ide-main.compare-layout {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
