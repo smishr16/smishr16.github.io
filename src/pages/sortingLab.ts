@@ -144,22 +144,24 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
             <div class="concept" id="concept"></div>
           </div>
         </section>
-        <section class="ide-pane viz-pane" aria-label="Visualization A" id="pane-viz-a">
-          <div class="pane-label"><span class="pane-title" id="label-a">Visualizer · 2D</span></div>
-          <div class="viz-wrap">
-            <canvas class="viz-canvas" id="viz-a" role="img" aria-label="Sorting visualization A"></canvas>
-            <div class="viz-status" id="viz-status-a" aria-live="polite">Ready.</div>
-            <div class="viz-stats" id="stats-a" aria-label="Algorithm A stats"></div>
-          </div>
-        </section>
-        <section class="ide-pane viz-pane compare-only" aria-label="Visualization B" id="pane-viz-b" ${compareMode ? '' : 'hidden'}>
-          <div class="pane-label"><span class="pane-title" id="label-b">Visualizer B</span></div>
-          <div class="viz-wrap">
-            <canvas class="viz-canvas" id="viz-b" role="img" aria-label="Sorting visualization B"></canvas>
-            <div class="viz-status" id="viz-status-b" aria-live="polite">Ready.</div>
-            <div class="viz-stats" id="stats-b" aria-label="Algorithm B stats"></div>
-          </div>
-        </section>
+        <div class="viz-stage" id="viz-stage">
+          <section class="viz-pane" aria-label="Visualization A" id="pane-viz-a">
+            <div class="pane-label"><span class="pane-title" id="label-a">Visualizer · 2D</span></div>
+            <div class="viz-wrap">
+              <canvas class="viz-canvas" id="viz-a" role="img" aria-label="Sorting visualization A"></canvas>
+              <div class="viz-status" id="viz-status-a" aria-live="polite">Ready.</div>
+              <div class="viz-stats" id="stats-a" aria-label="Algorithm A stats"></div>
+            </div>
+          </section>
+          <section class="viz-pane compare-only" aria-label="Visualization B" id="pane-viz-b" ${compareMode ? '' : 'hidden'}>
+            <div class="pane-label"><span class="pane-title" id="label-b">Visualizer B</span></div>
+            <div class="viz-wrap">
+              <canvas class="viz-canvas" id="viz-b" role="img" aria-label="Sorting visualization B"></canvas>
+              <div class="viz-status" id="viz-status-b" aria-live="polite">Ready.</div>
+              <div class="viz-stats" id="stats-b" aria-label="Algorithm B stats"></div>
+            </div>
+          </section>
+        </div>
       </div>
       <div class="transport-bar">
         <div class="transport">
