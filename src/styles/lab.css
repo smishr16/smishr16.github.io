@@ -10,9 +10,8 @@
 
 .ide {
   --lab-rail: 56px;
-  --lab-chart-h: clamp(120px, 22vh, 200px);
-  --lab-chart-w: clamp(240px, 38vw, 340px);
-  --lab-stage-max: 72rem;
+  /* min plot height; canvas flexes up to fill the card */
+  --lab-chart-h: clamp(140px, 28vh, 260px);
   display: grid;
   grid-template-columns: var(--lab-rail) minmax(0, 1fr);
   min-height: 100dvh;
@@ -215,29 +214,24 @@
   grid-template-columns: 2.5rem minmax(0, 1fr);
 }
 
-/* Stage holds one or two chart cards */
+/* Stage holds one or two chart cards — fills remaining IDE space */
 .viz-stage {
   min-width: 0;
   min-height: 0;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: center;
+  flex-wrap: nowrap;
+  justify-content: stretch;
+  align-content: stretch;
   align-items: stretch;
   gap: 0.75rem 1rem;
-  padding: 0.85rem 1rem;
-  overflow: auto;
+  padding: 0.75rem 0.9rem;
+  overflow: hidden;
   background:
     radial-gradient(ellipse 80% 60% at 50% 0%, rgba(61, 139, 253, 0.04), transparent 55%),
     var(--bg);
 }
 
-.ide-main.compare-layout .viz-stage {
-  flex: 1 1 auto;
-  width: 100%;
-}
-
-/* Compare: code strip + stage as flex column/row */
+/* Compare: code + stage as row; stage owns leftover width */
 .ide-main.compare-layout {
   display: flex;
   flex-direction: row;
@@ -267,13 +261,15 @@
 .ide-main.compare-layout .viz-stage {
   flex: 1 1 auto;
   min-width: 0;
+  width: auto;
 }
 
-/* Chart cards — size with clamp, not full bleed */
+/* Chart cards — grow to fill stage; bars stay density-capped in canvas code */
 .viz-pane {
-  flex: 0 1 var(--lab-chart-w);
-  width: var(--lab-chart-w);
-  max-width: 100%;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: none;
+  width: auto;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--border);
@@ -282,23 +278,70 @@
   background: var(--bg-elevated);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
   min-height: 0;
+  height: 100%;
 }
 
-/* Single-mode: editor + stage; chart fills stage reasonably */
+/* Single: one chart fills the entire stage */
+.ide-main:not(.compare-layout) .viz-stage {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 0.65rem 0.75rem;
+}
+
 .ide-main:not(.compare-layout) .viz-pane {
-  flex: 1 1 auto;
-  width: min(100%, 28rem);
-  max-width: 28rem;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  min-height: 0;
 }
 
-.ide-main:not(.compare-layout).code-collapsed .viz-pane {
-  width: min(100%, 32rem);
-  max-width: 32rem;
+/* Single + code open: still fill the viz column fully */
+.ide-main:not(.compare-layout):not(.code-collapsed) .viz-pane {
+  width: 100%;
+  max-width: none;
+}
+
+/* Compare: two equal columns sharing full stage width */
+.ide-main.compare-layout .viz-stage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  align-items: stretch;
 }
 
 .ide-main.compare-layout .viz-pane {
-  flex: 0 1 var(--lab-chart-w);
-  width: var(--lab-chart-w);
+  width: 100%;
+  max-width: none;
+  flex: unset;
+  min-width: 0;
+  height: 100%;
+}
+
+/* Prefer taller plot when code is collapsed (more vertical budget) */
+.ide-main.code-collapsed {
+  --lab-chart-h: clamp(160px, 38vh, 320px);
+}
+
+.ide-main.compare-layout.code-collapsed {
+  --lab-chart-h: clamp(140px, 32vh, 280px);
+}
+
+/* Canvas grows with the card instead of a fixed tiny band */
+.viz-wrap {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--bg-panel);
+}
+
+.viz-canvas {
+  display: block;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: var(--lab-chart-h);
+  height: auto;
+  max-height: none;
 }
 
 .ide-pane {
@@ -413,24 +456,7 @@
   color: var(--text);
 }
 
-/* ---- chart body ---- */
-
-.viz-wrap {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  min-height: 0;
-  background: var(--bg-panel);
-}
-
-.viz-canvas {
-  display: block;
-  width: 100%;
-  height: var(--lab-chart-h);
-  min-height: var(--lab-chart-h);
-  max-height: var(--lab-chart-h);
-  flex: 0 0 auto;
-}
+/* ---- chart meta (plot area rules above) ---- */
 
 .viz-status {
   padding: 0.35rem 0.65rem;
@@ -520,16 +546,14 @@
 @media (min-width: 1440px) {
   .ide {
     --lab-rail: 60px;
-    --lab-chart-w: clamp(280px, 22vw, 360px);
-    --lab-chart-h: clamp(140px, 20vh, 210px);
+    --lab-chart-h: clamp(160px, 30vh, 300px);
   }
 }
 
 /* Laptop / small desktop */
 @media (max-width: 1100px) {
   .ide {
-    --lab-chart-w: clamp(220px, 36vw, 300px);
-    --lab-chart-h: clamp(112px, 20vh, 168px);
+    --lab-chart-h: clamp(120px, 26vh, 220px);
   }
 
   .ide-main:not(.compare-layout) {
@@ -618,29 +642,35 @@
   }
 
   .ide-main.compare-layout .viz-stage {
-    padding: 0.75rem;
+    padding: 0.65rem;
+    /* stack charts full-width on tablet; still fill the column */
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+    overflow: auto;
   }
 
-  .viz-pane,
-  .ide-main:not(.compare-layout) .viz-pane,
-  .ide-main:not(.compare-layout).code-collapsed .viz-pane,
-  .ide-main.compare-layout .viz-pane {
-    width: min(100%, 20rem);
-    max-width: 20rem;
-    flex: 0 1 auto;
+  .ide-main.compare-layout .viz-pane,
+  .ide-main:not(.compare-layout) .viz-pane {
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: calc(var(--lab-chart-h) + 4.5rem);
+  }
+
+  .ide-main:not(.compare-layout) .viz-stage {
+    min-height: 40vh;
   }
 
   .editor-host {
-    min-height: 10rem;
-    max-height: 14rem;
+    min-height: 8rem;
+    max-height: 12rem;
   }
 }
 
 /* Phone */
 @media (max-width: 480px) {
   .ide {
-    --lab-chart-w: min(100%, 100vw - 1.5rem);
-    --lab-chart-h: clamp(100px, 28vw, 140px);
+    --lab-chart-h: clamp(110px, 30vw, 160px);
   }
 
   .ide-top {
@@ -650,13 +680,6 @@
   .algo-tabs button {
     font-size: 0.72rem;
     padding: 0.28rem 0.45rem;
-  }
-
-  .viz-pane,
-  .ide-main.compare-layout .viz-pane,
-  .ide-main:not(.compare-layout) .viz-pane {
-    width: 100%;
-    max-width: 100%;
   }
 
   .transport {
