@@ -22,7 +22,11 @@ describe('contracts', () => {
   })
 
   it('exports routes and fixture', () => {
-    expect(AppRoutes.sorting).toBe('/learn/sorting')
+    expect(AppRoutes.labSorting).toBe('/lab/sorting')
+    expect(AppRoutes.course('sorting')).toBe('/learn/sorting')
+    expect(AppRoutes.assignmentLab('sorting', 'bubble-walkthrough')).toBe(
+      '/lab/sorting?assignment=bubble-walkthrough',
+    )
     expect(FIXTURE_ARRAY).toEqual([3, 1, 2])
   })
 })

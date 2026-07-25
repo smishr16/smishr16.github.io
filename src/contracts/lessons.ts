@@ -1,12 +1,4 @@
-export type LessonStatus = 'live' | 'soon'
-
-export interface LessonMeta {
-  id: string
-  title: string
-  status: LessonStatus
-  path: string
-  blurb: string
-}
+/** Legacy lesson content shapes still used by the sorting lab concept panel. */
 
 export interface LessonContent {
   title: string

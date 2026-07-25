@@ -4,9 +4,18 @@ export function getPath(): string {
   return window.location.pathname.replace(/\/$/, '') || '/'
 }
 
-export function navigate(path: string): void {
-  if (path !== getPath()) {
-    history.pushState({}, '', path)
+export function getFullPath(): string {
+  return getPath() + window.location.search
+}
+
+/** Navigate to path, optionally with query (e.g. /lab/sorting?assignment=x). */
+export function navigate(to: string): void {
+  const url = new URL(to, window.location.origin)
+  const next = url.pathname.replace(/\/$/, '') || '/'
+  const nextFull = next + url.search
+  const curFull = getFullPath()
+  if (nextFull !== curFull) {
+    history.pushState({}, '', nextFull)
   }
   window.dispatchEvent(new PopStateEvent('popstate'))
 }
@@ -18,7 +27,7 @@ export function startRouter(onRoute: RouteHandler): () => void {
   return () => window.removeEventListener('popstate', handler)
 }
 
-/** Intercept internal links. */
+/** Intercept internal links (including query strings). */
 export function bindLinkInterception(root: ParentNode = document): void {
   root.addEventListener('click', (e) => {
     const t = e.target
@@ -26,7 +35,8 @@ export function bindLinkInterception(root: ParentNode = document): void {
     const a = t.closest('a')
     if (!a) return
     const href = a.getAttribute('href')
-    if (!href || href.startsWith('http') || href.startsWith('mailto:') || a.target === '_blank') return
+    if (!href || href.startsWith('http') || href.startsWith('mailto:') || a.target === '_blank')
+      return
     if (href.startsWith('/')) {
       e.preventDefault()
       navigate(href)

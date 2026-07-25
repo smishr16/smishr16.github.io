@@ -1,13 +1,82 @@
 .ide {
   display: grid;
   grid-template-columns: var(--rail-width) 1fr;
-  grid-template-rows: auto 1fr auto;
   min-height: 100vh;
   background: var(--bg);
 }
 
+.ide-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+.ide-main {
+  flex: 1;
+}
+
+.lab-context-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.45rem 0.85rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+  background: rgba(10, 13, 18, 0.6);
+}
+
+.lab-context-bar a {
+  color: var(--text-muted);
+}
+
+.lab-context-bar a:hover {
+  color: var(--accent);
+}
+
+.assignment-banner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(90deg, rgba(125, 211, 192, 0.08), transparent 60%);
+}
+
+.assignment-banner .eyebrow {
+  margin: 0 0 0.2rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.assignment-banner strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.assignment-banner p.muted {
+  margin: 0;
+  max-width: 40rem;
+  font-size: 0.9rem;
+}
+
+.assignment-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.btn-active {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
 .ide-rail {
-  grid-row: 1 / -1;
   background: var(--bg-elevated);
   border-right: 1px solid var(--border);
   display: flex;
@@ -90,19 +159,34 @@
   grid-template-columns: 1fr 1fr;
   min-height: 0;
   overflow: hidden;
+  gap: 0;
 }
 
+/* Side-by-side compare: generous gap so charts don't feel cramped */
 .ide-main.compare-layout {
   grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  padding: 1rem 1.15rem 0.5rem;
+  background: var(--bg);
+  align-items: stretch;
 }
 
-.ide.is-compare .ide-main.compare-layout {
-  grid-template-columns: 1fr 1fr;
+.ide-main.compare-layout .viz-pane {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-elevated);
+  min-height: 320px;
+  border-right: 1px solid var(--border);
+}
+
+.ide-main.compare-layout .ide-pane {
+  border-right: none;
 }
 
 .ide.is-compare #pane-viz-a,
 .ide.is-compare #pane-viz-b {
-  min-height: 280px;
+  min-height: 320px;
 }
 
 #btn-compare[aria-pressed='true'] {

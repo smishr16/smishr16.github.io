@@ -5,6 +5,8 @@ import {
   ARRAY_SIZE_DEFAULT,
   AppRoutes,
   clampArraySize,
+  type Assignment,
+  type AssignmentConfig,
   type ISortingAlgorithm,
 } from '../contracts'
 import { sortingAlgorithms, getAlgorithm } from '../core/algorithms'
@@ -14,9 +16,17 @@ import { Visualizer2D } from '../viz/visualizer2d'
 import { labBridge } from '../lab/labBridge'
 import { pyodideBridge } from '../lab/pyodideBridge'
 import { templateFor } from '../lab/templates'
-import { sortingContent } from '../content/lessons'
+import { sortingContent } from '../content/sortingContent'
 
 export type LabCleanup = () => void
+
+export interface SortingLabOptions {
+  /** Free visualizer vs course assignment */
+  context: 'visualizer' | 'assignment'
+  assignment?: Assignment
+  courseTitle?: string
+  config?: AssignmentConfig
+}
 
 function randomArray(n: number): number[] {
   return Array.from({ length: n }, () => 1 + Math.floor(Math.random() * 40))
@@ -32,19 +42,45 @@ function algoOptions(selected: string, exclude?: string): string {
     .join('')
 }
 
-export function mountSortingLab(root: HTMLElement): LabCleanup {
-  let algoId = sortingAlgorithms[0]!.id
+export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = { context: 'visualizer' }): LabCleanup {
+  const cfg = options.config ?? {}
+  let algoId = cfg.algoId ?? sortingAlgorithms[0]!.id
   let algoBId =
-    sortingAlgorithms.find((a) => a.id !== algoId)?.id ?? sortingAlgorithms[0]!.id
-  let size = ARRAY_SIZE_DEFAULT
-  let data = randomArray(size)
+    cfg.algoBId ??
+    sortingAlgorithms.find((a) => a.id !== algoId)?.id ??
+    sortingAlgorithms[0]!.id
+  let size = clampArraySize(cfg.arraySize ?? ARRAY_SIZE_DEFAULT)
+  let data = cfg.fixedArray?.slice() ?? randomArray(size)
+  if (cfg.fixedArray) size = cfg.fixedArray.length
+
   const engineA = new StepEngine()
   const engineB = new StepEngine()
   let editor: EditorView | null = null
   let vizA: Visualizer2D | null = null
   let vizB: Visualizer2D | null = null
-  let mode: 'reference' | 'python' = 'reference'
-  let compareMode = false
+  let mode: 'reference' | 'python' = cfg.runMode ?? 'reference'
+  let compareMode = Boolean(cfg.compare)
+  const isAssignment = options.context === 'assignment' && options.assignment
+
+  const assignmentBanner = isAssignment
+    ? `<div class="assignment-banner" role="region" aria-label="Assignment">
+        <div>
+          <p class="eyebrow">Assignment${options.courseTitle ? ` · ${options.courseTitle}` : ''}</p>
+          <strong>${options.assignment!.title}</strong>
+          <p class="muted">${options.assignment!.brief}</p>
+        </div>
+        <div class="assignment-banner-actions">
+          <a class="btn" href="${AppRoutes.course('sorting')}">Back to course</a>
+          <a class="btn" href="${AppRoutes.labSorting}">Open free visualizer</a>
+        </div>
+      </div>`
+    : `<div class="lab-context-bar">
+        <span class="muted">Lab · Sorting visualizer</span>
+        <span class="muted">·</span>
+        <a href="${AppRoutes.lab}">All labs</a>
+        <span class="muted">·</span>
+        <a href="${AppRoutes.learn}">Courses</a>
+      </div>`
 
   root.innerHTML = `
   <div class="ide" id="ide-root">
@@ -52,76 +88,79 @@ export function mountSortingLab(root: HTMLElement): LabCleanup {
       <a class="mark" href="${AppRoutes.home}" title="Home">CS</a>
       <a class="rail-link" href="${AppRoutes.home}">Home</a>
       <a class="rail-link" href="${AppRoutes.learn}">Learn</a>
-      <a class="rail-link" href="${AppRoutes.sorting}" aria-current="page">Sort</a>
+      <a class="rail-link" href="${AppRoutes.lab}" aria-current="page">Lab</a>
     </aside>
-    <div class="ide-top">
-      <div class="algo-tabs" role="tablist" aria-label="Primary algorithm">
-        ${sortingAlgorithms
-          .map(
-            (a) =>
-              `<button type="button" role="tab" data-algo="${a.id}" aria-selected="${a.id === algoId}">${a.label}</button>`,
-          )
-          .join('')}
-      </div>
-      <label class="muted compare-only" style="font-size:0.85rem;display:none;" id="vs-label">
-        vs
-        <select id="algo-b" style="margin-left:0.35rem;background:var(--bg-elevated);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:0.3rem;">
-          ${algoOptions(algoBId, algoId)}
-        </select>
-      </label>
-      <label class="muted" style="font-size:0.85rem;">
-        n
-        <input id="arr-size" type="number" min="4" max="64" value="${size}" style="width:3.5rem;margin-left:0.25rem;background:var(--bg-elevated);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:0.25rem;" />
-      </label>
-      <button type="button" class="btn" id="btn-shuffle">Shuffle</button>
-      <button type="button" class="btn" id="btn-compare" aria-pressed="false" title="Compare two algorithms on the same array">Compare</button>
-      <div class="spacer"></div>
-      <label class="muted single-only" style="font-size:0.85rem;">
-        Mode
-        <select id="run-mode" style="margin-left:0.35rem;background:var(--bg-elevated);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:0.3rem;">
-          <option value="reference">Reference (TS)</option>
-          <option value="python">Python lab</option>
-        </select>
-      </label>
-      <button type="button" class="btn btn-primary" id="btn-run">Run</button>
-    </div>
-    <div class="ide-main" id="ide-main">
-      <section class="ide-pane single-only" aria-label="Code editor" id="pane-editor">
-        <div class="pane-label">Editor · Python template</div>
-        <div class="editor-host" id="editor"></div>
-        <div class="concept" id="concept"></div>
-      </section>
-      <section class="ide-pane" aria-label="Visualization A" id="pane-viz-a">
-        <div class="pane-label" id="label-a">Visualizer · 2D</div>
-        <div class="viz-wrap">
-          <canvas class="viz-canvas" id="viz-a" role="img" aria-label="Sorting visualization A"></canvas>
-          <div class="viz-status" id="viz-status-a" aria-live="polite">Ready.</div>
-          <div class="viz-stats" id="stats-a" aria-label="Algorithm A stats"></div>
+    <div class="ide-column">
+      ${assignmentBanner}
+      <div class="ide-top">
+        <div class="algo-tabs" role="tablist" aria-label="Primary algorithm">
+          ${sortingAlgorithms
+            .map(
+              (a) =>
+                `<button type="button" role="tab" data-algo="${a.id}" aria-selected="${a.id === algoId}">${a.label}</button>`,
+            )
+            .join('')}
         </div>
-      </section>
-      <section class="ide-pane compare-only" aria-label="Visualization B" id="pane-viz-b" hidden>
-        <div class="pane-label" id="label-b">Visualizer B</div>
-        <div class="viz-wrap">
-          <canvas class="viz-canvas" id="viz-b" role="img" aria-label="Sorting visualization B"></canvas>
-          <div class="viz-status" id="viz-status-b" aria-live="polite">Ready.</div>
-          <div class="viz-stats" id="stats-b" aria-label="Algorithm B stats"></div>
-        </div>
-      </section>
-    </div>
-    <div class="transport-bar">
-      <div class="transport">
-        <button type="button" class="btn" id="btn-play">Play both</button>
-        <button type="button" class="btn" id="btn-pause">Pause</button>
-        <button type="button" class="btn" id="btn-step">Step both</button>
-        <button type="button" class="btn" id="btn-reset">Reset</button>
-        <label class="muted" style="font-size:0.85rem;align-self:center;">
-          Speed
-          <input id="speed" type="range" min="0.25" max="4" step="0.25" value="1" />
+        <label class="muted compare-only" id="vs-label" ${compareMode ? '' : 'hidden'}>
+          vs
+          <select id="algo-b" style="margin-left:0.35rem;background:var(--bg-elevated);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:0.3rem;">
+            ${algoOptions(algoBId, algoId)}
+          </select>
         </label>
+        <label class="muted" style="font-size:0.85rem;">
+          n
+          <input id="arr-size" type="number" min="4" max="64" value="${size}" style="width:3.5rem;margin-left:0.25rem;background:var(--bg-elevated);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:0.25rem;" />
+        </label>
+        <button type="button" class="btn" id="btn-shuffle">Shuffle</button>
+        <button type="button" class="btn" id="btn-compare" aria-pressed="${compareMode}" title="Compare two algorithms on the same array">Compare</button>
+        <div class="spacer"></div>
+        <label class="muted single-only" style="font-size:0.85rem;" ${compareMode ? 'hidden' : ''}>
+          Mode
+          <select id="run-mode" style="margin-left:0.35rem;background:var(--bg-elevated);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:0.3rem;">
+            <option value="reference" ${mode === 'reference' ? 'selected' : ''}>Reference (TS)</option>
+            <option value="python" ${mode === 'python' ? 'selected' : ''}>Python lab</option>
+          </select>
+        </label>
+        <button type="button" class="btn btn-primary" id="btn-run">Run</button>
       </div>
-      <div class="compare-summary muted" id="compare-summary" hidden></div>
+      <div class="ide-main ${compareMode ? 'compare-layout' : ''}" id="ide-main">
+        <section class="ide-pane single-only" aria-label="Code editor" id="pane-editor" ${compareMode ? 'hidden' : ''}>
+          <div class="pane-label">Editor · Python template</div>
+          <div class="editor-host" id="editor"></div>
+          <div class="concept" id="concept"></div>
+        </section>
+        <section class="ide-pane viz-pane" aria-label="Visualization A" id="pane-viz-a">
+          <div class="pane-label" id="label-a">Visualizer · 2D</div>
+          <div class="viz-wrap">
+            <canvas class="viz-canvas" id="viz-a" role="img" aria-label="Sorting visualization A"></canvas>
+            <div class="viz-status" id="viz-status-a" aria-live="polite">Ready.</div>
+            <div class="viz-stats" id="stats-a" aria-label="Algorithm A stats"></div>
+          </div>
+        </section>
+        <section class="ide-pane viz-pane compare-only" aria-label="Visualization B" id="pane-viz-b" ${compareMode ? '' : 'hidden'}>
+          <div class="pane-label" id="label-b">Visualizer B</div>
+          <div class="viz-wrap">
+            <canvas class="viz-canvas" id="viz-b" role="img" aria-label="Sorting visualization B"></canvas>
+            <div class="viz-status" id="viz-status-b" aria-live="polite">Ready.</div>
+            <div class="viz-stats" id="stats-b" aria-label="Algorithm B stats"></div>
+          </div>
+        </section>
+      </div>
+      <div class="transport-bar">
+        <div class="transport">
+          <button type="button" class="btn" id="btn-play">${compareMode ? 'Play both' : 'Play'}</button>
+          <button type="button" class="btn" id="btn-pause">Pause</button>
+          <button type="button" class="btn" id="btn-step">${compareMode ? 'Step both' : 'Step'}</button>
+          <button type="button" class="btn" id="btn-reset">Reset</button>
+          <label class="muted" style="font-size:0.85rem;align-self:center;">
+            Speed
+            <input id="speed" type="range" min="0.25" max="4" step="0.25" value="1" />
+          </label>
+        </div>
+        <div class="compare-summary muted" id="compare-summary" ${compareMode ? '' : 'hidden'}></div>
+      </div>
+      <div class="ide-console" id="console" aria-live="polite" aria-label="Console">Console ready.</div>
     </div>
-    <div class="ide-console" id="console" aria-live="polite" aria-label="Console">Console ready.</div>
   </div>
   `
 
@@ -149,10 +188,14 @@ export function mountSortingLab(root: HTMLElement): LabCleanup {
   const statsBEl = root.querySelector('#stats-b') as HTMLElement
   const summaryEl = root.querySelector('#compare-summary') as HTMLElement
   const paneB = root.querySelector('#pane-viz-b') as HTMLElement
+  const paneEditor = root.querySelector('#pane-editor') as HTMLElement
   const ideMain = root.querySelector('#ide-main') as HTMLElement
   const compareBtn = root.querySelector('#btn-compare') as HTMLButtonElement
   const algoBSelect = root.querySelector('#algo-b') as HTMLSelectElement
+  const vsLabel = root.querySelector('#vs-label') as HTMLElement
+  const runModeLabel = root.querySelector('.single-only') as HTMLElement
   const playBtn = root.querySelector('#btn-play') as HTMLButtonElement
+  const stepBtn = root.querySelector('#btn-step') as HTMLButtonElement
 
   vizA = new Visualizer2D(canvasA, statusA)
   vizA.bind(engineA)
@@ -239,26 +282,24 @@ export function mountSortingLab(root: HTMLElement): LabCleanup {
     const ide = root.querySelector('#ide-root') as HTMLElement
     ide.classList.toggle('is-compare', compareMode)
     paneB.hidden = !compareMode
+    paneEditor.hidden = compareMode
     summaryEl.hidden = !compareMode
-    root.querySelectorAll('.compare-only').forEach((el) => {
-      ;(el as HTMLElement).style.display = compareMode ? '' : 'none'
-    })
-    root.querySelectorAll('.single-only').forEach((el) => {
-      ;(el as HTMLElement).style.display = compareMode ? 'none' : ''
-    })
+    vsLabel.hidden = !compareMode
+    if (runModeLabel) runModeLabel.hidden = compareMode
     ideMain.classList.toggle('compare-layout', compareMode)
     compareBtn.setAttribute('aria-pressed', String(compareMode))
-    compareBtn.classList.toggle('btn-primary', compareMode)
+    compareBtn.classList.toggle('btn-active', compareMode)
     playBtn.textContent = compareMode ? 'Play both' : 'Play'
-    root.querySelector('#btn-step')!.textContent = compareMode ? 'Step both' : 'Step'
+    stepBtn.textContent = compareMode ? 'Step both' : 'Step'
     ;(root.querySelector('#label-a') as HTMLElement).textContent = compareMode
       ? `A · ${getAlgorithm(algoId)?.label ?? 'A'}`
       : 'Visualizer · 2D'
 
-    // Refresh algo B options excluding A
     algoBSelect.innerHTML = algoOptions(algoBId, algoId)
-    if (algoBSelect.value !== algoBId) {
-      algoBId = algoBSelect.value || algoBId
+    if (![...algoBSelect.options].some((o) => o.value === algoBId)) {
+      algoBId = algoBSelect.value
+    } else {
+      algoBSelect.value = algoBId
     }
 
     if (compareMode) {
@@ -269,13 +310,28 @@ export function mountSortingLab(root: HTMLElement): LabCleanup {
         vizB?.redraw()
       })
     } else {
-      loadReferenceSingle()
+      if (mode === 'reference') loadReferenceSingle()
+      else {
+        engineA.load(data, [])
+        logConsole('Python mode — edit the template and press Run.')
+      }
       requestAnimationFrame(() => vizA?.redraw())
     }
   }
 
   updateConcept()
   applyLayout()
+
+  // Auto-run reference loads for assignment python mode still show template
+  if (!compareMode && mode === 'python') {
+    setEditorDoc(templateFor(algoId))
+    engineA.load(data, [])
+    logConsole(
+      isAssignment
+        ? `Assignment ready · Python mode · n=${data.length}. Implement using compare/swap, then Run.`
+        : `Python mode · n=${data.length}. Run when ready.`,
+    )
+  }
 
   const onAlgo = (e: Event) => {
     const btn = (e.target as HTMLElement).closest('button[data-algo]') as HTMLButtonElement | null
