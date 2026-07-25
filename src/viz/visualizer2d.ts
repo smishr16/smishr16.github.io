@@ -50,14 +50,19 @@ export class Visualizer2D {
     const n = snap.array.length
     if (n === 0) return
     const max = Math.max(...snap.array, 1)
-    const gap = 4
-    const barW = (cssW - gap * (n + 1)) / n
-    const base = cssH - 16
+    const gap = 3
+    // Cap bar width so wide canvases don't stretch columns into fat slabs
+    const maxBarW = 14
+    const available = Math.max(cssW - gap * (n + 1), n)
+    const barW = Math.min(maxBarW, available / n)
+    const groupW = n * barW + (n + 1) * gap
+    const originX = Math.max(0, (cssW - groupW) / 2)
+    const base = cssH - 12
 
     for (let i = 0; i < n; i++) {
       const v = snap.array[i]!
-      const h = (v / max) * (base - 12)
-      const x = gap + i * (barW + gap)
+      const h = (v / max) * (base - 10)
+      const x = originX + gap + i * (barW + gap)
       const y = base - h
 
       let fill = getComputedStyle(document.documentElement).getPropertyValue('--bar').trim() || '#3d8bfd'

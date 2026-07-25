@@ -167,31 +167,50 @@
   grid-template-columns: 2.75rem minmax(0, 1fr);
 }
 
-/* Compare: compact charts side-by-side with separation */
+/*
+ * Compare: do not stretch charts across the full IDE width.
+ * Center a pair of compact cards (fixed max width) so bars stay readable.
+ */
 .ide-main.compare-layout {
-  grid-template-columns: 1fr 1fr;
-  gap: 0.85rem;
-  padding: 0.75rem 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: flex-start;
+  gap: 0.85rem 1rem;
+  padding: 1rem 1.25rem 1.25rem;
   background: var(--bg);
-  align-items: start;
   overflow: auto;
 }
 
-.ide-main.compare-layout.code-collapsed {
-  grid-template-columns: 2.75rem 1fr 1fr;
+.ide-main.compare-layout .editor-pane {
+  flex: 1 1 100%;
+  max-width: 42rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  border-right: 1px solid var(--border);
+  order: -1;
 }
 
-.ide-main.compare-layout:not(.code-collapsed) {
-  grid-template-columns: minmax(200px, 0.75fr) 1fr 1fr;
+.ide-main.compare-layout.code-collapsed .editor-pane {
+  flex: 0 0 2.75rem;
+  max-width: 2.75rem;
+  align-self: stretch;
+  order: 0;
+  margin-right: 0.25rem;
 }
 
 .ide-main.compare-layout .viz-pane {
+  flex: 0 0 auto;
+  width: min(300px, calc(50% - 0.75rem));
+  max-width: 300px;
   border: 1px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
   background: var(--bg-elevated);
   min-height: 0;
-  border-right: none;
+  border-right: 1px solid var(--border);
+  order: 1;
 }
 
 .ide-main.compare-layout .ide-pane {
@@ -204,9 +223,9 @@
 
 .ide-main.compare-layout .viz-canvas {
   flex: 0 0 auto;
-  height: 132px;
-  min-height: 132px;
-  max-height: 132px;
+  height: 128px;
+  min-height: 128px;
+  max-height: 128px;
 }
 
 .ide-main.compare-layout .pane-label {
@@ -222,6 +241,14 @@
 .ide-main.compare-layout .viz-stats {
   padding: 0.3rem 0.65rem 0.45rem;
   font-size: 0.72rem;
+}
+
+/* Single-mode viz: also avoid ultra-wide empty bar stretch when code collapsed */
+.ide-main.code-collapsed:not(.compare-layout) .viz-pane {
+  max-width: 36rem;
+  margin: 0 auto;
+  width: 100%;
+  border-left: 1px solid var(--border);
 }
 
 #btn-compare[aria-pressed='true'] {
@@ -443,11 +470,21 @@
     grid-template-rows: auto auto;
   }
 
-  .ide-main.compare-layout,
-  .ide-main.compare-layout.code-collapsed,
-  .ide-main.compare-layout:not(.code-collapsed) {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
+  .ide-main.compare-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ide-main.compare-layout .viz-pane {
+    width: min(300px, 100%);
+    max-width: 300px;
+  }
+
+  .ide-main.compare-layout.code-collapsed .editor-pane {
+    flex: 1 1 auto;
+    max-width: min(300px, 100%);
+    align-self: center;
+    width: 100%;
   }
 
   .editor-pane.editor-collapsed {
