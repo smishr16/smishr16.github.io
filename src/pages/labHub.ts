@@ -33,12 +33,12 @@ export function renderLabHub(): string {
       <p class="eyebrow">Lab</p>
       <h1>Visualizer workspace</h1>
       <p class="lede">
-        Labs are instruments: visualize algorithms, structures, and systems concepts in action.
-        No syllabus required—compare, shuffle, step, and implement freely.
+        Labs are shared instruments across the core curriculum—not courses themselves.
+        Explore freely: step, compare, implement. Coursework may deep-link here preconfigured.
       </p>
       <p class="muted">
-        Prefer a full topic syllabus (degree-style depth)?
-        <a href="${AppRoutes.learn}">Open the course catalog</a> — coursework can deep-link here preconfigured.
+        For degree-shaped syllabi (Data Structures, Algorithms, OS, …),
+        see the <a href="${AppRoutes.learn}">course catalog</a>.
       </p>
     </header>
     <div class="course-grid course-grid-lg" aria-label="Labs">

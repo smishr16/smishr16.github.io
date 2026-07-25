@@ -39,22 +39,22 @@ export function renderHome(): string {
   ${renderHeader('home')}
   <main>
     <section class="hero">
-      <h1>Computer science, visualized with rigor.</h1>
+      <h1>Core CSE courses, made interactive.</h1>
       <p class="lede">
-        <strong>Learn</strong> is a catalog of courses at bachelor’s and master’s depth—algorithms,
-        structures, systems—not single-trick demos.
-        <strong>Lab</strong> is the instrumentation layer: open visualizers for experiments, compare runs,
-        and implementation work.
+        <strong>Learn</strong> follows a real undergraduate path: Data Structures, Algorithms,
+        Computer Organization, Operating Systems, and the rest of the required core—
+        <em>not</em> intro-to-programming, and not one micro-course per algorithm.
+        <strong>Lab</strong> is the instrumentation layer shared across those courses.
       </p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="${AppRoutes.learn}">Course catalog →</a>
-        <a class="btn" href="${AppRoutes.lab}">Lab visualizers</a>
+        <a class="btn" href="${AppRoutes.lab}">Lab instruments</a>
       </div>
     </section>
     <section class="section-block">
       <div class="section-head">
-        <h2>Courses</h2>
-        <p class="muted">Syllabus-first topics. Labs attach to modules where measurement helps theory land.</p>
+        <h2>Foundational courses</h2>
+        <p class="muted">Same grain as a CSE degree audit. Topics like sorting live inside Algorithms.</p>
       </div>
       <div class="course-grid" aria-label="Courses">
         ${cards}

@@ -1,5 +1,5 @@
-import { AppRoutes, LEGACY_SORTING_PATH } from '../contracts'
-import { findAssignmentById } from '../content/courses'
+import { AppRoutes, LEGACY_SORTING_COURSE_PATH } from '../contracts'
+import { findAssignmentById, LEGACY_COURSE_REDIRECTS } from '../content/courses'
 import { bindLinkInterception, navigate, startRouter } from '../ui/router'
 import { renderHome } from '../pages/home'
 import { renderLearn } from '../pages/learn'
@@ -35,10 +35,17 @@ export function bootstrap(app: HTMLElement): () => void {
       return
     }
 
-    // /learn/:courseId (includes legacy /learn/sorting → Sorting Fundamentals course)
+    // /learn/:courseId — legacy /learn/sorting → Algorithms
     if (path.startsWith('/learn/')) {
-      const courseId = path.slice('/learn/'.length).split('/').filter(Boolean)[0]
+      let courseId = path.slice('/learn/'.length).split('/').filter(Boolean)[0]
       if (courseId) {
+        if (LEGACY_COURSE_REDIRECTS[courseId]) {
+          courseId = LEGACY_COURSE_REDIRECTS[courseId]
+          // Normalize URL without breaking back button stack badly
+          if (path === LEGACY_SORTING_COURSE_PATH || path.endsWith('/sorting')) {
+            history.replaceState({}, '', AppRoutes.course(courseId))
+          }
+        }
         const html = renderCourse(courseId)
         if (html) {
           app.innerHTML = html
@@ -46,9 +53,6 @@ export function bootstrap(app: HTMLElement): () => void {
         }
       }
     }
-
-    // Keep legacy constant referenced for docs/grep
-    void LEGACY_SORTING_PATH
 
     // /lab/sorting — free visualizer or assignment deep-link
     if (path === AppRoutes.labSorting || path === '/lab/sorting') {

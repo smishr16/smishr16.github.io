@@ -23,7 +23,8 @@ describe('contracts', () => {
 
   it('exports routes and fixture', () => {
     expect(AppRoutes.labSorting).toBe('/lab/sorting')
-    expect(AppRoutes.course('sorting')).toBe('/learn/sorting')
+    expect(AppRoutes.course('algorithms')).toBe('/learn/algorithms')
+    expect(AppRoutes.course('data-structures')).toBe('/learn/data-structures')
     expect(AppRoutes.assignmentLab('sorting', 'm3-asymptotic-lab')).toBe(
       '/lab/sorting?assignment=m3-asymptotic-lab',
     )

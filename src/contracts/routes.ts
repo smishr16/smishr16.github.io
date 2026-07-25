@@ -2,16 +2,16 @@ export const AppRoutes = {
   home: '/',
   learn: '/learn',
   lab: '/lab',
-  /** Free sorting visualizer (not course-gated) */
+  /** Free sorting visualizer (instrument — not a course) */
   labSorting: '/lab/sorting',
-  /** Course detail: /learn/sorting */
+  /** Course detail: /learn/algorithms, /learn/data-structures, … */
   course: (courseId: string) => `/learn/${courseId}`,
-  /** Open lab with assignment preconfiguration */
+  /** Open lab with coursework preconfiguration */
   assignmentLab: (labId: string, assignmentId: string) =>
     `/lab/${labId}?assignment=${encodeURIComponent(assignmentId)}`,
 } as const
 
-/** @deprecated use AppRoutes.labSorting — kept for deep links */
-export const LEGACY_SORTING_PATH = '/learn/sorting'
+/** Old “sorting course” URL → Algorithms course */
+export const LEGACY_SORTING_COURSE_PATH = '/learn/sorting'
 
 export type AppRoute = string

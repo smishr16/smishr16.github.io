@@ -142,12 +142,19 @@ export function renderCourse(courseId: string): string | null {
     </section>
 
     <section class="section-block callout">
-      <h2>Lab as instrument, not the course</h2>
+      <h2>Labs are instruments</h2>
       <p class="muted">
-        The sorting visualizer is available anytime for free exploration. The course is the syllabus,
-        arguments, and experimental discipline—not a sequence of toy demos.
+        Visualizers support coursework; they are not a substitute for the course. Free exploration
+        stays under Lab. Coursework deep-links open the same instruments preconfigured.
       </p>
-      <p><a class="btn" href="${AppRoutes.labSorting}">Open sorting visualizer →</a></p>
+      <p>
+        <a class="btn" href="${AppRoutes.lab}">Lab hub →</a>
+        ${
+          courseId === 'algorithms'
+            ? ` <a class="btn" href="${AppRoutes.labSorting}">Sorting visualizer →</a>`
+            : ''
+        }
+      </p>
     </section>
   </main>
   ${renderFooter()}

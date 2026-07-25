@@ -74,7 +74,7 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
           <p class="muted">${options.assignment!.brief}</p>
         </div>
         <div class="assignment-banner-actions">
-          <a class="btn" href="${AppRoutes.course('sorting')}">Back to syllabus</a>
+          <a class="btn" href="${AppRoutes.course('algorithms')}">Back to Algorithms</a>
           <a class="btn" href="${AppRoutes.labSorting}">Dismiss to free lab</a>
         </div>
       </div>`
@@ -83,7 +83,8 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
         <span class="muted">·</span>
         <a href="${AppRoutes.lab}">All labs</a>
         <span class="muted">·</span>
-        <a href="${AppRoutes.course('sorting')}">Sorting Algorithms course</a>
+        <a href="${AppRoutes.course('algorithms')}">Algorithms course</a>
+        <span class="muted">· M3 Sorting unit</span>
       </div>`
 
   root.innerHTML = `

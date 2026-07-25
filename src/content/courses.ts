@@ -5,78 +5,130 @@ import { sortingContent } from './sortingContent'
 export { sortingContent }
 
 /**
- * Catalog: courses are bachelor’s / master’s CS topics — not single-algorithm tutorials.
+ * Catalog mirrors foundational CSE undergraduate required courses
+ * (after intro programming — not CSE 101).
+ * Topics like “sorting” live *inside* Algorithms, not as their own course.
  */
 export const courses: CourseMeta[] = [
   {
-    id: 'sorting',
-    title: 'Sorting Algorithms',
-    status: 'partial',
-    track: 'Algorithms',
-    level: 'undergraduate+graduate',
-    moduleCount: 6,
-    liveLabCount: 5,
-    academicNote: 'Core undergrad algorithms · selected grad extensions',
-    blurb:
-      'Comparison model, elementary and divide-and-conquer sorts, lower bounds, stability, and empirical analysis — with labs that instrument real step behavior.',
-  },
-  {
-    id: 'search',
-    title: 'Searching & Ordered Data',
-    status: 'soon',
-    track: 'Algorithms',
-    level: 'undergraduate',
-    moduleCount: 4,
-    liveLabCount: 0,
-    blurb:
-      'Linear and binary search, search trees, hashing trade-offs, and amortized analysis of dynamic sets.',
-  },
-  {
-    id: 'graphs',
-    title: 'Graph Algorithms',
-    status: 'soon',
-    track: 'Algorithms',
-    level: 'undergraduate+graduate',
-    moduleCount: 6,
-    liveLabCount: 0,
-    blurb:
-      'BFS/DFS, shortest paths, MSTs, flow — representations, correctness proofs, and complexity.',
-  },
-  {
-    id: 'structures',
+    id: 'data-structures',
     title: 'Data Structures',
     status: 'soon',
-    track: 'Data Structures',
+    track: 'Core · required',
     level: 'undergraduate',
     moduleCount: 8,
     liveLabCount: 0,
+    academicNote: 'Foundational required · typically sophomore',
     blurb:
-      'Arrays, lists, trees, heaps, hash tables, balanced BSTs — invariants, costs, and when each structure wins.',
+      'Abstract data types, representations, and costs: lists, trees, heaps, hash tables, graphs as structures — invariants and when each wins.',
   },
   {
-    id: 'os',
+    id: 'algorithms',
+    title: 'Algorithms',
+    status: 'partial',
+    track: 'Core · required',
+    level: 'undergraduate+graduate',
+    moduleCount: 8,
+    liveLabCount: 5,
+    academicNote: 'Design & analysis · core undergrad · grad-depth electives later',
+    blurb:
+      'Asymptotics, divide-and-conquer, sorting & order statistics, graphs, greedy methods, dynamic programming, and hardness — with labs where measurement supports analysis.',
+  },
+  {
+    id: 'computer-organization',
+    title: 'Computer Organization',
+    status: 'soon',
+    track: 'Core · required',
+    level: 'undergraduate',
+    moduleCount: 7,
+    liveLabCount: 0,
+    academicNote: 'Hardware/software interface · typically sophomore/junior',
+    blurb:
+      'ISA, datapath, pipelining, memory hierarchy, and performance — how programs meet the machine.',
+  },
+  {
+    id: 'operating-systems',
     title: 'Operating Systems',
     status: 'soon',
-    track: 'Systems',
+    track: 'Core · required',
     level: 'undergraduate+graduate',
     moduleCount: 8,
     liveLabCount: 0,
+    academicNote: 'Core systems · often junior',
     blurb:
-      'Processes, scheduling, virtual memory, concurrency, and synchronization — visualized where structure helps.',
+      'Processes, concurrency, scheduling, virtual memory, file systems, and synchronization.',
   },
   {
-    id: 'complexity',
-    title: 'Complexity & Computation',
+    id: 'discrete-math',
+    title: 'Discrete Mathematics',
     status: 'soon',
-    track: 'Theory',
+    track: 'Core · required',
+    level: 'undergraduate',
+    moduleCount: 6,
+    liveLabCount: 0,
+    academicNote: 'Math foundations for CS · often early major',
+    blurb:
+      'Logic, proofs, sets, combinatorics, graphs, and recurrence relations that underwrite algorithm analysis.',
+  },
+  {
+    id: 'theory-of-computation',
+    title: 'Theory of Computation',
+    status: 'soon',
+    track: 'Core / theory',
     level: 'undergraduate+graduate',
+    moduleCount: 6,
+    liveLabCount: 0,
+    academicNote: 'Required or strong elective depending on program',
+    blurb:
+      'Automata, computability, and complexity — what can be computed and at what cost in principle.',
+  },
+  {
+    id: 'databases',
+    title: 'Databases',
+    status: 'soon',
+    track: 'Core / systems elective',
+    level: 'undergraduate',
+    moduleCount: 6,
+    liveLabCount: 0,
+    blurb:
+      'Relational model, query languages, indexing, transactions, and storage — data as a systems problem.',
+  },
+  {
+    id: 'computer-networks',
+    title: 'Computer Networks',
+    status: 'soon',
+    track: 'Core / systems elective',
+    level: 'undergraduate',
+    moduleCount: 6,
+    liveLabCount: 0,
+    blurb:
+      'Layering, routing, transport, reliability, and congestion — end-to-end systems in the wide area.',
+  },
+  {
+    id: 'programming-languages',
+    title: 'Programming Languages',
+    status: 'soon',
+    track: 'Core / languages',
+    level: 'undergraduate+graduate',
+    moduleCount: 6,
+    liveLabCount: 0,
+    blurb:
+      'Syntax, semantics, types, and implementation ideas — how languages shape what we can say and check.',
+  },
+  {
+    id: 'software-engineering',
+    title: 'Software Engineering',
+    status: 'soon',
+    track: 'Core / practice',
+    level: 'undergraduate',
     moduleCount: 5,
     liveLabCount: 0,
     blurb:
-      'Asymptotics, reductions, P vs NP intuition, and connecting theory to algorithm design choices.',
+      'Process, design, testing, and maintenance at scale — building software that lasts beyond a homework.',
   },
 ]
 
+/** Visualizer instruments (not courses). Topic tools used across courses. */
 export const labs: LabMeta[] = [
   {
     id: 'sorting',
@@ -84,86 +136,154 @@ export const labs: LabMeta[] = [
     status: 'live',
     path: AppRoutes.labSorting,
     blurb:
-      'Instrument comparison sorts: step, compare algorithms on identical inputs, or drive the engine from Python.',
-    topics: ['Algorithms', 'Empirical complexity', 'Python'],
-  },
-  {
-    id: 'search',
-    title: 'Search visualizer',
-    status: 'soon',
-    path: '/lab/search',
-    blurb: 'Probe ordered and unordered collections under different search strategies.',
-    topics: ['Algorithms', 'Data structures'],
+      'Instrument comparison sorts for the Algorithms course (and free exploration): step, dual-run, Python hooks.',
+    topics: ['Algorithms', 'Sorting unit', 'Empirical analysis'],
   },
   {
     id: 'structures',
-    title: 'Structures visualizer',
+    title: 'Data structures visualizer',
     status: 'soon',
     path: '/lab/structures',
-    blurb: 'Layout, growth, and rebalancing of core data structures.',
-    topics: ['Data structures'],
+    blurb: 'Layout and mutation of core structures for the Data Structures course.',
+    topics: ['Data Structures'],
+  },
+  {
+    id: 'graphs',
+    title: 'Graph algorithms visualizer',
+    status: 'soon',
+    path: '/lab/graphs',
+    blurb: 'Traversals, shortest paths, and MSTs for the Algorithms course graph units.',
+    topics: ['Algorithms', 'Graphs'],
   },
   {
     id: 'systems',
     title: 'Systems visualizer',
     status: 'soon',
     path: '/lab/systems',
-    blurb: 'Schedulers, memory, and concurrency mechanics as animated state machines.',
-    topics: ['Operating systems'],
+    blurb: 'Scheduling, memory, and concurrency for Operating Systems.',
+    topics: ['Operating Systems'],
   },
 ]
 
-const sortingCourse: CourseDetail = {
-  ...courses.find((c) => c.id === 'sorting')!,
-  overview: `This course treats sorting as a full algorithms topic—the kind of unit that appears in a bachelor’s algorithms course and deepens toward graduate study.
+/**
+ * Algorithms — full core course.
+ * Sorting is a major unit (M3), not the whole course.
+ * Live labs currently attach mainly to the sorting unit; other units scaffold the syllabus.
+ */
+const algorithmsCourse: CourseDetail = {
+  ...courses.find((c) => c.id === 'algorithms')!,
+  overview: `This is a **core Algorithms** course in the sense of an undergraduate CSE required subject (design and analysis of algorithms), with room to push toward graduate depth on selected topics.
 
-You will not “learn bubble sort as a product.” You will study the comparison model, prove or argue bounds, classify algorithms by asymptotic and practical behavior (stability, adaptivity, memory), implement instrumented variants, and use the lab to measure what the theory predicts.
+It is **not** a “sorting course.” Sorting and order statistics form one unit among asymptotics, divide-and-conquer, graph algorithms, greedy methods, dynamic programming, and NP-completeness.
 
-Interactive labs are evidence tools: same input, dual engines, step counts, and Python hooks for instrumentation—not a substitute for reasoning about recurrences and invariants.`,
+Where interactive labs exist today, they support the sorting unit as **instrumentation for analysis**—identical inputs, compare counts, dual engines—not as a replacement for proofs, recurrences, and reductions.`,
   prerequisites: [
-    'Comfort with loops, arrays, and recursion',
-    'Big-O / Θ / Ω notation (can be reviewed in Module 1)',
-    'Optional for later modules: basic probability (for randomized quicksort)',
+    'Intro programming (loops, arrays, recursion) — completed; this is not CSE 101',
+    'Data Structures concurrent or prior (strongly recommended)',
+    'Discrete Mathematics: proofs, sums, basic graphs (concurrent or prior)',
+    'Comfort with mathematical notation for asymptotics',
   ],
   learningGoals: [
-    'State the comparison-based sorting model and the Ω(n log n) lower bound argument at a high level',
-    'Analyze elementary and divide-and-conquer sorts (time, space, stability, adaptivity)',
-    'Relate recurrences (e.g. T(n) = 2T(n/2) + Θ(n)) to observed compare/merge work in the lab',
-    'Design fair empirical experiments: identical inputs, controlled n, reported metrics',
-    'Implement instrumented sort routines that record compares/swaps and match reference behavior',
-    'Discuss practical hybrids (introsort / timsort ideas) and external-memory sorting at a conceptual level',
+    'Analyze iterative and recursive algorithms with asymptotic notation and recurrences',
+    'Apply divide-and-conquer, including sorting and related order-statistic ideas',
+    'Design and analyze fundamental graph algorithms (representation, BFS/DFS, shortest paths, MSTs)',
+    'Use greedy and dynamic-programming paradigms with correctness arguments at course level',
+    'Relate empirical measurements (e.g. instrumented sorts) to asymptotic claims carefully',
+    'State what NP-completeness means for algorithm design practice',
   ],
   modules: [
     {
-      id: 'm1-foundations',
+      id: 'alg-m1-analysis',
       code: 'M1',
-      title: 'Foundations of sorting',
+      title: 'Algorithm analysis & asymptotics',
       summary:
-        'What “sorting” means formally: total orders, permutations, inversions, stability, in-place vs out-of-place, and the comparison decision-tree model that underpins lower bounds.',
+        'Models of computation for analysis, RAM intuition, worst/average/best case, asymptotic notation, and common sums—language used for the rest of the course.',
       topics: [
-        'Total orders and permutations',
-        'Inversions as a measure of disorder',
-        'Stability and why it matters for multi-key sorts',
-        'In-place vs auxiliary memory',
-        'Comparison model and decision trees',
-        'Ω(n log n) lower bound for comparison sorts (argument sketch)',
+        'RAM model (intuition) and counting dominant operations',
+        'O, Θ, Ω and limit tests',
+        'Loop analysis and nested structure',
+        'Common summations and geometric series',
+        'Best / average / worst case; adversarial inputs',
       ],
       outcomes: [
-        'Define stability and give an example where it changes multi-key behavior',
-        'Explain why comparison sorts cannot beat Ω(n log n) in the worst case in the comparison model',
-        'Connect inversion count to work done by adaptive elementary sorts',
+        'Classify simple loops and nested loops asymptotically',
+        'Write tight-style bounds and justify them',
+        'Distinguish case analysis from “typical laptop timing”',
+      ],
+      work: [
+        {
+          id: 'alg-m1-problem-set',
+          title: 'Problem set: asymptotics',
+          kind: 'analysis',
+          status: 'live',
+          objective:
+            'Solve a short set of growth-rate and loop-analysis problems at midterm depth (on paper or your notes).',
+          brief:
+            'No visualizer required. Treat this as a standard Algorithms homework 1: compare functions, simplify sums, bound nested loops.',
+        },
+      ],
+    },
+    {
+      id: 'alg-m2-divide-conquer',
+      code: 'M2',
+      title: 'Divide and conquer & recurrences',
+      summary:
+        'The divide-and-conquer paradigm, recursion trees, Master Theorem (or equivalent), and substitution proofs—before specializing to sorting.',
+      topics: [
+        'Divide, conquer, combine pattern',
+        'Recursion trees',
+        'Master Theorem / common recurrence forms',
+        'Substitution method for upper/lower bounds',
+        'When D&C helps (and when it does not)',
+      ],
+      outcomes: [
+        'Solve standard divide-and-conquer recurrences',
+        'Sketch a substitution proof for a given recurrence',
+      ],
+      work: [
+        {
+          id: 'alg-m2-recurrences',
+          title: 'Problem set: recurrences',
+          kind: 'analysis',
+          status: 'live',
+          objective: 'Solve recurrences that will reappear in mergesort and related algorithms.',
+          brief: 'Written work. Include at least one Master-Theorem case and one substitution argument.',
+        },
+      ],
+    },
+    {
+      id: 'alg-m3-sorting',
+      code: 'M3',
+      title: 'Sorting & order statistics',
+      summary:
+        'A full unit of the Algorithms course: comparison model, elementary sorts, mergesort, quicksort landscape, lower bounds, stability, and empirical instrumentation. (Not a standalone product course.)',
+      topics: [
+        'Comparison model; inversions; stability',
+        'Elementary sorts: insertion, selection, bubble as a family',
+        'Mergesort: recurrence, merge, memory',
+        'Quicksort: partition, expected time, worst case, randomization / introsort idea',
+        'Ω(n log n) lower bound for comparison sorts',
+        'Heapsort & priority queues (bridge to structures)',
+        'Hybrids and external sort (systems-facing coda)',
+        'Order statistics / selection (landscape)',
+      ],
+      outcomes: [
+        'Analyze insertion and mergesort rigorously',
+        'Explain the comparison-sort lower bound at course level',
+        'Run fair empirical comparisons and relate them to asymptotics',
+        'Implement instrumented sorts that record compares/swaps',
       ],
       work: [
         {
           id: 'm1-inversions-lab',
-          title: 'Lab: inversions and elementary work',
+          title: 'Lab: inversions & elementary work',
           kind: 'lab',
           status: 'live',
           labId: 'sorting',
           objective:
-            'On identical inputs, compare an elementary sort’s compare count as disorder changes; relate spikes to inversions qualitatively.',
+            'On identical inputs, relate disorder to compare counts for elementary sorts.',
           brief:
-            'Use compare mode on insertion vs bubble with the same array. Shuffle, then try a nearly sorted list (small n). Record compare counts and write two sentences linking “disorder” to work—not just which algorithm is “faster.”',
+            'Compare insertion vs bubble. Use shuffled and nearly-sorted regimes. Prefer compare counts over raw “steps.” Write a short claim linking inversions/disorder to work.',
           config: {
             algoId: 'insertion',
             algoBId: 'bubble',
@@ -173,46 +293,14 @@ Interactive labs are evidence tools: same input, dual engines, step counts, and 
           },
         },
         {
-          id: 'm1-stability-reading',
-          title: 'Reading / analysis: stability',
-          kind: 'analysis',
-          status: 'live',
-          objective:
-            'Argue whether bubble and insertion as presented are stable, with a short counterexample sketch if not, or an invariant if yes.',
-          brief:
-            'Theory work (no lab required). Use equal keys mentally: does relative order of equals survive? Write a short justification you could put on an exam.',
-        },
-      ],
-    },
-    {
-      id: 'm2-elementary',
-      code: 'M2',
-      title: 'Elementary comparison sorts',
-      summary:
-        'Insertion, selection, and bubble as a family: quadratic worst case, best-case adaptivity (especially insertion), and pedagogical role—not as production default sorts.',
-      topics: [
-        'Insertion sort: adaptive, stable (classic form), online flavor',
-        'Selection sort: fixed swap structure, not adaptive',
-        'Bubble sort: adjacent transpositions; early-exit variants',
-        'Θ(n²) worst/average for random permutations (intuition)',
-        'When elementary sorts still appear (tiny n, nearly sorted tails)',
-      ],
-      outcomes: [
-        'Give tight-style characterizations of best/worst cases for insertion',
-        'Explain why selection is not adaptive',
-        'Choose an elementary sort for a constrained setting and defend it',
-      ],
-      work: [
-        {
           id: 'm2-adaptive-lab',
-          title: 'Lab: adaptive vs non-adaptive behavior',
+          title: 'Lab: adaptive behavior',
           kind: 'lab',
           status: 'live',
           labId: 'sorting',
-          objective:
-            'Demonstrate insertion’s advantage on nearly ordered data versus a quadratic peer on the same family of inputs.',
+          objective: 'Show insertion’s adaptivity versus a non-adaptive peer on controlled inputs.',
           brief:
-            'Compare insertion vs bubble. First on a shuffled array, then reshape input (shuffle less / manually prefer sorted prefixes). Document how compare counts move—this is the empirical shadow of adaptivity.',
+            'Compare insertion vs bubble across input families. Document how metrics move—this is empirical shadow of best-case structure.',
           config: {
             algoId: 'insertion',
             algoBId: 'bubble',
@@ -227,10 +315,9 @@ Interactive labs are evidence tools: same input, dual engines, step counts, and 
           kind: 'implementation',
           status: 'live',
           labId: 'sorting',
-          objective:
-            'Implement insertion sort via compare/swap hooks so the visualizer’s step log is a faithful instrumentation of your code.',
+          objective: 'Implement insertion sort through compare/swap hooks as instrumentation.',
           brief:
-            'Python lab mode. Your hooks are the only sensors—every compare and swap must go through them. Match reference behavior on random inputs of n≈10–16.',
+            'Python lab. Every compare/swap through hooks. Match reference behavior on random n≈10–16.',
           config: {
             algoId: 'insertion',
             runMode: 'python',
@@ -238,38 +325,16 @@ Interactive labs are evidence tools: same input, dual engines, step counts, and 
             compare: false,
           },
         },
-      ],
-    },
-    {
-      id: 'm3-divide-conquer',
-      code: 'M3',
-      title: 'Divide and conquer: mergesort (and quicksort landscape)',
-      summary:
-        'Mergesort as the clean Θ(n log n) teaching vehicle: recurrence, merge work, memory. Quicksort as the practical cousin (partition, expected time, worst-case, randomization)—visualizer coverage expands as engines land.',
-      topics: [
-        'Mergesort recurrence T(n) = 2T(n/2) + Θ(n)',
-        'Merge procedure and stability',
-        'Space: auxiliary buffers vs linked structures',
-        'Quicksort: partition, pivot policy, expected Θ(n log n)',
-        'Worst-case Θ(n²) and mitigation (randomization, median-of-three, introsort idea)',
-        'Comparing asymptotic class to measured merge/compare work',
-      ],
-      outcomes: [
-        'Solve or unroll the mergesort recurrence at exam level',
-        'Contrast mergesort’s guarantees with quicksort’s average-case story',
-        'Use side-by-side runs to illustrate quadratic vs n log n regimes on shared inputs',
-      ],
-      work: [
         {
           id: 'm3-asymptotic-lab',
-          title: 'Lab: quadratic vs n log n on shared inputs',
+          title: 'Lab: quadratic vs n log n',
           kind: 'lab',
           status: 'live',
           labId: 'sorting',
           objective:
-            'Hold the input fixed and contrast an elementary sort with mergesort; scale n and observe how the gap in step/compare metrics behaves.',
+            'Hold input fixed; contrast elementary sort with mergesort; scale n and interpret growth.',
           brief:
-            'Compare insertion vs merge on the same array; increase n (e.g. 12 → 24 → 32). Note that “steps” include marks/UI events—prefer compare counts as the cleaner complexity proxy. Write a short claim about growth, not a single race winner.',
+            'Compare insertion vs merge. Increase n. Prefer compare counts. Conclude with a growth claim, not a single race at one n.',
           config: {
             algoId: 'insertion',
             algoBId: 'merge',
@@ -280,14 +345,12 @@ Interactive labs are evidence tools: same input, dual engines, step counts, and 
         },
         {
           id: 'm3-implement-merge',
-          title: 'Implementation: mergesort-style instrumentation',
+          title: 'Implementation: mergesort instrumentation',
           kind: 'implementation',
           status: 'live',
           labId: 'sorting',
-          objective:
-            'Express a divide-and-conquer sort through the lab hooks (or the provided merge-oriented template) and validate against reference mergesort behavior.',
-          brief:
-            'Python mode with merge template. Focus on the structure of divide → conquer → combine and on which operations generate compares vs writes in the step stream.',
+          objective: 'Express divide-and-conquer sorting through lab hooks; validate against reference.',
+          brief: 'Python mode, merge template. Focus on divide → conquer → combine structure.',
           config: {
             algoId: 'merge',
             runMode: 'python',
@@ -297,119 +360,32 @@ Interactive labs are evidence tools: same input, dual engines, step counts, and 
         },
         {
           id: 'm3-quicksort-analysis',
-          title: 'Analysis: quicksort (theory)',
+          title: 'Analysis: quicksort',
           kind: 'analysis',
           status: 'partial',
           objective:
-            'Explain expected runtime under random pivots and why a fixed adversarial pivot policy fails; outline introsort’s hybrid escape hatch.',
+            'Explain expected runtime under random pivots, worst-case inputs, and hybrid escapes (introsort idea).',
           brief:
-            'Written analysis for now—quicksort engine in the lab is forthcoming. Treat this as problem-set depth: recurrence for expected compares, worst-case input shape, and practical hybrids.',
-        },
-      ],
-    },
-    {
-      id: 'm4-heaps-priority',
-      code: 'M4',
-      title: 'Heapsort and priority queues',
-      summary:
-        'Binary heaps as both a structure and a sort: heapify, extract-max loop, Θ(n log n) time, in-place appeal, and the deeper link to priority-queue ADTs used across algorithms.',
-      topics: [
-        'Heap property and array representation',
-        'Build-heap in linear time (idea)',
-        'Heapsort procedure',
-        'Priority queues in graph algorithms (preview)',
-        'Stability and cache behavior notes',
-      ],
-      outcomes: [
-        'Describe heapsort without conflating it with “just another quadratic neighbor sort”',
-        'Connect heapsort to the priority-queue abstraction',
-      ],
-      work: [
-        {
-          id: 'm4-heapsort-lab',
-          title: 'Lab: heapsort visualizer',
-          kind: 'lab',
-          status: 'soon',
-          labId: 'sorting',
-          objective: 'Step heapify and extract phases; compare heapsort metrics to mergesort on identical inputs.',
-          brief: 'Unlocks when the heap engine ships. Until then, complete M3 labs and the written heapsort sketch below.',
+            'Written problem-set depth. Visualizer engine for quicksort is forthcoming.',
         },
         {
           id: 'm4-heapsort-sketch',
-          title: 'Analysis: heapsort on paper',
+          title: 'Analysis: heapsort',
           kind: 'analysis',
           status: 'live',
-          objective:
-            'Write the heapsort loop structure and argue Θ(n log n) time; state whether classic heapsort is stable.',
-          brief: 'Exam-style written work. Optional: contrast space with mergesort.',
+          objective: 'Describe heapsort structure, Θ(n log n) argument, stability, and PQ connection.',
+          brief: 'Exam-style written work. Lab engine soon.',
         },
-      ],
-    },
-    {
-      id: 'm5-practice-memory',
-      code: 'M5',
-      title: 'Practice, hybrids, and the memory hierarchy',
-      summary:
-        'What production runtimes actually do: introsort, timsort/run detection, cache-aware behavior, and external sorting when data exceeds RAM—graduate-leaning systems view of “the same” problem.',
-      topics: [
-        'Introsort: quicksort + heapsort fallback',
-        'Timsort: runs, galloping, stability in the real world',
-        'Cache lines and why constant factors dominate for moderate n',
-        'External sorting: k-way merge, I/O complexity intuition',
-        'Parallel sorting landscape (high level)',
-      ],
-      outcomes: [
-        'Name why “we just teach mergesort” is incomplete for library sort',
-        'Sketch external merge sort and what is being optimized (I/Os, not only CPU compares)',
-      ],
-      work: [
-        {
-          id: 'm5-hybrid-reading',
-          title: 'Reading: library sorts',
-          kind: 'reading',
-          status: 'live',
-          objective:
-            'Summarize introsort or timsort in one page: motivation, components, and what guarantee each piece buys.',
-          brief: 'No lab required. Cite any standard algorithms text or language runtime docs you use.',
-        },
-        {
-          id: 'm5-external-sketch',
-          title: 'Analysis: external sort',
-          kind: 'analysis',
-          status: 'live',
-          objective:
-            'Given RAM that holds B records and N ≫ B on disk, sketch multi-pass k-way merge and count passes asymptotically in N and B.',
-          brief: 'Graduate-flavored I/O reasoning. Visualizer support is not required for this unit.',
-        },
-      ],
-    },
-    {
-      id: 'm6-capstone',
-      code: 'M6',
-      title: 'Capstone: experimental algorithmics',
-      summary:
-        'Pull the course together: design a small empirical study, report metrics honestly, and connect observations back to asymptotic and structural claims.',
-      topics: [
-        'Threats to validity (step inflation, UI events vs compares)',
-        'Fair benchmarks: identical seeds/inputs, varied n',
-        'Reporting: tables, growth claims, limitations',
-        'Optional implementation portfolio',
-      ],
-      outcomes: [
-        'Produce a short lab report with method, data, and conclusion tied to theory',
-        'Distinguish “won a race at n=16” from asymptotic evidence',
-      ],
-      work: [
         {
           id: 'm6-empirical-study',
-          title: 'Project: fair bake-off',
+          title: 'Mini-project: experimental bake-off',
           kind: 'project',
           status: 'live',
           labId: 'sorting',
           objective:
-            'Design and run a comparison of at least two algorithms across at least three input regimes (e.g. random, reversed, nearly sorted) and two sizes; interpret with theory.',
+            'Fair comparison across ≥2 algorithms, ≥3 input regimes, ≥2 sizes; interpret with theory.',
           brief:
-            'Use compare mode heavily. Prefer compare counts. Deliverable: short write-up (problem set length). Start from insertion vs merge as a baseline pair.',
+            'Use dual-run lab heavily. Deliver short lab-report write-up. Baseline pair: insertion vs merge.',
           config: {
             algoId: 'insertion',
             algoBId: 'merge',
@@ -420,15 +396,279 @@ Interactive labs are evidence tools: same input, dual engines, step counts, and 
         },
       ],
     },
+    {
+      id: 'alg-m4-graphs',
+      code: 'M4',
+      title: 'Graph algorithms',
+      summary:
+        'Representations, BFS/DFS, topological sort, shortest paths, and minimum spanning trees—the other pillar of a standard Algorithms course.',
+      topics: [
+        'Adjacency list/matrix trade-offs',
+        'BFS, DFS, and edge classifications',
+        'Topological sort; strongly connected components (overview)',
+        'Dijkstra, Bellman–Ford (landscape)',
+        'Kruskal / Prim and cut property (landscape)',
+      ],
+      outcomes: [
+        'Choose representations with complexity consequences in mind',
+        'Trace BFS/DFS and state what each computes',
+        'State correctness ideas for shortest paths / MSTs at course level',
+      ],
+      work: [
+        {
+          id: 'alg-m4-graph-ps',
+          title: 'Problem set: graphs',
+          kind: 'analysis',
+          status: 'live',
+          objective: 'Work representation, traversal, and path/MST reasoning problems on paper.',
+          brief: 'Visualizer for graphs is planned under Lab → Graph algorithms.',
+        },
+        {
+          id: 'alg-m4-graph-lab',
+          title: 'Lab: graph algorithms visualizer',
+          kind: 'lab',
+          status: 'soon',
+          labId: 'graphs',
+          objective: 'Step BFS/DFS and a shortest-path or MST algorithm on shared instances.',
+          brief: 'Unlocks when the graph engine ships.',
+        },
+      ],
+    },
+    {
+      id: 'alg-m5-greedy',
+      code: 'M5',
+      title: 'Greedy algorithms',
+      summary:
+        'Exchange arguments, activity selection, Huffman coding landscape, and when greed fails—standard Algorithms mid-course unit.',
+      topics: [
+        'Greedy choice property',
+        'Exchange arguments',
+        'Canonical examples (interval scheduling, etc.)',
+        'Counterexamples when greed fails',
+      ],
+      outcomes: [
+        'Prove a simple greedy algorithm with an exchange argument sketch',
+        'Identify a problem where greedy is incorrect',
+      ],
+      work: [
+        {
+          id: 'alg-m5-greedy-ps',
+          title: 'Problem set: greedy',
+          kind: 'analysis',
+          status: 'live',
+          objective: 'Solve and disprove greedy strategies on short problems.',
+          brief: 'Written only for this release.',
+        },
+      ],
+    },
+    {
+      id: 'alg-m6-dp',
+      code: 'M6',
+      title: 'Dynamic programming',
+      summary:
+        'Optimal substructure, overlapping subproblems, memoization vs tabulation, and classic DP problems (rod cutting, LCS, knapsack landscape).',
+      topics: [
+        'Optimal substructure',
+        'Overlapping subproblems',
+        'Memoization and bottom-up tables',
+        'Reconstruction of solutions',
+        'Classic examples at course depth',
+      ],
+      outcomes: [
+        'Formulate a DP recurrence from a problem statement',
+        'Analyze time/space of a DP table',
+      ],
+      work: [
+        {
+          id: 'alg-m6-dp-ps',
+          title: 'Problem set: dynamic programming',
+          kind: 'analysis',
+          status: 'live',
+          objective: 'Write recurrences and fill small tables by hand for 1–2 classic problems.',
+          brief: 'Written only for this release.',
+        },
+      ],
+    },
+    {
+      id: 'alg-m7-advanced',
+      code: 'M7',
+      title: 'Selected advanced topics',
+      summary:
+        'Bridge toward graduate electives: amortized analysis hooks, max-flow landscape, randomized algorithms, or approximation—program-dependent depth.',
+      topics: [
+        'Amortized analysis (aggregate / potential — overview)',
+        'Network flow landscape',
+        'Randomized algorithms (quicksort as recap; hashing hints)',
+        'Approximation algorithms (idea)',
+      ],
+      outcomes: [
+        'Place advanced topics relative to the core Algorithms toolkit',
+      ],
+      work: [
+        {
+          id: 'alg-m7-reading',
+          title: 'Reading: one advanced topic',
+          kind: 'reading',
+          status: 'live',
+          objective: 'Write a one-page map of one advanced topic to prerequisites in M1–M6.',
+          brief: 'Self-directed from a standard Algorithms text chapter.',
+        },
+      ],
+    },
+    {
+      id: 'alg-m8-complexity',
+      code: 'M8',
+      title: 'NP-completeness & hardness (course close)',
+      summary:
+        'P vs NP intuition, reductions, and what hardness means for algorithm design—closing unit of many undergrad Algorithms courses.',
+      topics: [
+        'Decision problems; P and NP (working definitions)',
+        'Polynomial-time reductions',
+        'NP-completeness idea; canonical problems',
+        'Coping: exact exp, approximation, heuristics',
+      ],
+      outcomes: [
+        'Explain NP-completeness at non-handwavy undergrad level',
+        'State how a reduction is used to transfer hardness',
+      ],
+      work: [
+        {
+          id: 'alg-m8-npc-ps',
+          title: 'Problem set: reductions (intro)',
+          kind: 'analysis',
+          status: 'live',
+          objective: 'Reason about simple reduction sketches and “what would an efficient algorithm imply?”',
+          brief: 'Written only. Depth matches a first exposure unit, not a full complexity course.',
+        },
+      ],
+    },
+  ],
+}
+
+/** Data Structures — core required; syllabus scaffold, labs forthcoming. */
+const dataStructuresCourse: CourseDetail = {
+  ...courses.find((c) => c.id === 'data-structures')!,
+  overview: `Core **Data Structures** course: how we organize data to support operations efficiently. Companion to Algorithms (who often share a year in the curriculum). This is not intro programming—students are expected to implement and analyze ADTs.
+
+Labs will visualize layout, growth, and rebalancing as engines land. Syllabus structure is in place so the catalog reads like a real CSE path.`,
+  prerequisites: [
+    'Intro programming completed',
+    'Discrete Math concurrent or prior recommended',
+  ],
+  learningGoals: [
+    'Specify ADTs and choose representations with complexity consequences',
+    'Implement and analyze lists, trees, heaps, and hash tables',
+    'Explain balanced-tree and hash-table performance at course level',
+    'Use graphs as a structure (representation) ahead of graph algorithms',
+  ],
+  modules: [
+    {
+      id: 'ds-m1',
+      code: 'M1',
+      title: 'Complexity review & ADTs',
+      summary: 'Asymptotics recap, abstract data types, and interface vs representation.',
+      topics: ['ADT vs data structure', 'Amortized preview', 'Interface contracts'],
+      outcomes: ['Specify an ADT with operation complexities'],
+      work: [
+        {
+          id: 'ds-m1-ps',
+          title: 'Problem set: ADT specs',
+          kind: 'analysis',
+          status: 'soon',
+          objective: 'Specify 2–3 ADTs with operation costs.',
+          brief: 'Scaffold unit — full homework pack forthcoming.',
+        },
+      ],
+    },
+    {
+      id: 'ds-m2',
+      code: 'M2',
+      title: 'Arrays, lists, stacks, queues',
+      summary: 'Contiguous vs linked representations; amortized growth of dynamic arrays.',
+      topics: ['Dynamic arrays', 'Linked lists', 'Stacks/queues', 'Amortized append'],
+      outcomes: ['Compare array vs linked list for given workloads'],
+      work: [
+        {
+          id: 'ds-m2-lab',
+          title: 'Lab: list representations',
+          kind: 'lab',
+          status: 'soon',
+          labId: 'structures',
+          objective: 'Visualize layout and cost differences.',
+          brief: 'Visualizer forthcoming.',
+        },
+      ],
+    },
+    {
+      id: 'ds-m3',
+      code: 'M3',
+      title: 'Trees & hierarchical structure',
+      summary: 'Binary trees, traversals, expression trees, and tree ADTs.',
+      topics: ['Binary trees', 'Traversals', 'Tree height/size'],
+      outcomes: ['Implement and analyze basic tree operations'],
+      work: [],
+    },
+    {
+      id: 'ds-m4',
+      code: 'M4',
+      title: 'Search trees',
+      summary: 'BSTs, imbalance, and balanced trees (AVL/red-black landscape).',
+      topics: ['BST dictionary', 'Imbalance', 'Balanced BST overview'],
+      outcomes: ['Explain worst-case BST vs balanced guarantees'],
+      work: [],
+    },
+    {
+      id: 'ds-m5',
+      code: 'M5',
+      title: 'Heaps & priority queues',
+      summary: 'Binary heaps, heap operations, and priority-queue applications.',
+      topics: ['Heap property', 'Insert/extract', 'Heapify', 'PQ ADT'],
+      outcomes: ['Connect heaps to scheduling and algorithms courses'],
+      work: [],
+    },
+    {
+      id: 'ds-m6',
+      code: 'M6',
+      title: 'Hashing',
+      summary: 'Hash functions, chaining vs open addressing, load factor.',
+      topics: ['Hash families (intro)', 'Collision resolution', 'Amortized expected time'],
+      outcomes: ['Tune load factor reasoning; know failure modes'],
+      work: [],
+    },
+    {
+      id: 'ds-m7',
+      code: 'M7',
+      title: 'Graphs as structures',
+      summary: 'Representations and basic traversal interfaces—before Algorithms graph design.',
+      topics: ['Adj list/matrix', 'Degree, paths', 'BFS/DFS as structure ops'],
+      outcomes: ['Pick a representation for a stated constraint set'],
+      work: [],
+    },
+    {
+      id: 'ds-m8',
+      code: 'M8',
+      title: 'Advanced structures (survey)',
+      summary: 'B-trees, tries, union-find landscape—program-dependent depth.',
+      topics: ['External search trees', 'Tries', 'Disjoint sets'],
+      outcomes: ['Map advanced structures to use cases'],
+      work: [],
+    },
   ],
 }
 
 const courseDetails: Record<string, CourseDetail> = {
-  sorting: sortingCourse,
+  algorithms: algorithmsCourse,
+  'data-structures': dataStructuresCourse,
+}
+
+/** Legacy course id redirect target */
+export const LEGACY_COURSE_REDIRECTS: Record<string, string> = {
+  sorting: 'algorithms',
 }
 
 export function getCourse(id: string): CourseDetail | undefined {
-  return courseDetails[id]
+  const resolved = LEGACY_COURSE_REDIRECTS[id] ?? id
+  return courseDetails[resolved]
 }
 
 export function findAssignmentById(assignmentId: string): {
