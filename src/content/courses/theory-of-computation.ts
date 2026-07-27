@@ -84,6 +84,17 @@ Expect heavy written proofs. Interactive automata toys may arrive later; syllabu
           'Written proofs + diagrams.',
           'partial',
         ),
+        {
+          id: 'toc-m1-lab',
+          title: 'Lab: DFA run (even zeros)',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective: 'Step the 2-state DFA for even # of 0s on input 01001; accept/reject.',
+          brief: 'systemsDemo dfa-even0. Record state after each symbol; final accept?',
+          config: { systemsDemo: 'dfa-even0' },
+          sources: [{ label: 'Sipser Ch. 1', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({

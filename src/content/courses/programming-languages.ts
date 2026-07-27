@@ -88,6 +88,17 @@ Expect interpreters-on-paper, type derivations, and careful definitions. Runtime
           'Written / offline code optional.',
           'partial',
         ),
+        {
+          id: 'pl-m1-lab',
+          title: 'Lab: expression tree evaluation',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective: 'Step bottom-up eval of AST for (2+3)*4; record intermediate values.',
+          brief: 'systemsDemo pl-eval-tree. Connect to big-step eval rules in the paper set.',
+          config: { systemsDemo: 'pl-eval-tree' },
+          sources: [{ label: 'PLAI / EOPL selected', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({

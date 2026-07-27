@@ -3,7 +3,7 @@ import {
   type CourseDetail,
   type CourseMeta,
 } from '../../contracts'
-import { analysisWork, labSoon, moduleOf, readingWork } from '../scaffold'
+import { analysisWork, moduleOf, readingWork } from '../scaffold'
 
 export const databasesMeta: CourseMeta = {
   id: 'databases',
@@ -177,13 +177,18 @@ No production DBMS is required in-browser for Phase syllabus; written design wor
           'Written systems reasoning.',
           'partial',
         ),
-        labSoon(
-          'db-m4-lab',
-          'Lab: B+ tree toy',
-          'structures',
-          'Step inserts through a tiny B+ tree model.',
-          'May share structures visualizer later.',
-        ),
+        {
+          id: 'db-m4-lab',
+          title: 'Lab: B+ leaf packing (toy)',
+          kind: 'lab',
+          status: 'live',
+          labId: 'structures',
+          objective: 'Insert keys into an order-3 B+ leaf toy; observe packing and split to new leaves.',
+          brief:
+            'structureDemo bplus-insert. Honest scope: leaves only (no full internal index). Values [10,20,5,30,15,25,35].',
+          config: { structureDemo: 'bplus-insert', values: [10, 20, 5, 30, 15, 25, 35] },
+          sources: [{ label: 'DB textbook — B+ trees', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({

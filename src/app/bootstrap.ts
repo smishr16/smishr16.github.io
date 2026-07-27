@@ -83,6 +83,9 @@ export function bootstrap(app: HTMLElement): () => void {
         if (html) {
           app.innerHTML = html
           const course = getCourse(courseId)
+          void import('../ui/progress').then(({ bindCourseProgress }) => {
+            if (course) bindCourseProgress(course.id, app)
+          })
           afterRoute(app, [course?.title ?? courseId, 'Learn'])
           return
         }

@@ -1,6 +1,6 @@
 /** Data structures instrument contracts. */
 
-export type StructureKind = 'list' | 'bst' | 'heap' | 'hash'
+export type StructureKind = 'list' | 'bst' | 'heap' | 'hash' | 'bplus'
 
 export type StructureNodeRole = 'default' | 'active' | 'new' | 'found' | 'pivot' | 'path'
 

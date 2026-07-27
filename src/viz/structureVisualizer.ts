@@ -126,7 +126,7 @@ export class StructureVisualizer {
       ctx.fillStyle = this.roleColor(n.role)
       ctx.strokeStyle = this.cssVar('--text', '#e6edf3')
       ctx.lineWidth = 1.5
-      if (frame.kind === 'list' || frame.kind === 'hash') {
+      if (frame.kind === 'list' || frame.kind === 'hash' || frame.kind === 'bplus') {
         const rw = r * 2
         const rh = r * 1.4
         ctx.fillRect(p.x - r, p.y - rh / 2, rw, rh)

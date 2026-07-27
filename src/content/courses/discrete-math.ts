@@ -242,6 +242,17 @@ This course is **written-work first**. Visualizers are secondary; mastery is on 
           'Written math; algorithm design deferred to Algorithms.',
           'partial',
         ),
+        {
+          id: 'dm-m5-lab',
+          title: 'Lab: graph as math object',
+          kind: 'lab',
+          status: 'live',
+          labId: 'graphs',
+          objective: 'BFS on Campus from Gate→Lab; treat nodes/edges as discrete math objects (not algo design depth).',
+          brief: 'graphId campus. Record hop path; count edges on path; relate to path definition in the paper set.',
+          config: { graphAlgo: 'bfs', graphId: 'campus', start: 'Gate', goal: 'Lab' },
+          sources: [{ label: 'Rosen — graphs chapters', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({

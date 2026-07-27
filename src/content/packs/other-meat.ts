@@ -1528,4 +1528,167 @@ export const labMeat: MeatPack[] = [
       },
     ],
   },
+  {
+    workId: 'dm-m5-lab',
+    timeEstimate: '30 min',
+    sources: [{ label: 'Rosen — graphs', kind: 'textbook' }],
+    deliverables: ['Path + edge count'],
+    selfCheck: ['Campus Gate→Lab BFS'],
+    problems: [
+      {
+        id: 'g1',
+        title: 'P1 · Path',
+        points: 40,
+        prompt: 'Campus BFS Gate→Lab: write the vertex sequence of a shortest hop path.',
+      },
+      {
+        id: 'g2',
+        title: 'P2 · Counts',
+        points: 30,
+        prompt: 'How many edges on that path? How many vertices?',
+      },
+      {
+        id: 'g3',
+        title: 'P3 · Definition',
+        points: 30,
+        prompt: 'In ≤4 sentences: define path vs walk using your example (no repeated vertices vs allowing).',
+      },
+    ],
+  },
+  {
+    workId: 'toc-m1-lab',
+    timeEstimate: '30 min',
+    sources: [{ label: 'Sipser Ch. 1', kind: 'textbook' }],
+    deliverables: ['State trace table'],
+    selfCheck: ['Input 01001'],
+    problems: [
+      {
+        id: 'd1',
+        title: 'P1 · Trace',
+        points: 40,
+        prompt: 'dfa-even0 lab on 01001: fill table (i, symbol, state before, state after).',
+      },
+      {
+        id: 'd2',
+        title: 'P2 · Accept',
+        points: 30,
+        prompt: 'Does the DFA accept? Count of zeros = ? Is that even?',
+      },
+      {
+        id: 'd3',
+        title: 'P3 · Design',
+        points: 30,
+        prompt: 'Modify mentally for odd number of 1s: which state should be accepting? One-sentence justification.',
+      },
+    ],
+  },
+  {
+    workId: 'net-m1-lab',
+    timeEstimate: '30 min',
+    sources: [{ label: 'Kurose & Ross Ch. 1', kind: 'textbook' }],
+    deliverables: ['Cumulative delay log'],
+    selfCheck: ['network-path demo'],
+    problems: [
+      {
+        id: 'n1',
+        title: 'P1 · Hops',
+        points: 40,
+        prompt: 'network-path lab: list nodes in order and cumulative t after each arrival.',
+      },
+      {
+        id: 'n2',
+        title: 'P2 · Dominant term',
+        points: 30,
+        prompt: 'Which hop adds more delay, R1 or R2? tx vs prop — which dominates on R2?',
+      },
+      {
+        id: 'n3',
+        title: 'P3 · Paper link',
+        points: 30,
+        prompt: 'Relate this toy to transmission vs propagation formulas in net-m1-ps (L/R and d/s).',
+      },
+    ],
+  },
+  {
+    workId: 'pl-m1-lab',
+    timeEstimate: '30 min',
+    sources: [{ label: 'PLAI / EOPL selected', kind: 'textbook' }],
+    deliverables: ['Eval order notes'],
+    selfCheck: ['(2+3)*4 → 20'],
+    problems: [
+      {
+        id: 'e1',
+        title: 'P1 · Order',
+        points: 40,
+        prompt: 'pl-eval-tree: list values computed in order (leaves first).',
+      },
+      {
+        id: 'e2',
+        title: 'P2 · Result',
+        points: 30,
+        prompt: 'Final program value? Show  (2+3)*4 arithmetic.',
+      },
+      {
+        id: 'e3',
+        title: 'P3 · Big-step',
+        points: 30,
+        prompt: 'Write one big-step judgment for the + node (environment empty).',
+      },
+    ],
+  },
+  {
+    workId: 'se-m1-lab',
+    timeEstimate: '25 min',
+    sources: [{ label: 'Sommerville — process', kind: 'textbook' }],
+    deliverables: ['State map table'],
+    selfCheck: ['Metaphor only — not Jira'],
+    problems: [
+      {
+        id: 's1',
+        title: 'P1 · Map',
+        points: 40,
+        prompt:
+          'process-lifecycle lab: map OS states new/ready/running/blocked/terminated to work-item states (e.g. backlog, ready, in-progress, blocked, done).',
+      },
+      {
+        id: 's2',
+        title: 'P2 · Blocked',
+        points: 30,
+        prompt: 'Give one real team reason a ticket is “blocked” analogous to I/O wait.',
+      },
+      {
+        id: 's3',
+        title: 'P3 · Limits',
+        points: 30,
+        prompt: 'Why this metaphor fails for SE (two reasons): e.g. parallel work, no single CPU, etc.',
+      },
+    ],
+  },
+  {
+    workId: 'db-m4-lab',
+    timeEstimate: '35 min',
+    sources: [{ label: 'DB textbook — B+ trees', kind: 'textbook' }],
+    deliverables: ['Leaf contents after each insert batch'],
+    selfCheck: ['bplus-insert toy — leaves only'],
+    problems: [
+      {
+        id: 'b1',
+        title: 'P1 · Pack',
+        points: 40,
+        prompt: 'bplus-insert values [10,20,5,30,15,25,35], order 3: after all inserts, list each leaf’s keys.',
+      },
+      {
+        id: 'b2',
+        title: 'P2 · Split',
+        points: 30,
+        prompt: 'At which insert did a new leaf appear? Why (max keys = 3)?',
+      },
+      {
+        id: 'b3',
+        title: 'P3 · Honesty',
+        points: 30,
+        prompt: 'Name two B+ features missing from this toy (internal nodes, fanout, root splits).',
+      },
+    ],
+  },
 ]

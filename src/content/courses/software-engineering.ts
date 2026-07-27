@@ -88,6 +88,19 @@ Team projects are offline by nature; this site provides structured modules, chec
           'Written memo format.',
           'partial',
         ),
+        {
+          id: 'se-m1-lab',
+          title: 'Lab: lifecycle states (metaphor)',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective:
+            'Use process state machine as a metaphor for work-item lifecycle (new→ready→doing→blocked→done); map states in a short note.',
+          brief:
+            'Honest scope: OS process demo reused as SE metaphor, not a real issue tracker. systemsDemo process-lifecycle.',
+          config: { systemsDemo: 'process-lifecycle' },
+          sources: [{ label: 'Sommerville — process chapters', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({

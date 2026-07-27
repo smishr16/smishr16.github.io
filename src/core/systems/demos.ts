@@ -480,6 +480,227 @@ function minimaxTree(): SystemsFrame[] {
   return frames
 }
 
+/** DFA for even number of 0s on {0,1}*. States E (even/accept), O (odd). */
+function dfaEven0(): SystemsFrame[] {
+  const str = '01001'
+  const frames: SystemsFrame[] = []
+  let state: 'E' | 'O' = 'E'
+  const nodes = (cur: string) => [
+    { id: 'E', label: 'E (acc)', x: 0.3, y: 0.45, role: cur === 'E' ? 'active' : 'default' },
+    { id: 'O', label: 'O', x: 0.7, y: 0.45, role: cur === 'O' ? 'active' : 'default' },
+  ]
+  const edges = [
+    { from: 'E', to: 'O' },
+    { from: 'O', to: 'E' },
+    { from: 'E', to: 'E' },
+    { from: 'O', to: 'O' },
+  ]
+  frames.push({
+    kind: 'tree',
+    title: 'DFA · even number of 0s',
+    statusText: `Start in E · input "${str}"`,
+    treeNodes: nodes('E'),
+    treeEdges: edges,
+    metrics: 'accepting = E',
+    panels: [
+      {
+        title: 'δ',
+        lines: ['δ(E,0)=O  δ(E,1)=E', 'δ(O,0)=E  δ(O,1)=O', 'L = { w | #0(w) even }'],
+      },
+    ],
+  })
+  for (let i = 0; i < str.length; i++) {
+    const ch = str[i]!
+    const prev = state
+    if (ch === '0') state = state === 'E' ? 'O' : 'E'
+    // 1 self-loop
+    frames.push({
+      kind: 'tree',
+      title: 'DFA · even number of 0s',
+      statusText: `Read '${ch}' · ${prev} → ${state}`,
+      treeNodes: nodes(state),
+      treeEdges: edges,
+      metrics: `consumed "${str.slice(0, i + 1)}" · remaining "${str.slice(i + 1)}"`,
+      panels: [
+        {
+          title: 'Run',
+          lines: [`symbol ${ch}`, `${prev} --${ch}→ ${state}`, state === 'E' ? 'in accept so far' : 'not accepting yet'],
+        },
+      ],
+    })
+  }
+  frames.push({
+    kind: 'tree',
+    title: 'DFA · even number of 0s',
+    statusText: state === 'E' ? 'ACCEPT (even zeros)' : 'REJECT',
+    treeNodes: nodes(state).map((n) => ({
+      ...n,
+      role: n.id === state ? (state === 'E' ? 'path' : 'active') : 'default',
+    })),
+    treeEdges: edges,
+    metrics: `final state ${state}`,
+  })
+  return frames
+}
+
+/** Packet along path with cumulative delay. */
+function networkPath(): SystemsFrame[] {
+  const hops = [
+    { name: 'Client', tx: 0, prop: 0 },
+    { name: 'R1', tx: 1.2, prop: 2 },
+    { name: 'R2', tx: 1.2, prop: 5 },
+    { name: 'Server', tx: 0, prop: 0 },
+  ]
+  let t = 0
+  const frames: SystemsFrame[] = []
+  const nodes = hops.map((h, i) => ({
+    id: h.name,
+    label: h.name,
+    x: 0.12 + i * 0.25,
+    y: 0.45,
+    role: 'default' as string | undefined,
+  }))
+  const edges = [
+    { from: 'Client', to: 'R1' },
+    { from: 'R1', to: 'R2' },
+    { from: 'R2', to: 'Server' },
+  ]
+  frames.push({
+    kind: 'tree',
+    title: 'Store-and-forward path (toy)',
+    statusText: 'Packet at Client · L/R model simplified',
+    treeNodes: nodes.map((n, i) => ({ ...n, role: i === 0 ? 'active' : 'default' })),
+    treeEdges: edges,
+    metrics: 't=0 ms',
+    panels: [
+      {
+        title: 'Assumptions',
+        lines: [
+          'Per-hop: transmission + propagation (ms units toy)',
+          'R1: tx=1.2 prop=2; R2: tx=1.2 prop=5',
+          'Ignore queueing/processing',
+        ],
+      },
+    ],
+  })
+  for (let i = 0; i < hops.length - 1; i++) {
+    const hop = hops[i + 1]!
+    t += hop.tx + hop.prop
+    frames.push({
+      kind: 'tree',
+      title: 'Store-and-forward path (toy)',
+      statusText: `Arrive ${hop.name} · +tx ${hop.tx} +prop ${hop.prop}`,
+      treeNodes: nodes.map((n, j) => ({
+        ...n,
+        role: j === i + 1 ? 'active' : j <= i + 1 ? 'done' : 'default',
+      })),
+      treeEdges: edges,
+      metrics: `t≈${t.toFixed(1)} ms cumulative`,
+      panels: [
+        {
+          title: 'Delay so far',
+          lines: [`cumulative ≈ ${t.toFixed(1)} ms`, `last hop tx=${hop.tx} prop=${hop.prop}`],
+        },
+      ],
+    })
+  }
+  frames.push({
+    kind: 'tree',
+    title: 'Store-and-forward path (toy)',
+    statusText: `Done at Server · total ≈ ${t.toFixed(1)} ms`,
+    treeNodes: nodes.map((n) => ({ ...n, role: n.id === 'Server' ? 'path' : 'done' })),
+    treeEdges: edges,
+    metrics: `end-to-end ≈ ${t.toFixed(1)} ms`,
+  })
+  return frames
+}
+
+/** Evaluate (2+3)*4 expression tree bottom-up. */
+function plEvalTree(): SystemsFrame[] {
+  const base = [
+    { id: 'mul', label: '*', x: 0.5, y: 0.15 },
+    { id: 'add', label: '+', x: 0.32, y: 0.45 },
+    { id: 'four', label: '4', x: 0.7, y: 0.45 },
+    { id: 'two', label: '2', x: 0.2, y: 0.75 },
+    { id: 'three', label: '3', x: 0.44, y: 0.75 },
+  ]
+  const edges = [
+    { from: 'mul', to: 'add' },
+    { from: 'mul', to: 'four' },
+    { from: 'add', to: 'two' },
+    { from: 'add', to: 'three' },
+  ]
+  return [
+    {
+      kind: 'tree',
+      title: 'Expression tree eval',
+      statusText: 'AST for (2+3)*4',
+      treeNodes: base.map((n) => ({ ...n, role: 'default' })),
+      treeEdges: edges,
+      panels: [{ title: 'Big-step idea', lines: ['Evaluate children before parent', 'Numbers are values', 'Operators combine values'] }],
+    },
+    {
+      kind: 'tree',
+      title: 'Expression tree eval',
+      statusText: '2 and 3 are values',
+      treeNodes: base.map((n) => ({
+        ...n,
+        role: n.id === 'two' || n.id === 'three' ? 'done' : 'default',
+        value: n.id === 'two' ? '2' : n.id === 'three' ? '3' : undefined,
+      })),
+      treeEdges: edges,
+    },
+    {
+      kind: 'tree',
+      title: 'Expression tree eval',
+      statusText: '+ evaluates to 5',
+      treeNodes: base.map((n) => ({
+        ...n,
+        role: n.id === 'add' ? 'active' : n.id === 'two' || n.id === 'three' ? 'done' : 'default',
+        value: n.id === 'add' ? '5' : n.id === 'two' ? '2' : n.id === 'three' ? '3' : undefined,
+      })),
+      treeEdges: edges,
+      metrics: '2+3 → 5',
+    },
+    {
+      kind: 'tree',
+      title: 'Expression tree eval',
+      statusText: '4 is a value',
+      treeNodes: base.map((n) => ({
+        ...n,
+        role: n.id === 'four' || n.id === 'add' ? 'done' : 'default',
+        value:
+          n.id === 'add' ? '5' : n.id === 'four' ? '4' : n.id === 'two' ? '2' : n.id === 'three' ? '3' : undefined,
+      })),
+      treeEdges: edges,
+    },
+    {
+      kind: 'tree',
+      title: 'Expression tree eval',
+      statusText: '* evaluates to 20 — program value',
+      treeNodes: base.map((n) => ({
+        ...n,
+        role: n.id === 'mul' ? 'path' : 'done',
+        value:
+          n.id === 'mul'
+            ? '20'
+            : n.id === 'add'
+              ? '5'
+              : n.id === 'four'
+                ? '4'
+                : n.id === 'two'
+                  ? '2'
+                  : n.id === 'three'
+                    ? '3'
+                    : undefined,
+      })),
+      treeEdges: edges,
+      metrics: '(2+3)*4 = 20',
+      panels: [{ title: 'Result', lines: ['Final value 20', 'Order: leaves → + → *'] }],
+    },
+  ]
+}
+
 export const systemsDemos: ISystemsDemo[] = [
   {
     id: 'schedule-fcfs',
@@ -543,6 +764,27 @@ export const systemsDemos: ISystemsDemo[] = [
     description: 'Depth-2 game tree: min at children, max at root.',
     category: 'ai',
     generate: minimaxTree,
+  },
+  {
+    id: 'dfa-even0',
+    label: 'DFA (even 0s)',
+    description: 'Run a 2-state DFA for even number of zeros on string 01001.',
+    category: 'ai',
+    generate: dfaEven0,
+  },
+  {
+    id: 'network-path',
+    label: 'Network path',
+    description: 'Store-and-forward hop delays along Client→R1→R2→Server.',
+    category: 'cpu',
+    generate: networkPath,
+  },
+  {
+    id: 'pl-eval-tree',
+    label: 'Expr eval',
+    description: 'Bottom-up evaluation of AST for (2+3)*4.',
+    category: 'ai',
+    generate: plEvalTree,
   },
 ]
 

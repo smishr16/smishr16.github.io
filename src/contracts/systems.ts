@@ -10,6 +10,9 @@ export type SystemsDemoId =
   | 'cache-direct'
   | 'stack-calls'
   | 'minimax-tree'
+  | 'dfa-even0'
+  | 'network-path'
+  | 'pl-eval-tree'
 
 export type SystemsJob = {
   id: string

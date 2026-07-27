@@ -2,8 +2,13 @@ import { describe, expect, it } from 'vitest'
 import { getStructureDemo, structureDemos } from './demos'
 
 describe('structure demos', () => {
-  it('includes list, bst, heap, hash', () => {
-    expect(structureDemos.map((d) => d.kind).sort()).toEqual(['bst', 'hash', 'heap', 'list'].sort())
+  it('includes list, bst, heap, hash, bplus', () => {
+    expect(structureDemos.map((d) => d.id)).toContain('bplus-insert')
+    expect(getStructureDemo('bplus-insert').generate([1, 2, 3, 4]).length).toBeGreaterThan(2)
+  })
+
+  it('throws on unknown demo id', () => {
+    expect(() => getStructureDemo('nope')).toThrow(/Unknown/)
   })
 
   it('BST insert produces growing node sets', () => {

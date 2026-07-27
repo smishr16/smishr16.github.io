@@ -163,10 +163,14 @@ export function renderCourse(courseId: string): string | null {
         .map((w) => {
           const src = sourceList(w.sources)
           return `
-          <article class="work-card work-${w.status}">
+          <article class="work-card work-${w.status}" id="work-${w.id}">
             <div class="work-meta">
               ${statusBadgeHtml(w.status)}
               ${kindChip(w.kind)}
+              <label class="progress-check muted">
+                <input type="checkbox" data-progress-work="${w.id}" />
+                Mark done
+              </label>
             </div>
             <h4>${w.title}</h4>
             <p class="work-objective"><strong>Objective.</strong> ${w.objective}</p>

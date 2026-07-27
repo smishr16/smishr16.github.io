@@ -324,6 +324,69 @@ function hashFrames(values: number[]): StructureFrame[] {
   return frames
 }
 
+/** Order-3 B+ leaf-only toy: show keys packing into leaves (honest simplification). */
+function bplusFrames(values: number[]): StructureFrame[] {
+  const order = 3 // max keys per leaf in toy
+  const frames: StructureFrame[] = []
+  const leaves: number[][] = [[]]
+  frames.push({
+    kind: 'bplus',
+    title: 'B+ leaf packing (order-3 toy)',
+    statusText: 'Empty index — teaching simplification (leaves only)',
+    nodes: [],
+    edges: [],
+    panels: [
+      {
+        title: 'Honesty',
+        lines: [
+          'Full B+ has internal separators + sibling links',
+          'This toy only shows leaf packing & splits',
+          'max keys per leaf = 3',
+        ],
+      },
+    ],
+  })
+  let n = 0
+  for (const v of values) {
+    n++
+    let leaf = leaves[leaves.length - 1]!
+    if (leaf.length >= order) {
+      leaves.push([])
+      leaf = leaves[leaves.length - 1]!
+    }
+    leaf.push(v)
+    leaf.sort((a, b) => a - b)
+    const nodes: StructureDrawNode[] = []
+    const edges: StructureDrawEdge[] = []
+    leaves.forEach((keys, li) => {
+      const id = `L${li}`
+      nodes.push({
+        id,
+        label: keys.join(',') || '∅',
+        x: 0.15 + (li / Math.max(leaves.length, 1)) * 0.7,
+        y: 0.55,
+        role: li === leaves.length - 1 ? 'new' : 'default',
+      })
+      if (li > 0) edges.push({ from: `L${li - 1}`, to: id, label: 'next' })
+    })
+    frames.push({
+      kind: 'bplus',
+      title: 'B+ leaf packing (order-3 toy)',
+      statusText: `Insert ${v} · leaves=${leaves.length}`,
+      nodes,
+      edges,
+      metrics: `n=${n} · order=${order}`,
+      panels: [
+        {
+          title: 'Leaves',
+          lines: leaves.map((k, i) => `L${i}: [${k.join(', ')}]`),
+        },
+      ],
+    })
+  }
+  return frames
+}
+
 export const structureDemos: IStructureDemo[] = [
   {
     id: 'list-append',
@@ -353,10 +416,19 @@ export const structureDemos: IStructureDemo[] = [
     description: 'Insert keys with h(k)=k mod m and chaining.',
     generate: hashFrames,
   },
+  {
+    id: 'bplus-insert',
+    kind: 'bplus',
+    label: 'B+ leaves (toy)',
+    description: 'Order-3 leaf packing/splits — simplified B+ teaching model.',
+    generate: bplusFrames,
+  },
 ]
 
 export function getStructureDemo(id: string): IStructureDemo {
-  return structureDemos.find((d) => d.id === id) ?? structureDemos[0]!
+  const d = structureDemos.find((x) => x.id === id)
+  if (!d) throw new Error(`Unknown structure demo "${id}". Valid: ${structureDemos.map((x) => x.id).join(', ')}`)
+  return d
 }
 
 export function demosForKind(kind: StructureKind): IStructureDemo[] {

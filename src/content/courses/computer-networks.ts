@@ -88,6 +88,17 @@ Programming projects (toy TCP, routers) are offline/self-hosted when assigned; i
           'Written.',
           'partial',
         ),
+        {
+          id: 'net-m1-lab',
+          title: 'Lab: store-and-forward path',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective: 'Trace a packet Client→R1→R2→Server with toy tx+prop delays; record cumulative time.',
+          brief: 'systemsDemo network-path. Compare to paper delay calculations in net-m1-ps.',
+          config: { systemsDemo: 'network-path' },
+          sources: [{ label: 'Kurose & Ross Ch. 1', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({
