@@ -189,6 +189,17 @@ No production DBMS is required in-browser for Phase syllabus; written design wor
           config: { structureDemo: 'bplus-insert', values: [10, 20, 5, 30, 15, 25, 35] },
           sources: [{ label: 'DB textbook — B+ trees', kind: 'textbook' }],
         },
+        {
+          id: 'db-m4-lab-hash',
+          title: 'Lab: hash index (chaining)',
+          kind: 'lab',
+          status: 'live',
+          labId: 'structures',
+          objective: 'Insert keys with chaining hash; relate buckets to hash index leaves for equality lookups.',
+          brief: 'structureDemo hash-insert. Note collisions and chain length; contrast with B+ range scans.',
+          config: { structureDemo: 'hash-insert', values: [7, 3, 11, 1, 9, 5, 15] },
+          sources: [{ label: 'DB textbook — hash indexes', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({
@@ -218,6 +229,17 @@ No production DBMS is required in-browser for Phase syllabus; written design wor
           'Written.',
           'partial',
         ),
+        {
+          id: 'db-m5-lab-nlj',
+          title: 'Lab: nested-loop join',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective: 'Step nested-loop join of tiny R⋈S on a; count probes and result tuples.',
+          brief: 'systemsDemo nl-join. |R|=|S|=3 → 9 probes; list emitted join rows.',
+          config: { systemsDemo: 'nl-join' },
+          sources: [{ label: 'DB textbook — join algorithms', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({
@@ -247,6 +269,19 @@ No production DBMS is required in-browser for Phase syllabus; written design wor
           'Written concurrency-for-data problems.',
           'partial',
         ),
+        {
+          id: 'db-m6-lab-buf',
+          title: 'Lab: buffer pool eviction (FIFO metaphor)',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective:
+            'Treat page frames as a buffer pool; FIFO eviction under a page ref string; count faults as pool misses.',
+          brief:
+            'Honest scope: OS page-FIFO demo reused as DB buffer pool metaphor. systemsDemo page-fifo. Map frames→buffer slots in a short note.',
+          config: { systemsDemo: 'page-fifo' },
+          sources: [{ label: 'DB textbook — buffer management', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({

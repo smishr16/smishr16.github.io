@@ -162,6 +162,32 @@ Team projects are offline by nature; this site provides structured modules, chec
           'Written design deliverable.',
           'partial',
         ),
+        {
+          id: 'se-m3-lab-fcfs',
+          title: 'Lab: single-queue delivery (FCFS metaphor)',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective:
+            'Treat CPU FCFS as a single shared delivery queue; discuss convoy effect as blocked high-value work.',
+          brief:
+            'Honest metaphor: schedule-fcfs is OS scheduling, not a real sprint board. Map jobs→tickets; note when short work waits behind long.',
+          config: { systemsDemo: 'schedule-fcfs' },
+          sources: [{ label: 'SE process / flow efficiency landscape', kind: 'notes' }],
+        },
+        {
+          id: 'se-m3-lab-rr',
+          title: 'Lab: context-switch thrash (RR metaphor)',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective:
+            'Use round-robin time slices as a metaphor for excessive WIP / multitasking; argue for WIP limits.',
+          brief:
+            'systemsDemo schedule-rr. Honest: not Kanban software. Count slice switches; relate to thrash from too many in-progress tickets.',
+          config: { systemsDemo: 'schedule-rr' },
+          sources: [{ label: 'Lean/WIP limits (public engineering blogs)', kind: 'other' }],
+        },
       ],
     }),
     moduleOf({
@@ -191,6 +217,19 @@ Team projects are offline by nature; this site provides structured modules, chec
           'Written. No proprietary autograder.',
           'partial',
         ),
+        {
+          id: 'se-m4-lab-stack',
+          title: 'Lab: production stack trace (metaphor)',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective:
+            'Read a nested call stack as an incident artifact; write a 5-line “where to put the unit test” note.',
+          brief:
+            'systemsDemo stack-calls. Map top frames to likely unit vs integration test seams. Metaphor only.',
+          config: { systemsDemo: 'stack-calls' },
+          sources: [{ label: 'SE testing / debugging practice', kind: 'other' }],
+        },
       ],
     }),
     moduleOf({

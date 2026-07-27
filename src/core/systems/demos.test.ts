@@ -29,4 +29,15 @@ describe('systems demos', () => {
     const frames = getSystemsDemo('process-lifecycle').generate()
     expect(frames.some((f) => f.processes?.some((p) => p.state === 'blocked'))).toBe(true)
   })
+
+  it('new curriculum demos produce frames (DFA, CFG, window, join, env)', () => {
+    for (const id of ['dfa-ends01', 'cfg-anbn', 'sliding-window', 'nl-join', 'env-lookup'] as const) {
+      const frames = getSystemsDemo(id).generate()
+      expect(frames.length, id).toBeGreaterThan(2)
+    }
+    const dfa = getSystemsDemo('dfa-ends01').generate()
+    expect(dfa[dfa.length - 1]!.statusText).toMatch(/ACCEPT|REJECT/)
+    const join = getSystemsDemo('nl-join').generate()
+    expect(join[join.length - 1]!.statusText.toLowerCase()).toMatch(/done|result/)
+  })
 })

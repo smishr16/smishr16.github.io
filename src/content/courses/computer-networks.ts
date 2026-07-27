@@ -128,6 +128,19 @@ Programming projects (toy TCP, routers) are offline/self-hosted when assigned; i
           'Written.',
           'partial',
         ),
+        {
+          id: 'net-m2-lab-cache',
+          title: 'Lab: web/CDN cache (direct-map metaphor)',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective:
+            'Use direct-mapped cache hits/misses as a metaphor for edge/web cache behavior on a request stream.',
+          brief:
+            'Honest scope: CPU cache-direct demo reused for caching intuition, not real HTTP cache keys. systemsDemo cache-direct.',
+          config: { systemsDemo: 'cache-direct' },
+          sources: [{ label: 'Kurose — CDN/caching landscape', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({
@@ -157,6 +170,17 @@ Programming projects (toy TCP, routers) are offline/self-hosted when assigned; i
           'Written quantitative set.',
           'partial',
         ),
+        {
+          id: 'net-m3-lab-arq',
+          title: 'Lab: stop-and-wait vs window',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective: 'Compare stop-and-wait to window=2 pipeline; explain utilization on long RTT.',
+          brief: 'systemsDemo sliding-window. Record outstanding packets per phase; link to BDP intuition.',
+          config: { systemsDemo: 'sliding-window' },
+          sources: [{ label: 'Kurose — ARQ / sliding window', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({
@@ -215,6 +239,18 @@ Programming projects (toy TCP, routers) are offline/self-hosted when assigned; i
           'Written.',
           'partial',
         ),
+        {
+          id: 'net-m5-lab-route',
+          title: 'Lab: link-state shortest paths',
+          kind: 'lab',
+          status: 'live',
+          labId: 'graphs',
+          objective: 'Dijkstra on city-6 as the local computation after LS flood; record next hops / distances.',
+          brief:
+            'graphAlgo dijkstra, graphId city-6. Honest: not full OSPF; only the Dijkstra piece of link-state.',
+          config: { graphAlgo: 'dijkstra', graphId: 'city-6' },
+          sources: [{ label: 'Kurose — link state / Dijkstra', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({

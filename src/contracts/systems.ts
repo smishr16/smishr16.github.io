@@ -11,6 +11,11 @@ export type SystemsDemoId =
   | 'stack-calls'
   | 'minimax-tree'
   | 'dfa-even0'
+  | 'dfa-ends01'
+  | 'cfg-anbn'
+  | 'sliding-window'
+  | 'nl-join'
+  | 'env-lookup'
   | 'network-path'
   | 'pl-eval-tree'
 

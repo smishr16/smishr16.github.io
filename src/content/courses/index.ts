@@ -102,8 +102,9 @@ export const labs: LabMeta[] = [
     title: 'Systems visualizer',
     status: 'live',
     path: AppRoutes.labSystems,
-    blurb: 'CPU scheduling, page replacement, and process states for Systems / OS courses.',
-    topics: ['Computer Systems', 'Operating Systems'],
+    blurb:
+      'Scheduling, memory, stacks, automata/CFG toys, network path & ARQ, joins, and env chains — Systems/OS plus cross-course demos.',
+    topics: ['Computer Systems', 'Operating Systems', 'Theory', 'Networks', 'PL', 'Databases'],
   },
   {
     id: 'ml',

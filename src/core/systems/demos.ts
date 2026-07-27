@@ -615,6 +615,342 @@ function networkPath(): SystemsFrame[] {
   return frames
 }
 
+/** DFA for strings ending in 01. States: S (start), Saw0, Acc (ends with 01). */
+function dfaEnds01(): SystemsFrame[] {
+  const str = '11001'
+  type St = 'S' | '0' | 'A'
+  const labels: Record<St, string> = { S: 'S', '0': 'Saw0', A: 'Acc' }
+  let state: St = 'S'
+  const step = (s: St, ch: string): St => {
+    if (ch === '0') return '0'
+    // ch === '1'
+    if (s === '0') return 'A'
+    return 'S'
+  }
+  const nodes = (cur: St) => [
+    { id: 'S', label: 'S', x: 0.2, y: 0.5, role: cur === 'S' ? 'active' : 'default' },
+    { id: '0', label: 'Saw0', x: 0.5, y: 0.5, role: cur === '0' ? 'active' : 'default' },
+    { id: 'A', label: 'Acc', x: 0.8, y: 0.5, role: cur === 'A' ? 'active' : 'default' },
+  ]
+  const edges = [
+    { from: 'S', to: '0' },
+    { from: '0', to: 'A' },
+    { from: 'A', to: '0' },
+    { from: 'S', to: 'S' },
+    { from: '0', to: 'S' },
+    { from: 'A', to: 'S' },
+  ]
+  const frames: SystemsFrame[] = [
+    {
+      kind: 'tree',
+      title: 'DFA · ends with 01',
+      statusText: `Start in S · input "${str}"`,
+      treeNodes: nodes('S'),
+      treeEdges: edges,
+      metrics: 'accepting = Acc',
+      panels: [
+        {
+          title: 'δ',
+          lines: [
+            'δ(*,0)=Saw0',
+            'δ(Saw0,1)=Acc; δ(S,1)=S; δ(Acc,1)=S',
+            'L = { w ∈ {0,1}* | w ends with 01 }',
+          ],
+        },
+      ],
+    },
+  ]
+  for (let i = 0; i < str.length; i++) {
+    const ch = str[i]!
+    const prev = state
+    state = step(state, ch)
+    frames.push({
+      kind: 'tree',
+      title: 'DFA · ends with 01',
+      statusText: `Read '${ch}' · ${labels[prev]} → ${labels[state]}`,
+      treeNodes: nodes(state),
+      treeEdges: edges,
+      metrics: `consumed "${str.slice(0, i + 1)}"`,
+      panels: [
+        {
+          title: 'Run',
+          lines: [`${labels[prev]} --${ch}→ ${labels[state]}`, state === 'A' ? 'accepting so far' : 'not accepting'],
+        },
+      ],
+    })
+  }
+  frames.push({
+    kind: 'tree',
+    title: 'DFA · ends with 01',
+    statusText: state === 'A' ? 'ACCEPT' : 'REJECT',
+    treeNodes: nodes(state).map((n) => ({
+      ...n,
+      role: n.id === (state === 'A' ? 'A' : state === '0' ? '0' : 'S') ? (state === 'A' ? 'path' : 'active') : 'default',
+    })),
+    treeEdges: edges,
+    metrics: `final ${labels[state]}`,
+  })
+  return frames
+}
+
+/** Leftmost derivation for aabb via S→aSb | ε style CFG (toy). */
+function cfgAnbn(): SystemsFrame[] {
+  // S → a S b | ε  derives aabb
+  const steps = [
+    { sent: 'S', note: 'start symbol' },
+    { sent: 'a S b', note: 'S → aSb' },
+    { sent: 'a a S b b', note: 'S → aSb' },
+    { sent: 'a a ε b b', note: 'S → ε' },
+    { sent: 'a a b b', note: 'erase ε · terminal string aabb' },
+  ]
+  return steps.map((s, i) => ({
+    kind: 'tree' as const,
+    title: 'CFG derivation · aⁿbⁿ',
+    statusText: s.note,
+    treeNodes: [
+      { id: 'root', label: s.sent, x: 0.5, y: 0.45, role: i === steps.length - 1 ? 'path' : 'active' },
+    ],
+    treeEdges: [],
+    metrics: `step ${i + 1}/${steps.length}`,
+    panels: [
+      {
+        title: 'Grammar',
+        lines: ['S → a S b | ε', 'Leftmost derivation of aabb (n=2)', 'Parse tree would nest a…b pairs'],
+      },
+    ],
+  }))
+}
+
+/** Stop-and-wait then window=2 pipeline (toy sequence numbers). */
+function slidingWindow(): SystemsFrame[] {
+  const frames: SystemsFrame[] = []
+  // Stop-and-wait: send 0, wait ACK0, send 1, wait ACK1
+  const saw = [
+    { status: 'Send DATA0', seq: 'DATA0 →', win: 'window=1' },
+    { status: 'Wait… ACK0 arrives', seq: '← ACK0', win: 'window=1' },
+    { status: 'Send DATA1', seq: 'DATA1 →', win: 'window=1' },
+    { status: 'Wait… ACK1 arrives', seq: '← ACK1', win: 'window=1' },
+  ]
+  frames.push({
+    kind: 'process',
+    title: 'ARQ · stop-and-wait vs window',
+    statusText: 'Stop-and-wait: only 1 outstanding packet',
+    processes: [
+      { id: 'Snd', state: 'ready', role: 'sender' },
+      { id: 'Rcv', state: 'ready', role: 'receiver' },
+    ],
+    metrics: 'phase 1 · stop-and-wait',
+    panels: [{ title: 'Idea', lines: ['One unacked packet max', 'Long RTT ⇒ low utilization', 'Next: pipeline with window=2'] }],
+  })
+  for (const s of saw) {
+    frames.push({
+      kind: 'process',
+      title: 'ARQ · stop-and-wait vs window',
+      statusText: s.status,
+      processes: [
+        { id: 'Snd', state: s.status.startsWith('Wait') ? 'blocked' : 'running', role: 'sender' },
+        { id: 'Rcv', state: s.seq.includes('ACK') ? 'running' : 'ready', role: 'receiver' },
+      ],
+      metrics: s.win,
+      panels: [{ title: 'Wire', lines: [s.seq, s.win] }],
+    })
+  }
+  frames.push({
+    kind: 'process',
+    title: 'ARQ · stop-and-wait vs window',
+    statusText: 'Window=2: send DATA0 and DATA1 without waiting between',
+    processes: [
+      { id: 'Snd', state: 'running', role: 'sender' },
+      { id: 'Rcv', state: 'ready', role: 'receiver' },
+    ],
+    metrics: 'phase 2 · window=2',
+    panels: [
+      {
+        title: 'Pipeline',
+        lines: [
+          'Outstanding: DATA0, DATA1 (window full)',
+          'ACKs can return out of order in SR; GBN rewinds',
+          'Utilization ↑ when BDP > 1 packet',
+        ],
+      },
+    ],
+  })
+  frames.push({
+    kind: 'process',
+    title: 'ARQ · stop-and-wait vs window',
+    statusText: 'ACK0, ACK1 return · window slides forward',
+    processes: [
+      { id: 'Snd', state: 'ready', role: 'sender' },
+      { id: 'Rcv', state: 'terminated', role: 'receiver' },
+    ],
+    metrics: 'done',
+    panels: [{ title: 'Takeaway', lines: ['Window size pipelines the pipe', 'Loss recovery differs GBN vs SR', 'Toy only — no real loss inject'] }],
+  })
+  return frames
+}
+
+/** Nested-loop join on tiny R ⋈ S. */
+function nlJoin(): SystemsFrame[] {
+  const R = [
+    { id: 'r1', a: 1, b: 'x' },
+    { id: 'r2', a: 2, b: 'y' },
+    { id: 'r3', a: 3, b: 'z' },
+  ]
+  const S = [
+    { id: 's1', a: 2, c: 10 },
+    { id: 's2', a: 3, c: 20 },
+    { id: 's3', a: 4, c: 30 },
+  ]
+  const frames: SystemsFrame[] = [
+    {
+      kind: 'process',
+      title: 'Nested-loop join R ⋈ S on a',
+      statusText: 'Outer R, inner S · equality on a',
+      processes: [
+        ...R.map((r) => ({ id: r.id, state: 'ready' as const, role: `R a=${r.a}` })),
+        ...S.map((s) => ({ id: s.id, state: 'ready' as const, role: `S a=${s.a}` })),
+      ],
+      metrics: '|R|=3 |S|=3',
+      panels: [
+        {
+          title: 'Tables',
+          lines: [
+            'R: (1,x) (2,y) (3,z)',
+            'S: (2,10) (3,20) (4,30)',
+            'Cost idea: |R|·|S| probe comparisons',
+          ],
+        },
+      ],
+    },
+  ]
+  const matches: string[] = []
+  for (const r of R) {
+    frames.push({
+      kind: 'process',
+      title: 'Nested-loop join R ⋈ S on a',
+      statusText: `Outer row ${r.id} a=${r.a} · scan all of S`,
+      processes: [
+        ...R.map((row) => ({
+          id: row.id,
+          state: (row.id === r.id ? 'running' : 'ready') as 'running' | 'ready',
+          role: `R a=${row.a}`,
+        })),
+        ...S.map((s) => ({ id: s.id, state: 'ready' as const, role: `S a=${s.a}` })),
+      ],
+      metrics: `matches so far: ${matches.join(', ') || '∅'}`,
+    })
+    for (const s of S) {
+      const hit = r.a === s.a
+      if (hit) matches.push(`(${r.a},${r.b},${s.c})`)
+      frames.push({
+        kind: 'process',
+        title: 'Nested-loop join R ⋈ S on a',
+        statusText: hit
+          ? `Match ${r.id} ⋈ ${s.id} → emit (${r.a},${r.b},${s.c})`
+          : `Probe ${r.id} vs ${s.id}: ${r.a}≠${s.a}`,
+        processes: [
+          ...R.map((row) => ({
+            id: row.id,
+            state: (row.id === r.id ? 'running' : 'ready') as 'running' | 'ready',
+            role: `R a=${row.a}`,
+          })),
+          ...S.map((row) => ({
+            id: row.id,
+            state: (row.id === s.id ? (hit ? 'blocked' : 'running') : 'ready') as
+              | 'blocked'
+              | 'running'
+              | 'ready',
+            role: `S a=${row.a}`,
+          })),
+        ],
+        metrics: `matches: ${matches.join(', ') || '∅'}`,
+      })
+    }
+  }
+  frames.push({
+    kind: 'process',
+    title: 'Nested-loop join R ⋈ S on a',
+    statusText: `Done · result ${matches.join(' ')}`,
+    processes: [
+      ...R.map((r) => ({ id: r.id, state: 'terminated' as const, role: `R a=${r.a}` })),
+      ...S.map((s) => ({ id: s.id, state: 'terminated' as const, role: `S a=${s.a}` })),
+    ],
+    metrics: `${matches.length} tuples · 9 probes`,
+    panels: [
+      {
+        title: 'Result',
+        lines: [...matches, 'Hash/sort-merge beat NLJ at scale when selectivity allows'],
+      },
+    ],
+  })
+  return frames
+}
+
+/** Static env chain: lookup x in nested frames. */
+function envLookup(): SystemsFrame[] {
+  // global {x:1} → f {y:2} → g {x:9}  lookup x from g body → 9; lookup y → 2; lookup z miss
+  const frames: SystemsFrame[] = []
+  const chain = (active: number, highlight?: string) => {
+    const levels = [
+      { id: 'G', label: 'global {x↦1}', x: 0.5, y: 0.2 },
+      { id: 'F', label: 'f {y↦2}', x: 0.5, y: 0.45 },
+      { id: 'g', label: 'g {x↦9}', x: 0.5, y: 0.7 },
+    ]
+    return levels.map((n, i) => ({
+      ...n,
+      role: i === active ? 'active' : i < active ? 'done' : 'default',
+      value: highlight && i === active ? highlight : undefined,
+    }))
+  }
+  const edges = [
+    { from: 'g', to: 'F' },
+    { from: 'F', to: 'G' },
+  ]
+  frames.push({
+    kind: 'tree',
+    title: 'Environment chain (static scope)',
+    statusText: 'Call stack of envs: g → f → global',
+    treeNodes: chain(2),
+    treeEdges: edges,
+    panels: [
+      {
+        title: 'Setup',
+        lines: [
+          'global: x↦1',
+          'f closes over global; binds y↦2',
+          'g closes over f; binds x↦9 (shadows)',
+        ],
+      },
+    ],
+  })
+  frames.push({
+    kind: 'tree',
+    title: 'Environment chain (static scope)',
+    statusText: 'Lookup x in g · hit local binding 9',
+    treeNodes: chain(2, 'x=9'),
+    treeEdges: edges,
+    metrics: 'x ↦ 9',
+  })
+  frames.push({
+    kind: 'tree',
+    title: 'Environment chain (static scope)',
+    statusText: 'Lookup y in g · miss local → parent f → y=2',
+    treeNodes: chain(1, 'y=2'),
+    treeEdges: edges,
+    metrics: 'y ↦ 2',
+  })
+  frames.push({
+    kind: 'tree',
+    title: 'Environment chain (static scope)',
+    statusText: 'Lookup z · miss all frames → unbound error',
+    treeNodes: chain(0, 'z?'),
+    treeEdges: edges,
+    metrics: 'unbound z',
+    panels: [{ title: 'Static vs dynamic', lines: ['Chain follows definition (lexical)', 'Dynamic scope would walk the call stack differently'] }],
+  })
+  return frames
+}
+
 /** Evaluate (2+3)*4 expression tree bottom-up. */
 function plEvalTree(): SystemsFrame[] {
   const base = [
@@ -771,6 +1107,41 @@ export const systemsDemos: ISystemsDemo[] = [
     description: 'Run a 2-state DFA for even number of zeros on string 01001.',
     category: 'ai',
     generate: dfaEven0,
+  },
+  {
+    id: 'dfa-ends01',
+    label: 'DFA (ends 01)',
+    description: '3-state DFA for strings ending in 01 on input 11001.',
+    category: 'ai',
+    generate: dfaEnds01,
+  },
+  {
+    id: 'cfg-anbn',
+    label: 'CFG aⁿbⁿ',
+    description: 'Leftmost derivation of aabb from S → aSb | ε.',
+    category: 'ai',
+    generate: cfgAnbn,
+  },
+  {
+    id: 'sliding-window',
+    label: 'Sliding window',
+    description: 'Stop-and-wait vs window=2 ARQ pipeline (toy).',
+    category: 'cpu',
+    generate: slidingWindow,
+  },
+  {
+    id: 'nl-join',
+    label: 'Nested-loop join',
+    description: 'Nested-loop join of tiny R and S on attribute a.',
+    category: 'memory',
+    generate: nlJoin,
+  },
+  {
+    id: 'env-lookup',
+    label: 'Env lookup',
+    description: 'Static-scope environment chain: shadowing and parent lookup.',
+    category: 'cpu',
+    generate: envLookup,
   },
   {
     id: 'network-path',
