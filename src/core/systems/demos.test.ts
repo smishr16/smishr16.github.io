@@ -40,4 +40,20 @@ describe('systems demos', () => {
     const join = getSystemsDemo('nl-join').generate()
     expect(join[join.length - 1]!.statusText.toLowerCase()).toMatch(/done|result/)
   })
+
+  it('PDA, TM, AIMD demos are course-native instruments', () => {
+    const pda = getSystemsDemo('pda-anbn').generate()
+    expect(pda.length).toBeGreaterThan(4)
+    expect(pda.some((f) => /ACCEPT/i.test(f.statusText))).toBe(true)
+    expect(pda.some((f) => (f.stackFrames?.length ?? 0) > 0)).toBe(true)
+
+    const tm = getSystemsDemo('tm-anbn').generate()
+    expect(tm.length).toBeGreaterThan(5)
+    expect(tm[tm.length - 1]!.statusText).toMatch(/ACCEPT/i)
+
+    const aimd = getSystemsDemo('tcp-aimd').generate()
+    expect(aimd.length).toBeGreaterThan(8)
+    expect(aimd.some((f) => /LOSS/i.test(f.statusText))).toBe(true)
+  })
 })
+

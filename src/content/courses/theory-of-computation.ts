@@ -177,14 +177,15 @@ Expect heavy written proofs. Interactive automata toys may arrive later; syllabu
         },
         {
           id: 'toc-m3-lab-pda',
-          title: 'Lab: stack as PDA memory (metaphor)',
+          title: 'Lab: PDA for aⁿbⁿ',
           kind: 'lab',
           status: 'live',
           labId: 'systems',
-          objective: 'Use call-stack push/pop as PDA stack intuition for matched a…b pairs.',
+          objective:
+            'Step a real PDA on aabb: push A on each a, pop on each b, accept by empty stack (marker Z).',
           brief:
-            'Honest scope: stack-calls demo is CSAPP-style frames, not a full PDA. systemsDemo stack-calls. Map push=see a, pop=see b on paper for aabb.',
-          config: { systemsDemo: 'stack-calls' },
+            'systemsDemo pda-anbn. Record stack after each symbol; final accept? Contrast with the CFG derivation lab.',
+          config: { systemsDemo: 'pda-anbn' },
           sources: [{ label: 'Sipser Ch. 2 — PDA', kind: 'textbook' }],
         },
       ],
@@ -216,6 +217,19 @@ Expect heavy written proofs. Interactive automata toys may arrive later; syllabu
           'Written.',
           'partial',
         ),
+        {
+          id: 'toc-m4-lab-tm',
+          title: 'Lab: TM crosses off aⁿbⁿ',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective:
+            'Step a single-tape TM toy on □aabb□ that marks a/b pairs; list tape after each pass.',
+          brief:
+            'systemsDemo tm-anbn. Honest: finite n=2 instance illustrating the multipass TM idea, not a full Sipser formal δ table.',
+          config: { systemsDemo: 'tm-anbn' },
+          sources: [{ label: 'Sipser Ch. 3', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({

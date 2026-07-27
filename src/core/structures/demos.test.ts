@@ -33,4 +33,12 @@ describe('structure demos', () => {
     const last = frames[frames.length - 1]!
     expect(last.panels?.[0]?.lines.some((l) => l.includes('→'))).toBe(true)
   })
+
+  it('bplus-tree builds internal nodes after enough inserts', () => {
+    const frames = getStructureDemo('bplus-tree').generate([10, 20, 30, 40, 50])
+    expect(frames.length).toBeGreaterThan(5)
+    const last = frames[frames.length - 1]!
+    expect(last.nodes.length).toBeGreaterThan(2)
+    expect(last.panels?.[0]?.lines.some((l) => /int|⟨/.test(l))).toBe(true)
+  })
 })

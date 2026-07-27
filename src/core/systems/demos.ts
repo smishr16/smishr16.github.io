@@ -951,6 +951,255 @@ function envLookup(): SystemsFrame[] {
   return frames
 }
 
+/** Real PDA for aⁿbⁿ: push A on a, pop on b; accept by empty stack after all input. */
+function pdaAnbn(): SystemsFrame[] {
+  const str = 'aabb'
+  type St = 'q0' | 'q1' | 'qa'
+  const stack: string[] = ['Z'] // bottom marker
+  const frames: SystemsFrame[] = []
+  const stackView = (topHighlight = false) =>
+    stack.map((s, i) => ({
+      label: s,
+      role: (i === stack.length - 1 ? (topHighlight ? 'active' : 'default') : 'default') as
+        | 'active'
+        | 'default',
+    }))
+  const stateNodes = (cur: St) => [
+    { id: 'q0', label: 'q0 start', x: 0.2, y: 0.25, role: cur === 'q0' ? 'active' : 'default' },
+    { id: 'q1', label: 'q1', x: 0.5, y: 0.25, role: cur === 'q1' ? 'active' : 'default' },
+    { id: 'qa', label: 'qa acc', x: 0.8, y: 0.25, role: cur === 'qa' ? 'path' : 'default' },
+  ]
+  frames.push({
+    kind: 'stack',
+    title: 'PDA · aⁿbⁿ',
+    statusText: `Start q0 · input "${str}" · stack [Z]`,
+    stackFrames: stackView(),
+    treeNodes: stateNodes('q0'),
+    treeEdges: [
+      { from: 'q0', to: 'q1' },
+      { from: 'q1', to: 'qa' },
+    ],
+    metrics: 'push A on a; pop A on b',
+    panels: [
+      {
+        title: 'δ (sketch)',
+        lines: [
+          'δ(q0,a,Z/A)=(q0, AZ/AA)  push A',
+          'δ(q0,b,A)=(q1, ε)  first b → pop, enter q1',
+          'δ(q1,b,A)=(q1, ε)  more b → pop',
+          'δ(q1,ε,Z)=(qa, Z)  empty stack marker → accept',
+        ],
+      },
+    ],
+  })
+  for (let i = 0; i < str.length; i++) {
+    const ch = str[i]!
+    if (ch === 'a') {
+      stack.push('A')
+      frames.push({
+        kind: 'stack',
+        title: 'PDA · aⁿbⁿ',
+        statusText: `Read 'a' · push A · state q0`,
+        stackFrames: stackView(true),
+        treeNodes: stateNodes('q0'),
+        treeEdges: [
+          { from: 'q0', to: 'q1' },
+          { from: 'q1', to: 'qa' },
+        ],
+        metrics: `consumed "${str.slice(0, i + 1)}" · stack height ${stack.length}`,
+        panels: [{ title: 'Stack (bottom→top)', lines: [...stack] }],
+      })
+    } else {
+      // b
+      const top = stack[stack.length - 1]
+      if (top === 'A') {
+        stack.pop()
+        frames.push({
+          kind: 'stack',
+          title: 'PDA · aⁿbⁿ',
+          statusText: `Read 'b' · pop A · state q1`,
+          stackFrames: stackView(true),
+          treeNodes: stateNodes('q1'),
+          treeEdges: [
+            { from: 'q0', to: 'q1' },
+            { from: 'q1', to: 'qa' },
+          ],
+          metrics: `consumed "${str.slice(0, i + 1)}" · stack height ${stack.length}`,
+          panels: [{ title: 'Stack (bottom→top)', lines: [...stack] }],
+        })
+      } else {
+        frames.push({
+          kind: 'stack',
+          title: 'PDA · aⁿbⁿ',
+          statusText: `Read 'b' · stuck (top≠A) · REJECT`,
+          stackFrames: stackView(true),
+          treeNodes: stateNodes('q1'),
+          metrics: 'reject',
+        })
+        return frames
+      }
+    }
+  }
+  if (stack.length === 1 && stack[0] === 'Z') {
+    frames.push({
+      kind: 'stack',
+      title: 'PDA · aⁿbⁿ',
+      statusText: 'ε-move on Z · ACCEPT by empty stack (marker only)',
+      stackFrames: stackView(),
+      treeNodes: stateNodes('qa'),
+      treeEdges: [
+        { from: 'q0', to: 'q1' },
+        { from: 'q1', to: 'qa' },
+      ],
+      metrics: 'ACCEPT · n=2 for aabb',
+      panels: [{ title: 'Result', lines: ['Matched 2 a with 2 b', 'Real PDA — not a call-stack metaphor'] }],
+    })
+  }
+  return frames
+}
+
+/** Single-tape TM that checks aⁿbⁿ for n=2 on tape □aabb□ (high-level steps). */
+function tmAnbn(): SystemsFrame[] {
+  // Tape cells as process "frames" metaphor — use panels for tape + tree for states
+  type Cell = string
+  const tape: Cell[] = ['□', 'a', 'a', 'b', 'b', '□']
+  let head = 1
+  let state = 'q_scan'
+  const frames: SystemsFrame[] = []
+  const snap = (status: string, note: string[]) => {
+    const tapeLine = tape.map((c, i) => (i === head ? `[${c}]` : ` ${c} `)).join('')
+    frames.push({
+      kind: 'tree',
+      title: 'TM · aⁿbⁿ (n=2 toy)',
+      statusText: status,
+      treeNodes: [
+        { id: 's', label: state, x: 0.5, y: 0.2, role: 'active' },
+        {
+          id: 't',
+          label: tapeLine,
+          x: 0.5,
+          y: 0.55,
+          role: 'default',
+        },
+      ],
+      treeEdges: [{ from: 's', to: 't' }],
+      metrics: `head@${head} · state ${state}`,
+      panels: [
+        { title: 'Tape', lines: [tapeLine, `head index ${head}`] },
+        { title: 'Notes', lines: note },
+      ],
+    })
+  }
+  snap('Start: tape □aabb□', ['Strategy: cross off one a and one b per pass', 'Accept if all matched'])
+  // Pass 1: mark first a as X, scan to first b mark Y
+  tape[1] = 'X'
+  head = 1
+  state = 'q_mark_a'
+  snap("Mark leftmost 'a' → X", ['First a crossed'])
+  head = 3
+  state = 'q_find_b'
+  snap("Scan right for first 'b'", ['Head moves right'])
+  tape[3] = 'Y'
+  state = 'q_mark_b'
+  snap("Mark matching 'b' → Y", ['One a-b pair done'])
+  // rewind
+  head = 1
+  state = 'q_rewind'
+  snap('Rewind to left end', ['Prepare second pass'])
+  // Pass 2
+  head = 2
+  tape[2] = 'X'
+  state = 'q_mark_a'
+  snap("Mark next 'a' → X", ['Second a'])
+  head = 4
+  tape[4] = 'Y'
+  state = 'q_mark_b'
+  snap("Mark matching 'b' → Y", ['Second pair'])
+  // check no leftover a/b
+  head = 1
+  state = 'q_check'
+  snap('Scan: no unmarked a/b remain', ['All symbols crossed'])
+  state = 'q_accept'
+  snap('ACCEPT', ['Language aⁿbⁿ for this finite n=2 instance', 'General TM repeats until blank; reject on mismatch'])
+  return frames
+}
+
+/** TCP AIMD: slow start then congestion avoidance with one loss. */
+function tcpAimd(): SystemsFrame[] {
+  const frames: SystemsFrame[] = []
+  let cwnd = 1
+  let ssthresh = 8
+  let phase: 'slow-start' | 'cong-avoid' | 'loss' = 'slow-start'
+  const history: string[] = []
+  const push = (rtt: number, event: string) => {
+    history.push(`RTT${rtt}: cwnd=${cwnd.toFixed(1)} ssthresh=${ssthresh} [${phase}] ${event}`)
+    const nodes = history.slice(-6).map((h, i) => ({
+      id: `r${i}`,
+      label: h.split(' ').slice(0, 2).join(' '),
+      x: 0.12 + (i / 6) * 0.8,
+      y: 0.55 - Math.min(cwnd, 12) * 0.03,
+      role: i === Math.min(history.length, 6) - 1 ? 'active' : 'default',
+      value: String(Math.round(cwnd * 10) / 10),
+    }))
+    frames.push({
+      kind: 'tree',
+      title: 'TCP AIMD (toy)',
+      statusText: `RTT ${rtt} · cwnd=${cwnd.toFixed(1)} · ${phase} · ${event}`,
+      treeNodes: [
+        { id: 'cwnd', label: `cwnd ${cwnd.toFixed(1)}`, x: 0.35, y: 0.25, role: 'active', value: String(cwnd) },
+        { id: 'ss', label: `ssthresh ${ssthresh}`, x: 0.7, y: 0.25, role: 'default' },
+        ...nodes.map((n, i) => ({ ...n, y: 0.65, x: 0.1 + i * 0.14 })),
+      ],
+      treeEdges: [{ from: 'cwnd', to: 'ss' }],
+      metrics: `phase=${phase}`,
+      panels: [
+        { title: 'Trace', lines: [...history] },
+        {
+          title: 'Rules',
+          lines: [
+            'Slow start: cwnd *= 2 each RTT (approx +1 per ACK → exponential)',
+            'Congestion avoidance: cwnd += 1 per RTT (AIMD additive increase)',
+            'Loss: ssthresh = cwnd/2; cwnd = 1 (or ssthresh for fast recovery landscape)',
+          ],
+        },
+      ],
+    })
+  }
+  // RTT 0-3 slow start: 1,2,4,8
+  for (let rtt = 0; rtt < 4; rtt++) {
+    push(rtt, rtt === 0 ? 'start' : 'double (SS)')
+    if (rtt < 3) {
+      if (cwnd >= ssthresh) phase = 'cong-avoid'
+      else cwnd = Math.min(cwnd * 2, ssthresh)
+      if (cwnd >= ssthresh) phase = 'cong-avoid'
+    }
+  }
+  // at cwnd=8 hit ssthresh, CA
+  phase = 'cong-avoid'
+  for (let rtt = 4; rtt < 7; rtt++) {
+    cwnd += 1
+    push(rtt, '+1 (CA)')
+  }
+  // loss at RTT 7
+  phase = 'loss'
+  ssthresh = Math.max(Math.floor(cwnd / 2), 2)
+  const lost = cwnd
+  cwnd = 1
+  push(7, `LOSS · was ${lost} → restart SS`)
+  phase = 'slow-start'
+  for (let rtt = 8; rtt < 11; rtt++) {
+    if (cwnd < ssthresh) {
+      cwnd *= 2
+      push(rtt, 'double (SS recovery)')
+    } else {
+      phase = 'cong-avoid'
+      cwnd += 1
+      push(rtt, '+1 (CA)')
+    }
+  }
+  return frames
+}
+
 /** Evaluate (2+3)*4 expression tree bottom-up. */
 function plEvalTree(): SystemsFrame[] {
   const base = [
@@ -1123,11 +1372,32 @@ export const systemsDemos: ISystemsDemo[] = [
     generate: cfgAnbn,
   },
   {
+    id: 'pda-anbn',
+    label: 'PDA aⁿbⁿ',
+    description: 'Pushdown automaton for aabb: push A on a, pop on b, accept on empty stack.',
+    category: 'ai',
+    generate: pdaAnbn,
+  },
+  {
+    id: 'tm-anbn',
+    label: 'TM aⁿbⁿ',
+    description: 'Single-tape TM toy crossing off a/b pairs on □aabb□.',
+    category: 'ai',
+    generate: tmAnbn,
+  },
+  {
     id: 'sliding-window',
     label: 'Sliding window',
     description: 'Stop-and-wait vs window=2 ARQ pipeline (toy).',
     category: 'cpu',
     generate: slidingWindow,
+  },
+  {
+    id: 'tcp-aimd',
+    label: 'TCP AIMD',
+    description: 'Slow start + congestion avoidance with one loss event (cwnd/ssthresh).',
+    category: 'cpu',
+    generate: tcpAimd,
   },
   {
     id: 'nl-join',

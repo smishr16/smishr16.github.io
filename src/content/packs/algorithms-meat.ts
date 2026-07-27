@@ -171,6 +171,11 @@ export const algorithmsMeat: MeatPack[] = [
     sources: [{ label: 'CLRS Ch. 22–24', kind: 'textbook' }],
     deliverables: ['Diagrams + complexity answers', 'Dijkstra settle order with distances'],
     selfCheck: ['BFS layers correct', 'Edge classifications if DFS'],
+    solutionSketch: {
+      problemId: 'g2',
+      sketch:
+        'BFS from A, alpha ties on neighbors: A; then B,C (dist 1); from B: D,E; from C: F → order A,B,C,D,E,F. Dist: A0 B1 C1 D2 E2 F2.',
+    },
     problems: [
       {
         id: 'g1',

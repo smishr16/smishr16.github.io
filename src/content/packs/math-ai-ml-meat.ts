@@ -49,7 +49,7 @@ export const discreteMeat: MeatPack[] = [
         title: 'P5 · Flaw',
         points: 20,
         prompt:
-          '“Proof” that all horses are the same color by induction on herd size is flawed. Identify the broken step.',
+          '“Proof” that all horses are the same color by induction on herd size n is flawed. Identify the broken step when going from n=1 to n=2 (or state the bad induction hypothesis application).',
       },
     ],
   },
@@ -793,26 +793,32 @@ export const mlMeat: MeatPack[] = [
     sources: [{ label: 'ISL intro / CS229', kind: 'curriculum', url: 'https://cs229.stanford.edu/' }],
     deliverables: ['Learning-curve sketches', 'Problem formulation'],
     selfCheck: ['Train/test distinction explicit'],
+    solutionSketch: {
+      problemId: 'm2',
+      sketch:
+        'Low capacity: high train+test error (underfit). Mid: min test error. High: train→0, test rises (overfit). Pick min test (or CV) capacity, not min train.',
+    },
     problems: [
       {
         id: 'm1',
         title: 'P1 · Formulate',
         points: 30,
         prompt:
-          'Spam classification: define X features (list 5), Y, hypothesis class, and a loss. What is a train/test split risk?',
+          'Spam classification: define X features (list 5), Y∈{0,1}, hypothesis class, and 0-1 or logistic loss. What is a train/test split risk if you tune on test?',
       },
       {
         id: 'm2',
         title: 'P2 · Curves',
         points: 40,
         prompt:
-          'Sketch train and test error vs model capacity for underfit → sweet spot → overfit. Mark where you pick a model.',
+          'Sketch train and test error vs model capacity for underfit → sweet spot → overfit. Mark where you pick a model (min test / CV).',
       },
       {
         id: 'm3',
         title: 'P3 · Bias',
         points: 30,
-        prompt: 'Explain inductive bias of linear models vs decision trees in ≤8 sentences.',
+        prompt:
+          'Explain inductive bias of linear models (linear decision surface in R^d) vs decision trees (axis-aligned partitions) in ≤8 sentences.',
       },
     ],
   },

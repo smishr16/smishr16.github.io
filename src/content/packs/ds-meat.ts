@@ -6,33 +6,39 @@ export const dataStructuresMeat: MeatPack[] = [
     timeEstimate: '60 min',
     deliverables: ['ADT specs with complexities', 'One alternative representation each'],
     selfCheck: ['Operations total a closed interface', 'Complexities match representation'],
+    solutionSketch: {
+      problemId: 'd4',
+      sketch:
+        'Aggregate: n appends with doubling cost 1+2+4+…+n ≤ 2n → amortized O(1). Worst single append is Θ(n) when resizing.',
+    },
     problems: [
       {
         id: 'd1',
         title: 'P1 · Stack ADT',
         points: 25,
         prompt:
-          'Specify Stack ADT: push, pop, peek, isEmpty with pre/postconditions and worst-case times for array and linked representations.',
+          'Specify Stack ADT: push, pop, peek, isEmpty with pre/postconditions and worst-case times Θ(1) for array-top and linked-list-head representations.',
       },
       {
         id: 'd2',
         title: 'P2 · Queue',
         points: 25,
-        prompt: 'Same for Queue (enqueue/dequeue). Explain circular buffer vs linked list trade-offs.',
+        prompt:
+          'Same for Queue (enqueue/dequeue): circular buffer of capacity n vs linked list. When is buffer full? Give Θ costs.',
       },
       {
         id: 'd3',
         title: 'P3 · Dictionary',
         points: 30,
         prompt:
-          'Specify Dictionary (insert, delete, find) abstractly. Name two representations and their average/worst find costs.',
+          'Specify Dictionary (insert, delete, find). Balanced BST find Θ(log n) worst; hash average Θ(1), worst Θ(n). When pick which?',
       },
       {
         id: 'd4',
         title: 'P4 · Amortized',
         points: 20,
         prompt:
-          'Dynamic array doubles when full. Argue append is amortized O(1) (aggregate or banker’s method).',
+          'Dynamic array doubles when full. Argue append is amortized O(1) (aggregate or banker’s method). State worst-case single append.',
       },
     ],
   },

@@ -210,6 +210,19 @@ Programming projects (toy TCP, routers) are offline/self-hosted when assigned; i
           'Written.',
           'partial',
         ),
+        {
+          id: 'net-m4-lab-aimd',
+          title: 'Lab: TCP AIMD cwnd trace',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective:
+            'Step slow start → congestion avoidance → one loss → recovery; record cwnd and ssthresh each RTT.',
+          brief:
+            'systemsDemo tcp-aimd. Fixed toy schedule (not live packet capture). Compare exponential SS vs +1 CA.',
+          config: { systemsDemo: 'tcp-aimd' },
+          sources: [{ label: 'Kurose & Ross — congestion control', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({

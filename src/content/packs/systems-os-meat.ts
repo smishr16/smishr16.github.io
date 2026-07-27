@@ -7,6 +7,11 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'CSAPP Ch. 2', kind: 'textbook' }],
     deliverables: ['Numeric answers + bit diagrams', 'Float and cast explanations'],
     selfCheck: ['Two’s complement wrap stated explicitly', 'Endian byte order listed left-to-right in memory'],
+    solutionSketch: {
+      problemId: 's1',
+      sketch:
+        '8-bit: −1=0xFF, −128=0x80, 127=0x7F. 100+50=150 → 150−256=−106 if interpreted as signed 8-bit (overflow).',
+    },
     problems: [
       {
         id: 's1',

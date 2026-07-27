@@ -387,6 +387,194 @@ function bplusFrames(values: number[]): StructureFrame[] {
   return frames
 }
 
+/**
+ * B+ tree with internal separators (order = max 2 keys / 3 children per node).
+ * Leaves hold data keys; internal nodes hold separator keys only.
+ */
+function bplusTreeFrames(values: number[]): StructureFrame[] {
+  const MAX_KEYS = 2 // order-3 tree: max 3 children
+  type Leaf = { id: string; keys: number[]; next: string | null }
+  type Internal = { id: string; keys: number[]; children: string[] }
+  type Node = Leaf | Internal
+
+  let idSeq = 0
+  const nid = (p: string) => `${p}${idSeq++}`
+  const nodes = new Map<string, Node>()
+  let rootId = nid('L')
+  nodes.set(rootId, { id: rootId, keys: [], next: null })
+
+  const frames: StructureFrame[] = []
+
+  const layout = (): { drawNodes: StructureDrawNode[]; drawEdges: StructureDrawEdge[]; lines: string[] } => {
+    const drawNodes: StructureDrawNode[] = []
+    const drawEdges: StructureDrawEdge[] = []
+    const lines: string[] = []
+    // BFS levels
+    const levels: string[][] = []
+    const q: { id: string; depth: number }[] = [{ id: rootId, depth: 0 }]
+    const seen = new Set<string>()
+    while (q.length) {
+      const { id, depth } = q.shift()!
+      if (seen.has(id)) continue
+      seen.add(id)
+      if (!levels[depth]) levels[depth] = []
+      levels[depth]!.push(id)
+      const n = nodes.get(id)!
+      if ('children' in n) {
+        for (const c of n.children) q.push({ id: c, depth: depth + 1 })
+      }
+    }
+    levels.forEach((level, d) => {
+      level.forEach((id, i) => {
+        const n = nodes.get(id)!
+        const x = (i + 1) / (level.length + 1)
+        const y = 0.2 + d * 0.28
+        const leaf = !('children' in n)
+        const label = leaf
+          ? `[${(n as Leaf).keys.join(',') || '∅'}]`
+          : `⟨${(n as Internal).keys.join('|')}⟩`
+        drawNodes.push({
+          id,
+          label,
+          x,
+          y,
+          role: id === rootId ? 'pivot' : leaf ? 'default' : 'path',
+        })
+        lines.push(`${id}${leaf ? ' leaf' : ' int'}: ${label}`)
+        if ('children' in n) {
+          for (const c of n.children) {
+            drawEdges.push({ from: id, to: c })
+          }
+        }
+      })
+    })
+    // sibling links on leaves
+    const leaves = [...nodes.values()].filter((n) => !('children' in n)) as Leaf[]
+    leaves.sort((a, b) => (a.keys[0] ?? 0) - (b.keys[0] ?? 0))
+    for (let i = 0; i < leaves.length - 1; i++) {
+      leaves[i]!.next = leaves[i + 1]!.id
+      drawEdges.push({ from: leaves[i]!.id, to: leaves[i + 1]!.id, label: '→' })
+    }
+    return { drawNodes, drawEdges, lines }
+  }
+
+  const pushFrame = (status: string, activeId?: string) => {
+    const { drawNodes, drawEdges, lines } = layout()
+    if (activeId) {
+      const n = drawNodes.find((x) => x.id === activeId)
+      if (n) n.role = 'new'
+    }
+    frames.push({
+      kind: 'bplus',
+      title: 'B+ tree (internal + leaves)',
+      statusText: status,
+      nodes: drawNodes,
+      edges: drawEdges,
+      metrics: `root=${rootId} · maxKeys=${MAX_KEYS}`,
+      panels: [
+        {
+          title: 'Tree',
+          lines: [
+            ...lines,
+            '⟨k⟩ = internal separators; [k] = leaf data',
+            'Sibling → links for range scans',
+          ],
+        },
+      ],
+    })
+  }
+
+  pushFrame('Empty B+ · root is a leaf')
+
+  const findLeaf = (key: number): string => {
+    let id = rootId
+    while (true) {
+      const n = nodes.get(id)!
+      if (!('children' in n)) return id
+      const inn = n as Internal
+      let i = 0
+      while (i < inn.keys.length && key >= inn.keys[i]!) i++
+      id = inn.children[i]!
+    }
+  }
+
+  const splitLeaf = (leafId: string): void => {
+    const leaf = nodes.get(leafId) as Leaf
+    const mid = Math.ceil(leaf.keys.length / 2)
+    const rightKeys = leaf.keys.splice(mid)
+    const sep = rightKeys[0]!
+    const rightId = nid('L')
+    nodes.set(rightId, { id: rightId, keys: rightKeys, next: leaf.next })
+    leaf.next = rightId
+
+    if (leafId === rootId) {
+      const newRoot = nid('I')
+      nodes.set(newRoot, { id: newRoot, keys: [sep], children: [leafId, rightId] })
+      rootId = newRoot
+      return
+    }
+    // find parent
+    for (const [pid, p] of nodes) {
+      if (!('children' in p)) continue
+      const inn = p as Internal
+      const idx = inn.children.indexOf(leafId)
+      if (idx < 0) continue
+      inn.keys.splice(idx, 0, sep)
+      inn.children.splice(idx + 1, 0, rightId)
+      if (inn.keys.length > MAX_KEYS) splitInternal(pid)
+      return
+    }
+  }
+
+  const splitInternal = (nodeId: string): void => {
+    const inn = nodes.get(nodeId) as Internal
+    const mid = Math.floor(inn.keys.length / 2)
+    const up = inn.keys[mid]!
+    const rightKeys = inn.keys.splice(mid + 1)
+    inn.keys.splice(mid) // remove mid from left
+    const rightChildren = inn.children.splice(mid + 1)
+    const rightId = nid('I')
+    nodes.set(rightId, { id: rightId, keys: rightKeys, children: rightChildren })
+
+    if (nodeId === rootId) {
+      const newRoot = nid('I')
+      nodes.set(newRoot, { id: newRoot, keys: [up], children: [nodeId, rightId] })
+      rootId = newRoot
+      return
+    }
+    for (const [pid, p] of nodes) {
+      if (!('children' in p)) continue
+      const par = p as Internal
+      const idx = par.children.indexOf(nodeId)
+      if (idx < 0) continue
+      par.keys.splice(idx, 0, up)
+      par.children.splice(idx + 1, 0, rightId)
+      if (par.keys.length > MAX_KEYS) splitInternal(pid)
+      return
+    }
+  }
+
+  for (const v of values) {
+    const leafId = findLeaf(v)
+    const leaf = nodes.get(leafId) as Leaf
+    // insert sorted
+    let i = 0
+    while (i < leaf.keys.length && leaf.keys[i]! < v) i++
+    if (leaf.keys[i] === v) {
+      pushFrame(`Key ${v} already present (no-op)`, leafId)
+      continue
+    }
+    leaf.keys.splice(i, 0, v)
+    pushFrame(`Insert ${v} into leaf ${leafId}`, leafId)
+    if (leaf.keys.length > MAX_KEYS) {
+      splitLeaf(leafId)
+      pushFrame(`Split leaf after ${v} · promote separator`, leafId)
+    }
+  }
+  pushFrame('Done — full B+ with internal separators + leaf chain')
+  return frames
+}
+
 export const structureDemos: IStructureDemo[] = [
   {
     id: 'list-append',
@@ -422,6 +610,13 @@ export const structureDemos: IStructureDemo[] = [
     label: 'B+ leaves (toy)',
     description: 'Order-3 leaf packing/splits — simplified B+ teaching model.',
     generate: bplusFrames,
+  },
+  {
+    id: 'bplus-tree',
+    kind: 'bplus',
+    label: 'B+ tree (full)',
+    description: 'B+ inserts with internal separators, root splits, and leaf sibling links.',
+    generate: bplusTreeFrames,
   },
 ]
 

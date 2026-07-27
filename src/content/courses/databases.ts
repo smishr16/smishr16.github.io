@@ -190,6 +190,19 @@ No production DBMS is required in-browser for Phase syllabus; written design wor
           sources: [{ label: 'DB textbook — B+ trees', kind: 'textbook' }],
         },
         {
+          id: 'db-m4-lab-bplus-full',
+          title: 'Lab: B+ tree with internal nodes',
+          kind: 'lab',
+          status: 'live',
+          labId: 'structures',
+          objective:
+            'Insert keys into a full B+ (max 2 keys/node): watch leaf splits, separator promotion, and root growth.',
+          brief:
+            'structureDemo bplus-tree, values [10,20,30,40,50,5,15,25]. Draw internal ⟨separators⟩ vs leaf [data] after each split.',
+          config: { structureDemo: 'bplus-tree', values: [10, 20, 30, 40, 50, 5, 15, 25] },
+          sources: [{ label: 'DB textbook / CMU 15-445 — B+ trees', kind: 'textbook' }],
+        },
+        {
           id: 'db-m4-lab-hash',
           title: 'Lab: hash index (chaining)',
           kind: 'lab',

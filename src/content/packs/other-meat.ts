@@ -263,6 +263,11 @@ export const networksMeat: MeatPack[] = [
     sources: [{ label: 'Kurose & Ross Ch. 1', kind: 'textbook' }],
     deliverables: ['Numeric delay calculations'],
     selfCheck: ['Units: bits, bps, meters, c'],
+    solutionSketch: {
+      problemId: 'n1',
+      sketch:
+        'L=1500×8=12000 bits; tx=L/R=12000/10e6=1.2ms. prop=d/s=1e6/2e8=5ms. +1ms proc → one-hop ≈7.2ms (no queue).',
+    },
     problems: [
       {
         id: 'n1',
@@ -275,13 +280,15 @@ export const networksMeat: MeatPack[] = [
         id: 'n2',
         title: 'P2 · End-to-end',
         points: 30,
-        prompt: 'State the end-to-end argument in your own words; give one function that should not live in the network core.',
+        prompt:
+          'State the end-to-end argument in your own words; give one function that should not live only in the network core (e.g. reliable delivery). Cite one counterexample where hop-by-hop still helps.',
       },
       {
         id: 'n3',
         title: 'P3 · Packet vs circuit',
         points: 30,
-        prompt: 'Compare packet and circuit switching on statistical multiplexing and failure modes.',
+        prompt:
+          'Compare packet and circuit switching: for 10 users each needing 1 Mbps peaks but average 0.1 Mbps on a 5 Mbps link, who fits? Name one failure mode each.',
       },
     ],
   },
@@ -705,25 +712,32 @@ export const seMeat: MeatPack[] = [
     timeEstimate: '50 min',
     deliverables: ['Process recommendation memo'],
     selfCheck: ['Risks named, not slogans'],
+    solutionSketch: {
+      problemId: 's3',
+      sketch:
+        'DoD sample bullets: code reviewed by ≥1 peer; unit tests for new paths; integration test for happy path; docs updated; feature flag off-by-default; monitoring dashboard link; WCAG AA checklist on primary flow.',
+    },
     problems: [
       {
         id: 's1',
         title: 'P1 · Scenario A',
         points: 40,
         prompt:
-          'Safety-critical medical device firmware, 8 engineers, regulatory audit. Recommend process practices (with risks of agile theater).',
+          'Safety-critical medical device firmware, 8 engineers, IEC 62304-style audit. Recommend process practices (phases, change control) and name ≥3 risks of “agile theater” (ceremonies without evidence).',
       },
       {
         id: 's2',
         title: 'P2 · Scenario B',
         points: 40,
-        prompt: 'Early-stage consumer mobile app, 3 founders, unknown market. Different recommendation; justify.',
+        prompt:
+          'Early-stage consumer mobile app, 3 founders, unknown market, 12-week runway. Different recommendation; justify with ≥2 measurable learning goals (e.g. activation %, retention D7).',
       },
       {
         id: 's3',
         title: 'P3 · DoD',
         points: 20,
-        prompt: 'Write a Definition of Done checklist for a user-facing feature (8–12 bullets).',
+        prompt:
+          'Write a Definition of Done checklist for a user-facing feature (8–12 bullets) including tests, review, and a11y (WCAG 2.2 AA) gates.',
       },
     ],
   },
@@ -732,25 +746,32 @@ export const seMeat: MeatPack[] = [
     timeEstimate: '55 min',
     deliverables: ['Rewritten acceptance criteria'],
     selfCheck: ['Each criterion is testable'],
+    solutionSketch: {
+      problemId: 'r3',
+      sketch:
+        'Example NFRs: p95 API latency ≤200ms at 100 RPS; availability ≥99.9% monthly; WCAG 2.2 AA on auth + checkout; error rate ≤0.1%.',
+    },
     problems: [
       {
         id: 'r1',
         title: 'P1 · Ambiguity',
         points: 50,
         prompt:
-          'Rewrite into testable ACs: “The system should be fast, user-friendly, and secure for all users.” Produce ≥6 criteria.',
+          'Rewrite into testable ACs: “The system should be fast, user-friendly, and secure for all users.” Produce ≥6 criteria with numbers or binary checks (latency ms, WCAG level, auth cases).',
       },
       {
         id: 'r2',
         title: 'P2 · Split',
         points: 30,
-        prompt: 'Separate problem statement vs solution for: “We need a chatbot on the homepage.”',
+        prompt:
+          'Separate problem statement vs solution for: “We need a chatbot on the homepage.” List ≥3 problem hypotheses and ≥2 solution options (chatbot is only one).',
       },
       {
         id: 'r3',
         title: 'P3 · NFR',
         points: 20,
-        prompt: 'Add measurable NFRs for latency, availability, and accessibility (WCAG level).',
+        prompt:
+          'Add measurable NFRs for latency (p95 ms), availability (%), and accessibility (WCAG 2.2 level). State load assumptions (RPS or concurrent users).',
       },
     ],
   },
@@ -759,25 +780,32 @@ export const seMeat: MeatPack[] = [
     timeEstimate: '60 min',
     deliverables: ['Risk-ranked test plan'],
     selfCheck: ['Not only happy path'],
+    solutionSketch: {
+      problemId: 't2',
+      sketch:
+        '100% line coverage can miss: wrong oracle (assert true), race only under load, missing integration of email link expiry=15min, XSS in token handling never branched in unit tests.',
+    },
     problems: [
       {
         id: 't1',
         title: 'P1 · Feature',
         points: 50,
         prompt:
-          'Feature: password reset via email link. List risks; map unit/integration/E2E tests; note what not to automate.',
+          'Feature: password reset via email link (token TTL=15 min, single use). List ≥5 risks; map unit/integration/E2E tests; note what not to automate.',
       },
       {
         id: 't2',
         title: 'P2 · Coverage myth',
         points: 25,
-        prompt: 'Why 100% line coverage can still miss critical bugs—give an example.',
+        prompt:
+          'Why 100% line coverage can still miss critical bugs—give a concrete example (wrong oracle, race, missing branch in auth).',
       },
       {
         id: 't3',
         title: 'P3 · Flakes',
         points: 25,
-        prompt: 'Name two flake sources in UI E2E and mitigations.',
+        prompt:
+          'Name two flake sources in UI E2E (timing, shared state, network) and mitigations (wait for role, isolate DB, retry policy ≤2).',
       },
     ],
   },
@@ -1839,28 +1867,131 @@ export const labMeat: MeatPack[] = [
   },
   {
     workId: 'toc-m3-lab-pda',
-    timeEstimate: '25 min',
+    timeEstimate: '35 min',
     sources: [{ label: 'Sipser Ch. 2 — PDA', kind: 'textbook' }],
-    deliverables: ['Push/pop map for aabb'],
-    selfCheck: ['Metaphor only — not full PDA'],
+    deliverables: ['Stack trace table for aabb', 'Accept/reject argument'],
+    selfCheck: ['pda-anbn demo', 'Stack heights match #unmatched a’s'],
+    solutionSketch: {
+      problemId: 'p2',
+      sketch:
+        'aabb: after aa stack ZAA (height 3); after aabb stack Z (height 1) → ε to accept. abba fails when second b needs A but stack may be wrong order / leftover A.',
+    },
     problems: [
       {
         id: 'p1',
-        title: 'P1 · Map',
+        title: 'P1 · Trace',
         points: 40,
-        prompt: 'stack-calls lab: map push frames to reading a’s and pops to b’s for string aabb (table).',
+        prompt:
+          'pda-anbn on aabb: for each symbol, record (state, stack bottom→top, action push/pop). Final stack should be [Z] only.',
       },
       {
         id: 'p2',
-        title: 'P2 · Reject idea',
+        title: 'P2 · Heights',
         points: 30,
-        prompt: 'When would a real PDA reject abba under aⁿbⁿ? (stack empty / leftover symbols).',
+        prompt:
+          'List stack height after each of the 4 symbols of aabb. Prove height = 1 + (#a − #b so far) while processing a valid prefix of aⁿbⁿ.',
       },
       {
         id: 'p3',
-        title: 'P3 · Honesty',
+        title: 'P3 · Reject',
         points: 30,
-        prompt: 'Name two ways this call-stack demo is not a PDA (alphabet, accept by empty stack/final state, ε-moves).',
+        prompt:
+          'On paper, simulate abba on the same PDA idea. At which symbol does it get stuck? Relate to aⁿbⁿ membership (n=2 needs aabb not abba).',
+      },
+    ],
+  },
+  {
+    workId: 'toc-m4-lab-tm',
+    timeEstimate: '35 min',
+    sources: [{ label: 'Sipser Ch. 3', kind: 'textbook' }],
+    deliverables: ['Tape snapshots after each pass', 'High-level TM description'],
+    selfCheck: ['tm-anbn on □aabb□', 'Two mark passes for n=2'],
+    problems: [
+      {
+        id: 't1',
+        title: 'P1 · Tape',
+        points: 40,
+        prompt:
+          'tm-anbn lab: write the tape contents (with head position) after pass 1 marks and after pass 2 marks for input aabb.',
+      },
+      {
+        id: 't2',
+        title: 'P2 · Complexity idea',
+        points: 30,
+        prompt:
+          'For general n, about how many full sweeps of the tape does this cross-off strategy need? Express as Θ(·) in n (or tape length).',
+      },
+      {
+        id: 't3',
+        title: 'P3 · Reject case',
+        points: 30,
+        prompt:
+          'Describe in ≤6 sentences how the TM should reject aab (unequal counts) without looping forever (decider vs recognizer).',
+      },
+    ],
+  },
+  {
+    workId: 'db-m4-lab-bplus-full',
+    timeEstimate: '40 min',
+    sources: [{ label: 'DB textbook / CMU 15-445 — B+', kind: 'textbook' }],
+    deliverables: ['Tree diagrams after each split', 'Separator list'],
+    selfCheck: ['bplus-tree demo', 'maxKeys=2'],
+    solutionSketch: {
+      problemId: 'f1',
+      sketch:
+        'Inserting 10,20,30 with maxKeys=2 forces a leaf split; separator 20 (or mid policy) goes to parent. After 40,50 further splits grow the internal level.',
+    },
+    problems: [
+      {
+        id: 'f1',
+        title: 'P1 · Splits',
+        points: 40,
+        prompt:
+          'bplus-tree values [10,20,30,40,50,5,15,25]: after which inserts does a leaf split occur? List separator keys promoted to internal nodes.',
+      },
+      {
+        id: 'f2',
+        title: 'P2 · Range',
+        points: 30,
+        prompt:
+          'On the final tree, which leaf pages are touched for range scan keys ∈ [12, 35]? Count sibling → hops after the first leaf.',
+      },
+      {
+        id: 'f3',
+        title: 'P3 · Contrast toy',
+        points: 30,
+        prompt:
+          'Name 3 features present in bplus-tree but missing from bplus-insert leaf-only toy (internal separators, root split, sibling links, fanout).',
+      },
+    ],
+  },
+  {
+    workId: 'net-m4-lab-aimd',
+    timeEstimate: '35 min',
+    sources: [{ label: 'Kurose — congestion control', kind: 'textbook' }],
+    deliverables: ['cwnd table by RTT', 'SS vs CA comparison'],
+    selfCheck: ['tcp-aimd demo', 'Loss event recorded'],
+    problems: [
+      {
+        id: 'a1',
+        title: 'P1 · Trace',
+        points: 40,
+        prompt:
+          'tcp-aimd lab: fill a table (RTT, cwnd, ssthresh, phase) for RTT 0 through the first LOSS event inclusive.',
+      },
+      {
+        id: 'a2',
+        title: 'P2 · Growth',
+        points: 30,
+        prompt:
+          'In slow start, does cwnd follow approximately 1,2,4,8…? After ssthresh, is growth +1 per RTT (AIMD additive increase)? Cite two rows from your table.',
+      },
+      {
+        id: 'a3',
+        title: 'P3 · Loss',
+        points: 30,
+        prompt:
+          'At LOSS: new ssthresh = ⌊cwnd/2⌋ and cwnd restarts at 1 in this toy. How does classic Reno fast recovery differ (one sentence)? Why is this still useful for AIMD intuition?',
       },
     ],
   },

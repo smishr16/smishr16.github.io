@@ -129,7 +129,9 @@ describe('content coverage audit (honesty)', () => {
       for (const p of pack.problems) {
         totalProblems++
         if (
-          /\d|Θ|Ω|O\(|prove|Σ|mod |arr=|burst|refs |SQL|DFA|n²|η|≤|≥/i.test(p.prompt)
+          /\d|Θ|Ω|O\(|prove|Σ|mod |arr=|burst|refs |SQL|DFA|PDA|TM|BFS|DFS|NP|P⊆|cwnd|FD|∀|∃|∈|⊆|→|n²|η|≤|≥|Karp|LCS|ADT/i.test(
+            p.prompt,
+          )
         ) {
           formal++
         }
