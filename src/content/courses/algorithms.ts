@@ -325,9 +325,22 @@ It is **not** a “sorting course.” Sorting and order statistics form **M3** a
           'm3-quicksort-analysis',
           'Analysis: quicksort',
           'Explain expected runtime under random pivots, worst-case inputs, and hybrid escapes (introsort idea).',
-          'Written problem-set depth. Visualizer engine for quicksort is forthcoming.',
+          'Written problem-set depth; pair with the quicksort lab (Lomuto partition).',
           'partial',
         ),
+        {
+          id: 'm3-quicksort-lab',
+          title: 'Lab: quicksort (Lomuto)',
+          kind: 'lab',
+          status: 'live',
+          labId: 'sorting',
+          objective:
+            'Step Lomuto quicksort with last-element pivot; count partitions and identify a worst-case shape.',
+          brief:
+            'algoId quicksort, n=12. Record pivot indices each partition; relate Θ(n log n) vs Θ(n²) adversarial order.',
+          config: { algoId: 'quicksort', arraySize: 12 },
+          sources: [{ label: 'CLRS Ch. 7', kind: 'textbook' }],
+        },
         analysisWork(
           'm4-heapsort-sketch',
           'Analysis: heapsort',

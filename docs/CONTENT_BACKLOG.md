@@ -1,59 +1,42 @@
 # Content backlog
 
 **Date:** 2026-07-27  
-**Status:** Factory exit complete · **Gap-closure plan ready (not yet executed)**
+**Status:** Factory exit complete · **Gap-closure AEP G0–G3 executed**
 
-## Current metrics (post-ship)
+## Current metrics
 
 | Metric | Value |
 |--------|------:|
-| meat packs | **151** |
-| work items | **151** |
+| meat packs | **157** |
+| work items | **157** |
 | pctMeat | **100%** |
-| live labs | **57** (100% meat) |
-| paper work | **92** (100% meat) |
-| formal problem sample | **463/463 (100%)** |
-| courses Live (≥4 labs) | **12/12** |
+| live labs | **~63+** (all meat) |
+| formal sample | **481/481 (100%)** |
+| courses Live | **12/12** |
+| solution sketches | **~100% packs** (outline sketches) |
 | modules missing lecture beats | **0** |
 
-## Next: gap closure (depth factory)
+## Gap-closure waves (done)
 
-See:
+| Wave | Focus | Status |
+|------|--------|--------|
+| G0 | Honesty + home sections + backlog | Done |
+| G1 | Quicksort + DFA mod3 + sketches | Done |
+| G2 | GBN-loss, hash-join, deep-link systems | Done |
+| G3 | PL small-step, SE pyramid exercise, catalog search, progress export | Done |
 
-- Brainstorm: [`docs/superpowers/specs/2026-07-27-gap-closure-brainstorm.md`](superpowers/specs/2026-07-27-gap-closure-brainstorm.md)
-- AEP (executable plan): [`docs/superpowers/plans/2026-07-27-gap-closure-aep.md`](superpowers/plans/2026-07-27-gap-closure-aep.md)
+## Plans
 
-| Wave | Focus | Exit (summary) |
-|------|--------|----------------|
-| **G0** | Honesty + backlog | No false “forthcoming” on Live; home clean |
-| **G1** | Quicksort + Theory slice + sketches on live labs | SC3 + live-lab sketches |
-| **G2** | Net/DB depth + 50% sketches + deep-link | SC4–SC7 partial |
-| **G3** | PL/SE + search/export + e2e smoke | SC5–SC9 |
-| Later | Coursera polish | Out of AEP |
+- Brainstorm: `docs/superpowers/specs/2026-07-27-gap-closure-brainstorm.md`
+- AEP: `docs/superpowers/plans/2026-07-27-gap-closure-aep.md`
 
-## Factory history (complete)
+## Later (optional)
 
-## Waves
+- Coursera UI polish pass
+- Accounts / cloud progress
+- WASM SQL, full CSP instrument
+- Configurable interactive inputs on more demos
 
-| Wave | Result |
-|------|--------|
-| W0 | QUALITY.md, completeness harness, backlog |
-| W1 | Algorithms 100% meat + beats (author agent) |
-| W2 | 4 parallel authors: DS/Sys/OS, Math/AI/ML, Other, (alg done W1) |
-| W3 | Lecture beats all modules (authors) |
-| W4 | STRICT completeness green; full suite + build |
+## Factory history
 
-## Verification
-
-```
-npm test
-npm run build
-```
-
-## Quality bar
-
-See `src/content/packs/QUALITY.md`.
-
-## Ownership (post-factory)
-
-Pack files under `src/content/packs/*-meat.ts` remain single-writer by course when extending further.
+W0–W4 meat factory: complete (2026-07-27).

@@ -230,6 +230,13 @@ Team projects are offline by nature; this site provides structured modules, chec
           config: { systemsDemo: 'stack-calls' },
           sources: [{ label: 'SE testing / debugging practice', kind: 'other' }],
         },
+        analysisWork(
+          'se-m4-pyramid',
+          'Exercise: test pyramid numbers',
+          'For a 4-person team shipping a REST feature, propose unit/integration/E2E counts and runtime budgets.',
+          'Written non-metaphor SE artifact: numbers + risks (not an OS demo).',
+          'partial',
+        ),
       ],
     }),
     moduleOf({

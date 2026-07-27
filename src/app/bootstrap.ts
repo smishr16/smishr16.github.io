@@ -2,7 +2,7 @@ import { AppRoutes, LEGACY_SORTING_COURSE_PATH } from '../contracts'
 import { findAssignmentById, getCourse, LEGACY_COURSE_REDIRECTS } from '../content/courses'
 import { bindLinkInterception, navigate, startRouter } from '../ui/router'
 import { renderHome } from '../pages/home'
-import { renderLearn } from '../pages/learn'
+import { bindLearnSearch, renderLearn } from '../pages/learn'
 import { renderCourse } from '../pages/course'
 import { renderLabHub } from '../pages/labHub'
 import { renderNotFound } from '../pages/notFound'
@@ -60,6 +60,7 @@ export function bootstrap(app: HTMLElement): () => void {
 
     if (path === AppRoutes.learn) {
       app.innerHTML = renderLearn()
+      bindLearnSearch(app)
       afterRoute(app, ['Learn'])
       return
     }

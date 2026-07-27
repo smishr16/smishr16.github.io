@@ -46,6 +46,12 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'CSAPP machine-level chapters', kind: 'textbook' }],
     deliverables: ['Annotated asm + stack drawing', 'Overflow location sketch'],
     selfCheck: ['Return address location marked', 'ABI or convention stated for args'],
+    solutionSketch: {
+      problemId: 'm1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'm1',
@@ -75,6 +81,12 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'CSAPP memory hierarchy', kind: 'textbook' }],
     deliverables: ['AMAT numbers + miss classification', 'Lab fault count for FIFO ref string'],
     selfCheck: ['Units consistent (cycles or ns)', 'Miss types named with one fix each'],
+    solutionSketch: {
+      problemId: 'c1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'c1',
@@ -104,6 +116,12 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'OSTEP intro', kind: 'textbook', url: 'https://ostep.org/' }],
     deliverables: ['Syscall path narrative', 'Monolithic vs microkernel trade-off table'],
     selfCheck: ['User/kernel boundary named', 'Syscall mediation of privileged ops stated'],
+    solutionSketch: {
+      problemId: 'o1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'o1',
@@ -134,6 +152,12 @@ export const systemsOsMeat: MeatPack[] = [
       'Same job set as lab: P1(0,5) P2(1,3) P3(2,8) P4(3,2)',
       'RR quantum = 2 in Gantt slices',
     ],
+    solutionSketch: {
+      problemId: 'sch1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'sch1',
@@ -165,6 +189,12 @@ export const systemsOsMeat: MeatPack[] = [
       'No busy-wait claimed as correct sync without justification',
       'Bounded-buffer invariants on count stated',
     ],
+    solutionSketch: {
+      problemId: 'c1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'c1',
@@ -195,6 +225,12 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'OSTEP VM', kind: 'textbook', url: 'https://ostep.org/' }],
     deliverables: ['Replacement traces', 'Thrashing paragraph'],
     selfCheck: ['Same ref string as lab', 'FIFO and LRU fault lists both present'],
+    solutionSketch: {
+      problemId: 'v1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'v1',
@@ -222,6 +258,12 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'CSAPP machine-level chapters', kind: 'textbook' }],
     deliverables: ['Stack snapshots at call/return', 'Argument/return path notes'],
     selfCheck: ['Return address below locals stated', 'Nested call depth visible in drawings'],
+    solutionSketch: {
+      problemId: 'sl1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'sl1',
@@ -252,6 +294,12 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'CSAPP / Patterson-Hennessy undergrad pipeline chapters', kind: 'textbook' }],
     deliverables: ['Pipeline diagram notes', 'Speedup calculations'],
     selfCheck: ['Ideal speedup vs hazard caveats', 'Units of CPI/time consistent'],
+    solutionSketch: {
+      problemId: 'p1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'p1',
@@ -285,6 +333,12 @@ export const systemsOsMeat: MeatPack[] = [
       'systemsDemo page-fifo; 3 frames; refs 1 2 3 2 4 1 5 2 1 3',
       'Scope: page replacement not cache geometry',
     ],
+    solutionSketch: {
+      problemId: 'pf1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'pf1',
@@ -315,6 +369,12 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'CSAPP — linking chapter', kind: 'textbook' }],
     deliverables: ['Symbol resolution scenarios', 'Linker error predictions'],
     selfCheck: ['Strong vs weak symbol rules used', 'Static vs dynamic distinguished'],
+    solutionSketch: {
+      problemId: 'lk1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'lk1',
@@ -345,6 +405,12 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'CSAPP — exceptional control flow', kind: 'textbook' }],
     deliverables: ['Exception taxonomy table', 'Process lifetime narrative'],
     selfCheck: ['Trap vs interrupt vs fault distinguished', 'User/kernel transition named'],
+    solutionSketch: {
+      problemId: 'ec1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'ec1',
@@ -375,6 +441,12 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'CSAPP — virtual memory chapters', kind: 'textbook' }],
     deliverables: ['VA→PA calculations', 'Page-fault scenario answers'],
     selfCheck: ['VPN/offset split consistent with page size', 'TLB role stated'],
+    solutionSketch: {
+      problemId: 'vm1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'vm1',
@@ -405,6 +477,12 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'CSAPP — exceptional control flow', kind: 'textbook' }],
     deliverables: ['Transition table for processes A and B', 'Syscall/interrupt mapping'],
     selfCheck: ['systemsDemo process-lifecycle', 'Each transition maps to a systems cause'],
+    solutionSketch: {
+      problemId: 'pl1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'pl1',
@@ -435,6 +513,12 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'CSAPP — system-level I/O / performance case studies', kind: 'textbook' }],
     deliverables: ['Case-study summary', 'Measurement caveats list'],
     selfCheck: ['Source cited', '≥3 measurement caveats'],
+    solutionSketch: {
+      problemId: 'io1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'io1',
@@ -465,6 +549,12 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'OSTEP — processes & address spaces', kind: 'textbook', url: 'https://ostep.org/' }],
     deliverables: ['fork/exec diagrams', 'Address-space sketch'],
     selfCheck: ['COW or copy semantics mentioned if relevant', 'Isolation benefits named'],
+    solutionSketch: {
+      problemId: 'pr1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'pr1',
@@ -495,6 +585,12 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'OSTEP — processes', kind: 'textbook', url: 'https://ostep.org/' }],
     deliverables: ['Step-by-step state table', 'Event naming for each transition'],
     selfCheck: ['systemsDemo process-lifecycle', 'Two processes A and B traced'],
+    solutionSketch: {
+      problemId: 'ol1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'ol1',
@@ -528,6 +624,12 @@ export const systemsOsMeat: MeatPack[] = [
       'systemsDemo schedule-fcfs',
       'Jobs P1(0,5) P2(1,3) P3(2,8) P4(3,2)',
     ],
+    solutionSketch: {
+      problemId: 'fc1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'fc1',
@@ -561,6 +663,12 @@ export const systemsOsMeat: MeatPack[] = [
       'systemsDemo schedule-sjf; non-preemptive; same 4 jobs',
       'Compared numerically to FCFS waiting average',
     ],
+    solutionSketch: {
+      problemId: 'sj1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'sj1',
@@ -594,6 +702,12 @@ export const systemsOsMeat: MeatPack[] = [
       'systemsDemo page-fifo; 3 frames; refs 1,2,3,2,4,1,5,2,1,3',
       'Victim pages listed on each eviction',
     ],
+    solutionSketch: {
+      problemId: 'ff1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'ff1',
@@ -627,6 +741,12 @@ export const systemsOsMeat: MeatPack[] = [
       'systemsDemo page-lru; same ref string as FIFO lab',
       'At least one FIFO/LRU differing hit identified',
     ],
+    solutionSketch: {
+      problemId: 'lr1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'lr1',
@@ -657,6 +777,12 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'OSTEP — file systems', kind: 'textbook', url: 'https://ostep.org/' }],
     deliverables: ['Layout sketches', 'Crash-consistency scenario answers'],
     selfCheck: ['Inode vs data block roles clear', 'Journaling purpose stated'],
+    solutionSketch: {
+      problemId: 'fs1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'fs1',
@@ -687,6 +813,12 @@ export const systemsOsMeat: MeatPack[] = [
     sources: [{ label: 'OSTEP — I/O & devices selected', kind: 'textbook', url: 'https://ostep.org/' }],
     deliverables: ['I/O path diagram', 'Device trade-off table'],
     selfCheck: ['User buffer vs kernel buffer vs device mentioned', 'Interrupt vs polling trade-off'],
+    solutionSketch: {
+      problemId: 'ioa',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'ioa',
@@ -724,6 +856,12 @@ export const systemsOsMeat: MeatPack[] = [
     ],
     deliverables: ['One-page isolation map', 'Cited public sources'],
     selfCheck: ['Maps onto process/VM concepts from earlier modules', 'Not a marketing brochure'],
+    solutionSketch: {
+      problemId: 'sec1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'sec1',

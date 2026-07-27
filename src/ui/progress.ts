@@ -42,6 +42,10 @@ export function progressCounts(courseId: string, totalWork: number): { done: num
   return { done, total: totalWork }
 }
 
+export function exportAllProgress(): string {
+  return JSON.stringify(read(), null, 2)
+}
+
 export function bindCourseProgress(courseId: string, root: ParentNode = document): void {
   const done = getDoneWork(courseId)
   const summary = root.querySelector<HTMLElement>('[data-progress-summary]')
@@ -62,5 +66,16 @@ export function bindCourseProgress(courseId: string, root: ParentNode = document
       refreshSummary()
     })
   })
+
+  const exp = root.querySelector<HTMLButtonElement>('[data-progress-export]')
+  exp?.addEventListener('click', () => {
+    const blob = new Blob([exportAllProgress()], { type: 'application/json' })
+    const a = document.createElement('a')
+    a.href = URL.createObjectURL(blob)
+    a.download = `csvl-progress-${courseId}.json`
+    a.click()
+    URL.revokeObjectURL(a.href)
+  })
+
   refreshSummary()
 }

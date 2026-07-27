@@ -55,5 +55,15 @@ describe('systems demos', () => {
     expect(aimd.length).toBeGreaterThan(8)
     expect(aimd.some((f) => /LOSS/i.test(f.statusText))).toBe(true)
   })
+
+  it('gap-closure demos: dfa-mod3, gbn-loss, hash-join, pl-small-step', () => {
+    expect(getSystemsDemo('dfa-mod3').generate().length).toBeGreaterThan(4)
+    expect(getSystemsDemo('gbn-loss').generate().some((f) => /LOSS|rexmit|retransmit/i.test(f.statusText))).toBe(
+      true,
+    )
+    expect(getSystemsDemo('hash-join').generate().length).toBeGreaterThan(3)
+    const sos = getSystemsDemo('pl-small-step').generate()
+    expect(sos[sos.length - 1]!.treeNodes?.[0]?.label).toMatch(/20/)
+  })
 })
 

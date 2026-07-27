@@ -45,7 +45,7 @@ export const databasesCourse: CourseDetail = {
   cs2023Areas: ['DM'],
   overview: `**Databases** covers the relational model, SQL, schema design, indexing, query execution, and transactions. Emphasis is on **systems thinking** (how queries run and why isolation matters), not only ORM usage.
 
-No production DBMS is required in-browser for Phase syllabus; written design work and SQL-on-paper come first. Instruments may later include join/index toys.`,
+Written design work and SQL-on-paper remain first-class. Live instruments cover B+ trees (toy + full), hash indexes, nested-loop join, and buffer-pool eviction metaphors — not a production SQL engine.`,
   prerequisites: [
     'Data Structures',
     'Some systems exposure helpful (files, concurrency intuition)',
@@ -252,6 +252,17 @@ No production DBMS is required in-browser for Phase syllabus; written design wor
           brief: 'systemsDemo nl-join. |R|=|S|=3 → 9 probes; list emitted join rows.',
           config: { systemsDemo: 'nl-join' },
           sources: [{ label: 'DB textbook — join algorithms', kind: 'textbook' }],
+        },
+        {
+          id: 'db-m5-lab-hj',
+          title: 'Lab: hash join',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective: 'Step build+probe hash join on same R,S; compare probe count to NLJ’s 9.',
+          brief: 'systemsDemo hash-join. Build |R| buckets then |S| probes; list emitted tuples.',
+          config: { systemsDemo: 'hash-join' },
+          sources: [{ label: 'DB textbook — hash join', kind: 'textbook' }],
         },
       ],
     }),

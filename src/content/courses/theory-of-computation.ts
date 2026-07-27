@@ -106,6 +106,17 @@ Expect heavy written proofs. Interactive automata toys may arrive later; syllabu
           config: { systemsDemo: 'dfa-ends01' },
           sources: [{ label: 'Sipser Ch. 1', kind: 'textbook' }],
         },
+        {
+          id: 'toc-m1-lab-mod3',
+          title: 'Lab: DFA binary mod 3',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective: 'Trace DFA for binary value mod 3 on 1101; verify r=(2r+b) mod 3 each step.',
+          brief: 'systemsDemo dfa-mod3. Final remainder should be 13 mod 3 = 1.',
+          config: { systemsDemo: 'dfa-mod3' },
+          sources: [{ label: 'Sipser Ch. 1 — DFA design', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({

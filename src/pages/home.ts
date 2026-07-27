@@ -42,32 +42,40 @@ export function renderHome(): string {
     <section class="section-block">
       <div class="section-head">
         <h2>Ready to run</h2>
-        <p class="muted">Live = multiple instruments. Jump in for the fullest experience.</p>
+        <p class="muted">Live = ≥4 openable instruments + full problem packs. Jump in for the fullest experience.</p>
       </div>
       <div class="course-grid" aria-label="Live courses">
         ${live.map(card).join('') || '<p class="muted">None yet.</p>'}
       </div>
     </section>
 
-    <section class="section-block">
+    ${
+      partial.length
+        ? `<section class="section-block">
       <div class="section-head">
         <h2>Partial — labs on some units</h2>
         <p class="muted">Full syllabus and problem packs; instruments on a subset of modules.</p>
       </div>
       <div class="course-grid" aria-label="Partial courses">
-        ${partial.map(card).join('') || '<p class="muted">None.</p>'}
+        ${partial.map(card).join('')}
       </div>
-    </section>
+    </section>`
+        : ''
+    }
 
-    <section class="section-block">
+    ${
+      syllabus.length
+        ? `<section class="section-block">
       <div class="section-head">
         <h2>Syllabus-ready — paper first</h2>
-        <p class="muted">Structured courses with midterm-style packs; dedicated instruments still forthcoming.</p>
+        <p class="muted">Structured courses with midterm-style packs; dedicated course instruments not yet shipped.</p>
       </div>
       <div class="course-grid" aria-label="Syllabus courses">
-        ${syllabus.map(card).join('') || '<p class="muted">None.</p>'}
+        ${syllabus.map(card).join('')}
       </div>
-    </section>
+    </section>`
+        : ''
+    }
   </main>
   ${renderFooter()}
   `

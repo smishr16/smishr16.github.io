@@ -4,7 +4,7 @@ import {
   type CourseMeta,
 } from '../../contracts'
 import { labHandout } from '../handouts'
-import { analysisWork, labSoon, moduleOf, readingWork } from '../scaffold'
+import { analysisWork, moduleOf, readingWork } from '../scaffold'
 
 export const dataStructuresMeta: CourseMeta = {
   id: 'data-structures',
@@ -86,7 +86,7 @@ Labs will visualize layout, growth, and rebalancing as engines land. The full mo
           'ds-m1-ps',
           'Problem set: ADT specs',
           'Specify 2–3 ADTs with operation costs and one alternative representation each.',
-          'Written. Full autograded pack forthcoming; use this as syllabus-aligned homework shape.',
+          'Written syllabus-aligned homework; meat pack is the autograde substitute (self-check + deliverables).',
           'partial',
         ),
       ],
@@ -361,13 +361,19 @@ Labs will visualize layout, growth, and rebalancing as engines land. The full mo
           'Written. Graph visualizer shared with Algorithms when shipped.',
           'partial',
         ),
-        labSoon(
-          'ds-m7-lab',
-          'Lab: graph structure traversal',
-          'graphs',
-          'Step BFS/DFS on shared graph instances focusing on representation cost.',
-          'Graph engine forthcoming.',
-        ),
+        {
+          id: 'ds-m7-lab',
+          title: 'Lab: graph structure traversal',
+          kind: 'lab',
+          status: 'live',
+          labId: 'graphs',
+          objective:
+            'Step BFS then DFS on Campus; contrast discovery order and argue adj-list neighbor iteration cost Θ(deg(v)).',
+          brief:
+            'graphAlgo bfs then switch to dfs, graphId campus, start Gate. Focus on representation cost, not algorithm design depth.',
+          config: { graphAlgo: 'bfs', graphId: 'campus', start: 'Gate', goal: 'Lab' },
+          sources: [{ label: 'CLRS — graph representations', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({

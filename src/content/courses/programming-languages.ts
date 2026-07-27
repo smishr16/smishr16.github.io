@@ -179,6 +179,17 @@ Expect interpreters-on-paper, type derivations, and careful definitions. Runtime
           'Written proof-flavored set.',
           'partial',
         ),
+        {
+          id: 'pl-m3-lab-sos',
+          title: 'Lab: small-step reduction',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective: 'Step small-step SOS for (2+3)*4 → 5*4 → 20; contrast with big-step pl-eval-tree.',
+          brief: 'systemsDemo pl-small-step. One redex per step; write the congruence choice.',
+          config: { systemsDemo: 'pl-small-step' },
+          sources: [{ label: 'Harper / Winskel-style SOS', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({

@@ -33,5 +33,5 @@ export function levelLabel(level: string, style: 'short' | 'long' = 'long'): str
 export function courseStatusHint(status: ContentStatus | string, liveLabCount: number): string {
   if (status === 'live') return `${liveLabCount} live labs · full syllabus`
   if (status === 'partial') return `${liveLabCount} live lab${liveLabCount === 1 ? '' : 's'} · syllabus + instruments`
-  return 'Full syllabus · instruments forthcoming'
+  return 'Full syllabus · paper-first (no course instrument yet)'
 }

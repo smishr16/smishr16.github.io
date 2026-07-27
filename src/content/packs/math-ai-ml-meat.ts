@@ -58,6 +58,12 @@ export const discreteMeat: MeatPack[] = [
     timeEstimate: '60 min',
     deliverables: ['Induction proofs with base + IH + step'],
     selfCheck: ['IH applied to smaller instance explicitly'],
+    solutionSketch: {
+      problemId: 'i1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'i1',
@@ -84,6 +90,12 @@ export const discreteMeat: MeatPack[] = [
     timeEstimate: '70 min',
     deliverables: ['Numeric counting answers'],
     selfCheck: ['Overcount checked'],
+    solutionSketch: {
+      problemId: 'c1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'c1',
@@ -124,6 +136,12 @@ export const discreteMeat: MeatPack[] = [
     ],
     deliverables: ['Set-identity proofs', 'Relation classification table', 'Counterexamples'],
     selfCheck: ['Empty-set edge cases handled', 'Equivalence requires all three properties'],
+    solutionSketch: {
+      problemId: 's1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 's1',
@@ -161,6 +179,12 @@ export const discreteMeat: MeatPack[] = [
     ],
     deliverables: ['Proofs + one counterexample construction', 'Handshaking / tree calculations'],
     selfCheck: ['Simple undirected graph assumed unless stated', 'Euler vs Hamilton difficulty distinguished'],
+    solutionSketch: {
+      problemId: 'g1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'g1',
@@ -198,6 +222,12 @@ export const discreteMeat: MeatPack[] = [
     ],
     deliverables: ['Closed forms', 'Recursion-tree sketch', 'Θ claim with justification'],
     selfCheck: ['Base cases plugged in', 'Unrolling shows the geometric pattern explicitly'],
+    solutionSketch: {
+      problemId: 'r1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'r1',
@@ -235,6 +265,12 @@ export const discreteMeat: MeatPack[] = [
     ],
     deliverables: ['Numeric probability answers with sample space', 'Linearity of expectation derivation'],
     selfCheck: ['Conditional probability uses definition P(A|B)=P(A∩B)/P(B)', 'Independence checked, not assumed'],
+    solutionSketch: {
+      problemId: 'pr1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'pr1',
@@ -271,6 +307,12 @@ export const discreteMeat: MeatPack[] = [
     ],
     deliverables: ['One-page summary', 'Cited textbook claim', 'Explicit random experiment'],
     selfCheck: ['Randomness use is algorithmic, not “AI magic”', 'Expectation or high-probability claim named'],
+    solutionSketch: {
+      problemId: 'rd1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'rd1',
@@ -304,6 +346,12 @@ export const theoryMeat: MeatPack[] = [
     sources: [{ label: 'Sipser Ch. 1', kind: 'textbook' }],
     deliverables: ['Automaton diagrams', 'Correctness brief'],
     selfCheck: ['Accept/reject on 3 test strings each'],
+    solutionSketch: {
+      problemId: 't1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 't1',
@@ -330,6 +378,12 @@ export const theoryMeat: MeatPack[] = [
     timeEstimate: '75 min',
     deliverables: ['Pumping proofs'],
     selfCheck: ['Pumping length p used correctly'],
+    solutionSketch: {
+      problemId: 'r1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'r1',
@@ -357,6 +411,12 @@ export const theoryMeat: MeatPack[] = [
     sources: [{ label: 'Sipser Ch. 7', kind: 'textbook' }],
     deliverables: ['NP membership + reduction sketch'],
     selfCheck: ['Certificate poly-size and poly-time verifiable'],
+    solutionSketch: {
+      problemId: 'n1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'n1',
@@ -384,6 +444,12 @@ export const theoryMeat: MeatPack[] = [
     sources: [{ label: 'Sipser Ch. 2', kind: 'textbook', locator: 'Ch. 2' }],
     deliverables: ['CFG grammars', 'PDA sketch or parse tree', 'CFL pumping proof'],
     selfCheck: ['Start variable and productions explicit', 'Pumping length used as in Sipser'],
+    solutionSketch: {
+      problemId: 'cf1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'cf1',
@@ -414,6 +480,12 @@ export const theoryMeat: MeatPack[] = [
     sources: [{ label: 'Sipser Ch. 3', kind: 'textbook', locator: 'Ch. 3' }],
     deliverables: ['High-level TM descriptions', 'Recognizer vs decider classifications'],
     selfCheck: ['Looping vs rejecting distinguished', 'Church–Turing claim scoped as thesis not theorem'],
+    solutionSketch: {
+      problemId: 'tm1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'tm1',
@@ -444,6 +516,12 @@ export const theoryMeat: MeatPack[] = [
     sources: [{ label: 'Sipser Ch. 4–5', kind: 'textbook', locator: 'Ch. 4–5' }],
     deliverables: ['Reduction diagrams', 'Undecidability proofs (sketches with correctness idea)'],
     selfCheck: ['Reduction direction: known-undecidable ≤ target', 'Mapping reduction f computable'],
+    solutionSketch: {
+      problemId: 'u1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'u1',
@@ -474,6 +552,12 @@ export const theoryMeat: MeatPack[] = [
     sources: [{ label: 'Sipser — later chapters (PSPACE / approx / randomized landscape)', kind: 'textbook' }],
     deliverables: ['One-page class map', 'Containment diagram', 'Citation'],
     selfCheck: ['Placed relative to P and NP', 'No fake theorem names'],
+    solutionSketch: {
+      problemId: 'ad1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'ad1',
@@ -507,6 +591,12 @@ export const aiMeat: MeatPack[] = [
     sources: [{ label: 'AIMA Ch. 1–3', kind: 'textbook' }],
     deliverables: ['PEAS tables', 'Formal search tuples'],
     selfCheck: ['Actions and transition model explicit'],
+    solutionSketch: {
+      problemId: 'a1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'a1',
@@ -535,6 +625,12 @@ export const aiMeat: MeatPack[] = [
     sources: [{ label: 'AIMA search chapters', kind: 'textbook' }],
     deliverables: ['Traces + admissibility proofs'],
     selfCheck: ['Expansion order matches algorithm'],
+    solutionSketch: {
+      problemId: 's1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 's1',
@@ -563,6 +659,12 @@ export const aiMeat: MeatPack[] = [
     timeEstimate: '70 min',
     deliverables: ['Game tree values'],
     selfCheck: ['Max/min levels alternate'],
+    solutionSketch: {
+      problemId: 'g1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'g1',
@@ -591,6 +693,12 @@ export const aiMeat: MeatPack[] = [
     sources: [{ label: 'AIMA — local search', kind: 'textbook' }],
     deliverables: ['Landscape analysis', 'Restart/annealing design', 'Scenario choice table'],
     selfCheck: ['Local optimum ≠ global named', 'Temperature / restart role explicit'],
+    solutionSketch: {
+      problemId: 'ls1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'ls1',
@@ -624,6 +732,12 @@ export const aiMeat: MeatPack[] = [
     ],
     deliverables: ['CSP formalization', 'Backtracking + FC trace', 'Heuristic choices'],
     selfCheck: ['Variables, domains, constraints listed', 'FC removes values from future vars only'],
+    solutionSketch: {
+      problemId: 'csp1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'csp1',
@@ -657,6 +771,12 @@ export const aiMeat: MeatPack[] = [
     ],
     deliverables: ['Domain wipeout table', 'Propagation order notes'],
     selfCheck: ['Map-coloring scale instance only', 'Instrument is planned — paper simulation acceptable'],
+    solutionSketch: {
+      problemId: 'cl1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'cl1',
@@ -694,6 +814,12 @@ export const aiMeat: MeatPack[] = [
     ],
     deliverables: ['KB encodings', 'Resolution / chaining traces'],
     selfCheck: ['CNF conversion correct', 'Unification only where FOL used'],
+    solutionSketch: {
+      problemId: 'lg1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'lg1',
@@ -727,6 +853,12 @@ export const aiMeat: MeatPack[] = [
     ],
     deliverables: ['Numeric query answers', 'Factorization + independence claims'],
     selfCheck: ['Normalized posteriors sum to 1', 'Graph d-separation stated carefully'],
+    solutionSketch: {
+      problemId: 'bn1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'bn1',
@@ -760,6 +892,12 @@ export const aiMeat: MeatPack[] = [
     ],
     deliverables: ['One-page bridge essay', 'MDP tuple', 'Contrast table AI vs ML'],
     selfCheck: ['Does not equate RL with supervised learning', 'Scoped claims only'],
+    solutionSketch: {
+      problemId: 'br1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'br1',
@@ -827,6 +965,12 @@ export const mlMeat: MeatPack[] = [
     timeEstimate: '80 min',
     deliverables: ['Hand calculations'],
     selfCheck: ['Derivative signs correct for GD'],
+    solutionSketch: {
+      problemId: 'r1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'r1',
@@ -855,6 +999,12 @@ export const mlMeat: MeatPack[] = [
     timeEstimate: '70 min',
     deliverables: ['Boundary geometry + metric choice'],
     selfCheck: ['Positive class defined'],
+    solutionSketch: {
+      problemId: 'c1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'c1',
@@ -882,6 +1032,12 @@ export const mlMeat: MeatPack[] = [
     timeEstimate: '60 min',
     deliverables: ['Experimental design critique'],
     selfCheck: ['Leakage named specifically'],
+    solutionSketch: {
+      problemId: 'e1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'e1',
@@ -913,6 +1069,12 @@ export const mlMeat: MeatPack[] = [
     ],
     deliverables: ['Curve interpretations', 'Regularization design choices'],
     selfCheck: ['Bias vs variance not confused with train vs test', 'λ direction correct (larger ⇒ simpler)'],
+    solutionSketch: {
+      problemId: 'bv1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'bv1',
@@ -943,6 +1105,12 @@ export const mlMeat: MeatPack[] = [
     sources: [{ label: 'ISL — tree-based methods', kind: 'textbook' }],
     deliverables: ['Hand-built tree', 'k-NN region sketch', 'Ensemble intuition paragraph'],
     selfCheck: ['Splits use training labels only', 'k-NN distance metric stated'],
+    solutionSketch: {
+      problemId: 'tr1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'tr1',
@@ -975,6 +1143,12 @@ export const mlMeat: MeatPack[] = [
     ],
     deliverables: ['Numeric forward/backward tables', 'Honest compute note'],
     selfCheck: ['Chain rule factors match graph', 'Activations applied elementwise'],
+    solutionSketch: {
+      problemId: 'nn1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'nn1',
@@ -1008,6 +1182,12 @@ export const mlMeat: MeatPack[] = [
     ],
     deliverables: ['System critique essay', 'Metric + failure modes list', 'Ethics paragraph'],
     selfCheck: ['Public source cited', 'No proprietary dataset required'],
+    solutionSketch: {
+      problemId: 'cr1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'cr1',

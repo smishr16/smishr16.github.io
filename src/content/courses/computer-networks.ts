@@ -181,6 +181,17 @@ Programming projects (toy TCP, routers) are offline/self-hosted when assigned; i
           config: { systemsDemo: 'sliding-window' },
           sources: [{ label: 'Kurose — ARQ / sliding window', kind: 'textbook' }],
         },
+        {
+          id: 'net-m3-lab-gbn',
+          title: 'Lab: Go-Back-N with loss',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective: 'Trace GBN window=3 when DATA1 is lost; list retransmitted seqs after timeout.',
+          brief: 'systemsDemo gbn-loss. Contrast with Selective Repeat (retransmit only lost).',
+          config: { systemsDemo: 'gbn-loss' },
+          sources: [{ label: 'Kurose — GBN', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({

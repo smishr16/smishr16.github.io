@@ -620,6 +620,32 @@ a.course-card:hover {
   font-size: var(--text-sm);
 }
 
+.progress-actions {
+  margin: 0.35rem 0 0;
+}
+
+.btn-sm {
+  font-size: var(--text-xs);
+  padding: 0.25rem 0.55rem;
+}
+
+.search-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 1rem 0;
+  max-width: 22rem;
+  font-size: var(--text-sm);
+}
+
+.search-field input {
+  padding: 0.5rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+
 .work-card h4 {
   margin: 0 0 var(--space-2);
   font-size: var(--text-md);

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { FIXTURE_ARRAY } from '../contracts'
-import { bubbleSort, insertionSort, mergeSort } from './algorithms'
+import { bubbleSort, insertionSort, mergeSort, quickSort } from './algorithms'
 
 function applySteps(input: number[], steps: ReturnType<typeof bubbleSort.generateSteps>): number[] {
   const a = input.slice()
@@ -24,7 +24,7 @@ describe('sorting algorithms', () => {
     [2, 2, 1, 1],
   ]
 
-  for (const algo of [bubbleSort, insertionSort, mergeSort]) {
+  for (const algo of [bubbleSort, insertionSort, mergeSort, quickSort]) {
     it(`${algo.id} sorts known arrays via steps`, () => {
       for (const input of cases) {
         const steps = algo.generateSteps(input)

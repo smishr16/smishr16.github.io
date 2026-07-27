@@ -102,6 +102,12 @@ export const algorithmsMeat: MeatPack[] = [
     sources: [{ label: 'CLRS Ch. 7', kind: 'textbook' }],
     deliverables: ['Expected-time argument sketch', 'Worst-case family', 'Hybrid note'],
     selfCheck: ['Randomization model stated', 'No claim that average = best'],
+    solutionSketch: {
+      problemId: 'q1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'q1',
@@ -142,6 +148,12 @@ export const algorithmsMeat: MeatPack[] = [
       'Array indexing 1-based or 0-based stated consistently',
       'BUILD-HEAP bound uses height-sum, not n × log n only',
     ],
+    solutionSketch: {
+      problemId: 'h1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'h1',
@@ -216,6 +228,12 @@ export const algorithmsMeat: MeatPack[] = [
       'Exchange argument names the first differing job and the swap',
       'Counterexample has explicit numbers (coins or edge weights)',
     ],
+    solutionSketch: {
+      problemId: 'gr1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'gr1',
@@ -246,6 +264,12 @@ export const algorithmsMeat: MeatPack[] = [
     sources: [{ label: 'CLRS Ch. 15', kind: 'textbook' }],
     deliverables: ['Recurrences + filled tables', 'One reconstructed solution (cuts or LCS string)'],
     selfCheck: ['Base cases filled', 'Reconstruction path shown'],
+    solutionSketch: {
+      problemId: 'd1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'd1',
@@ -289,6 +313,12 @@ export const algorithmsMeat: MeatPack[] = [
       'Topic is one of amortized analysis, max-flow, randomized algorithms, or approximation',
       'Every prerequisite claim points to a concrete earlier module (M1–M6)',
     ],
+    solutionSketch: {
+      problemId: 'r1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'r1',
@@ -319,6 +349,12 @@ export const algorithmsMeat: MeatPack[] = [
     sources: [{ label: 'CLRS Ch. 34 / Sipser', kind: 'textbook' }],
     deliverables: ['Definitions with examples', 'One reduction construction sketch'],
     selfCheck: ['Direction of reduction correct', 'Poly-time claimed carefully'],
+    solutionSketch: {
+      problemId: 'n1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'n1',

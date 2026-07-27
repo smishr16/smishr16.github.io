@@ -117,7 +117,23 @@ describe('deep audit: honesty gates', () => {
       ]),
     )
   })
+
+  it('Live courses do not claim instruments are unshipped in overview', () => {
+    const bad = /instruments?\s+(still\s+)?forthcoming|instruments?\s+not\s+(yet\s+)?shipped|Phase syllabus/i
+    for (const c of getAllCourses()) {
+      if (c.status !== 'live') continue
+      expect(bad.test(c.overview), `${c.id} overview: ${c.overview.slice(0, 80)}`).toBe(false)
+    }
+  })
+
+  it('quicksort algorithm is registered and sorts', () => {
+    const q = getAlgorithm('quicksort')
+    expect(q).toBeDefined()
+    const input = [5, 1, 4, 2, 3]
+    expect(applySortSteps(input, q!.generateSteps(input.slice()))).toEqual([1, 2, 3, 4, 5])
+  })
 })
+
 
 describe('deep audit: merge pedagogy still correct', () => {
   it('merge sorts', () => {

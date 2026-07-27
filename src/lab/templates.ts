@@ -55,10 +55,40 @@ def merge_sort():
 merge_sort()
 `
 
+export const QUICK_TEMPLATE = `# CS Visual Lab — quicksort (Lomuto, last pivot)
+# Hooks: get_array(), compare(i, j) -> -1|0|1, swap(i, j), log(msg)
+
+def quicksort():
+    a = get_array()
+
+    def partition(lo, hi):
+        # pivot at hi
+        i = lo
+        for j in range(lo, hi):
+            if compare(j, hi) <= 0:
+                swap(i, j)
+                i += 1
+        swap(i, hi)
+        return i
+
+    def qs(lo, hi):
+        if lo >= hi:
+            return
+        p = partition(lo, hi)
+        qs(lo, p - 1)
+        qs(p + 1, hi)
+
+    qs(0, len(a) - 1)
+    log("quicksort finished")
+
+quicksort()
+`
+
 export const TEMPLATES_BY_ALGO: Record<string, string> = {
   bubble: BUBBLE_TEMPLATE,
   insertion: INSERTION_TEMPLATE,
   merge: MERGE_TEMPLATE,
+  quicksort: QUICK_TEMPLATE,
 }
 
 export const DEFAULT_TEMPLATE = BUBBLE_TEMPLATE

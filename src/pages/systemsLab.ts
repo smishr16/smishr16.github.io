@@ -20,7 +20,9 @@ export function mountSystemsLab(
   options: SystemsLabOptions = { context: 'visualizer' },
 ): LabCleanup {
   const cfg = options.config ?? {}
-  let demoId = cfg.systemsDemo ?? 'schedule-rr'
+  const params = new URLSearchParams(typeof location !== 'undefined' ? location.search : '')
+  let demoId = params.get('systemsDemo') || cfg.systemsDemo || 'schedule-rr'
+  const startStep = Math.max(0, Number(params.get('step') || 0) || 0)
   const engine = new PlaybackEngine<SystemsFrame>()
   let viz: SystemsVisualizer | null = null
 
@@ -128,10 +130,21 @@ export function mountSystemsLab(
       engine.load(frames)
       const empty = root.querySelector('#empty-hint') as HTMLElement | null
       if (empty) empty.hidden = true
+      // Deep-link: optional ?step=N after load
+      if (startStep > 0) {
+        for (let i = 0; i < Math.min(startStep, frames.length - 1); i++) engine.step()
+      }
+      const share = `?systemsDemo=${encodeURIComponent(demoId)}`
       conceptEl.innerHTML = `<strong>${demo.label}</strong> · ${demo.category}<br/>${demo.description}<br/>
-        <span class="muted">Teaching toy — fixed instances for fair comparison. Switch tabs to explore demos; some are cross-course (automata, networks, PL, joins).</span>`
+        <span class="muted">Teaching toy — fixed instances. Deep-link: <code>${share}</code> (optional <code>&amp;step=N</code>).</span>`
       statsEl.textContent = `${demo.label} · ${frames.length} frames`
-      consoleEl.textContent = `Loaded ${demo.label}`
+      consoleEl.textContent = `Loaded ${demo.label}${startStep ? ` · stepped to ~${startStep}` : ''}`
+      // Keep URL in sync when free visualizer
+      if (options.context === 'visualizer' && typeof history !== 'undefined') {
+        const u = new URL(location.href)
+        u.searchParams.set('systemsDemo', demoId)
+        history.replaceState({}, '', u.pathname + u.search + u.hash)
+      }
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e)
       consoleEl.textContent = `Error: ${msg}`

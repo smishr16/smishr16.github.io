@@ -6,6 +6,12 @@ export const databasesMeat: MeatPack[] = [
     timeEstimate: '70 min',
     deliverables: ['Algebra expressions + key analysis'],
     selfCheck: ['Attribute sets match schema you defined'],
+    solutionSketch: {
+      problemId: 'd1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'd1',
@@ -34,6 +40,12 @@ export const databasesMeat: MeatPack[] = [
     timeEstimate: '80 min',
     deliverables: ['SQL queries'],
     selfCheck: ['NULL semantics considered for outer joins if used'],
+    solutionSketch: {
+      problemId: 's1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 's1',
@@ -60,6 +72,12 @@ export const databasesMeat: MeatPack[] = [
     timeEstimate: '65 min',
     deliverables: ['Schedule classifications'],
     selfCheck: ['Conflict serializability graph used if needed'],
+    solutionSketch: {
+      problemId: 't1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 't1',
@@ -90,6 +108,12 @@ export const databasesMeat: MeatPack[] = [
       'Decomposition is lossless-join (tableau or chase argument)',
       'Each relation’s keys justified from FDs',
     ],
+    solutionSketch: {
+      problemId: 'n1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'n1',
@@ -123,6 +147,12 @@ export const databasesMeat: MeatPack[] = [
       'Clustered vs unclustered distinguished',
       'Assumptions on page size and selectivity stated',
     ],
+    solutionSketch: {
+      problemId: 'i1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'i1',
@@ -194,6 +224,12 @@ export const databasesMeat: MeatPack[] = [
       'Units are page I/Os (state buffer assumptions)',
       'Join result size estimates use stated selectivities',
     ],
+    solutionSketch: {
+      problemId: 'q1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'q1',
@@ -230,6 +266,12 @@ export const databasesMeat: MeatPack[] = [
       'Maps system features onto WAL / isolation / partitioning concepts',
       'No proprietary internal materials',
     ],
+    solutionSketch: {
+      problemId: 'rd1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'rd1',
@@ -297,6 +339,12 @@ export const networksMeat: MeatPack[] = [
     timeEstimate: '75 min',
     deliverables: ['Sequence diagrams'],
     selfCheck: ['Window size and ACK numbers consistent'],
+    solutionSketch: {
+      problemId: 't1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 't1',
@@ -323,6 +371,12 @@ export const networksMeat: MeatPack[] = [
     timeEstimate: '70 min',
     deliverables: ['Routing tables after iterations'],
     selfCheck: ['Count-to-infinity mentioned if relevant'],
+    solutionSketch: {
+      problemId: 'r1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'r1',
@@ -354,6 +408,12 @@ export const networksMeat: MeatPack[] = [
       'Distinguish iterative vs recursive DNS resolution',
       'TLS placement relative to HTTP stated correctly',
     ],
+    solutionSketch: {
+      problemId: 'a1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'a1',
@@ -387,6 +447,12 @@ export const networksMeat: MeatPack[] = [
       'Slow start vs congestion avoidance phases labeled',
       'Fairness claim scoped to AIMD model assumptions',
     ],
+    solutionSketch: {
+      problemId: 'c1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'c1',
@@ -420,6 +486,12 @@ export const networksMeat: MeatPack[] = [
       'Learning switch only learns from source MAC',
       'Hidden terminal defined with topology sketch',
     ],
+    solutionSketch: {
+      problemId: 'l1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'l1',
@@ -456,6 +528,12 @@ export const networksMeat: MeatPack[] = [
       'TLS placed correctly relative to TCP/app',
       'Measurement claims distinguish correlation vs causation',
     ],
+    solutionSketch: {
+      problemId: 'rd1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'rd1',
@@ -488,6 +566,12 @@ export const plMeat: MeatPack[] = [
     timeEstimate: '80 min',
     deliverables: ['AST + eval rules'],
     selfCheck: ['Environments explicit in traces'],
+    solutionSketch: {
+      problemId: 'p1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'p1',
@@ -515,6 +599,12 @@ export const plMeat: MeatPack[] = [
     sources: [{ label: 'Pierce TAPL early chapters', kind: 'textbook' }],
     deliverables: ['Typing derivations'],
     selfCheck: ['Context Γ managed correctly'],
+    solutionSketch: {
+      problemId: 't1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 't1',
@@ -546,6 +636,12 @@ export const plMeat: MeatPack[] = [
       'Static scope resolves free vars in defining environment',
       'Dynamic scope resolves in calling environment',
     ],
+    solutionSketch: {
+      problemId: 'sc1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'sc1',
@@ -579,6 +675,12 @@ export const plMeat: MeatPack[] = [
       'Judgment forms declared before rules',
       'Small-step congruence rules included if needed',
     ],
+    solutionSketch: {
+      problemId: 'os1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'os1',
@@ -612,6 +714,12 @@ export const plMeat: MeatPack[] = [
       'Pattern match exhaustiveness considered',
       'Type variables quantified correctly (∀) where claimed',
     ],
+    solutionSketch: {
+      problemId: 'd1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'd1',
@@ -645,6 +753,12 @@ export const plMeat: MeatPack[] = [
       'Aliasing shown with shared locations',
       'Evaluation order effect on side effects made explicit',
     ],
+    solutionSketch: {
+      problemId: 'st1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'st1',
@@ -681,6 +795,12 @@ export const plMeat: MeatPack[] = [
       'Syntax, semantics, and types each addressed',
       'Alternatives considered, not only the chosen design',
     ],
+    solutionSketch: {
+      problemId: 'des1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'des1',
@@ -819,6 +939,12 @@ export const seMeat: MeatPack[] = [
       'Trade-offs named (not only benefits)',
       'ADR has context, decision, and consequences',
     ],
+    solutionSketch: {
+      problemId: 'd1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'd1',
@@ -852,6 +978,12 @@ export const seMeat: MeatPack[] = [
       'Review comments are actionable and kind',
       'CI gates distinguish blocking vs informative',
     ],
+    solutionSketch: {
+      problemId: 'c1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'c1',
@@ -888,6 +1020,12 @@ export const seMeat: MeatPack[] = [
       'Risks have likelihood × impact and owners',
       'Postmortem focuses on systems, not individuals',
     ],
+    solutionSketch: {
+      problemId: 'r1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'r1',
@@ -924,6 +1062,12 @@ export const seMeat: MeatPack[] = [
       'Milestones are time-bounded and testable',
       'DoD is checklist-form, not slogans',
     ],
+    solutionSketch: {
+      problemId: 'p1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'p1',
@@ -964,6 +1108,12 @@ export const labMeat: MeatPack[] = [
       'Identical arrays used for both algorithms in each regime',
       'Metrics are compare counts (not wall-clock steps alone)',
     ],
+    solutionSketch: {
+      problemId: 'l1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'l1',
@@ -1000,6 +1150,12 @@ export const labMeat: MeatPack[] = [
       'Same n=20 and identical arrays within each family for insertion vs bubble',
       'At least one nearly-sorted and one reverse-sorted (or high-disorder) family',
     ],
+    solutionSketch: {
+      problemId: 'ad1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'ad1',
@@ -1036,6 +1192,12 @@ export const labMeat: MeatPack[] = [
       'No direct a[i]<a[j] outside hooks; all ordering goes through compare',
       'Stable insertion: equal keys keep relative order on a deliberate test',
     ],
+    solutionSketch: {
+      problemId: 'ii1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'ii1',
@@ -1072,6 +1234,12 @@ export const labMeat: MeatPack[] = [
       'Compare counts used (not wall-clock) for asymptotic discussion',
       'Same array family policy stated when reshaping at each n',
     ],
+    solutionSketch: {
+      problemId: 'a1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'a1',
@@ -1108,6 +1276,12 @@ export const labMeat: MeatPack[] = [
       'Base case n≤1 correct; no off-by-one in mid = ⌊(lo+hi)/2⌋ style split',
       'Matches reference on shuffled n=12 and on reverse-sorted [12..1]',
     ],
+    solutionSketch: {
+      problemId: 'im1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'im1',
@@ -1151,6 +1325,12 @@ export const labMeat: MeatPack[] = [
       'Fair comparison: identical inputs for dual-run pairs; compare counts primary',
       'Conclusions separate empirical observation from asymptotic proof',
     ],
+    solutionSketch: {
+      problemId: 'e1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'e1',
@@ -1194,6 +1374,12 @@ export const labMeat: MeatPack[] = [
       'Same graph (city-6), start A, goal F for both runs',
       'Expansion order listed node-by-node, not only the final path',
     ],
+    solutionSketch: {
+      problemId: 'g1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'g1',
@@ -1230,6 +1416,12 @@ export const labMeat: MeatPack[] = [
       'All City edge weights treated as non-negative in the lab run',
       'At least one relaxation that improved a tentative distance is recorded',
     ],
+    solutionSketch: {
+      problemId: 'd1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'd1',
@@ -1260,6 +1452,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'Berkeley 61B — BSTs', kind: 'curriculum' }],
     deliverables: ['Two tree sketches', 'Height comparison paragraph'],
     selfCheck: ['Inorder is sorted for both', 'structureDemo bst-insert used'],
+    solutionSketch: {
+      problemId: 't1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 't1',
@@ -1287,6 +1485,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'OSTEP — scheduling', kind: 'textbook', url: 'https://ostep.org/' }],
     deliverables: ['Slice table matching lab', 'Policy comparison notes'],
     selfCheck: ['Quantum 2', 'systemsDemo schedule-rr; same 4-job instance'],
+    solutionSketch: {
+      problemId: 'r1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'r1',
@@ -1313,6 +1517,12 @@ export const labMeat: MeatPack[] = [
     timeEstimate: '30 min',
     deliverables: ['Epoch table'],
     selfCheck: ['Toy data only'],
+    solutionSketch: {
+      problemId: 'm1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'm1',
@@ -1339,6 +1549,12 @@ export const labMeat: MeatPack[] = [
     timeEstimate: '30 min',
     deliverables: ['Separability answer'],
     selfCheck: ['Client-side toy expectations'],
+    solutionSketch: {
+      problemId: 'p1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'p1',
@@ -1366,6 +1582,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'AIMA — uninformed search', kind: 'textbook' }],
     deliverables: ['Expansion order tables', 'Path comparison paragraph'],
     selfCheck: ['Same Ladder graph S→G for both BFS and DFS', 'Tie-break order recorded'],
+    solutionSketch: {
+      problemId: 'bf1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'bf1',
@@ -1399,6 +1621,12 @@ export const labMeat: MeatPack[] = [
     ],
     deliverables: ['Dijkstra vs A* expansion lists', 'Heuristic critique essay (≤½ page)'],
     selfCheck: ['City graph A→F for both runs', 'Did not treat layout Euclidean h as domain-optimal without argument'],
+    solutionSketch: {
+      problemId: 'as1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'as1',
@@ -1429,6 +1657,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'ISL — unsupervised / clustering chapters', kind: 'textbook' }],
     deliverables: ['Centroid table over iterations', 'Compare to supervised lab note'],
     selfCheck: ['k=2 on fixed 2D demo only', 'Assign then update order respected'],
+    solutionSketch: {
+      problemId: 'km1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'km1',
@@ -1459,6 +1693,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'CSAPP — cache chapters', kind: 'textbook' }],
     deliverables: ['Hit/miss table for the address stream', 'Conflict-miss identification'],
     selfCheck: ['Used cache-direct demo', 'line=(addr/4) mod 4 model'],
+    solutionSketch: {
+      problemId: 'c1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'c1',
@@ -1487,6 +1727,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'AIMA — uninformed search', kind: 'textbook' }],
     deliverables: ['BFS hop path + Dijkstra cost path'],
     selfCheck: ['graphId=campus Gate→Lab'],
+    solutionSketch: {
+      problemId: 'cp1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'cp1',
@@ -1514,6 +1760,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'AIMA — adversarial search', kind: 'textbook' }],
     deliverables: ['Node values B,C,A + action'],
     selfCheck: ['Leaf order 3,12 under B and 8,2 under C'],
+    solutionSketch: {
+      problemId: 'mm1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'mm1',
@@ -1541,6 +1793,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'ISL / CS229 generalization', kind: 'curriculum', url: 'https://cs229.stanford.edu/' }],
     deliverables: ['k* at best test + region labels'],
     selfCheck: ['Cartoon only — not real CV'],
+    solutionSketch: {
+      problemId: 'tc1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'tc1',
@@ -1568,6 +1826,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'Rosen — graphs', kind: 'textbook' }],
     deliverables: ['Path + edge count'],
     selfCheck: ['Campus Gate→Lab BFS'],
+    solutionSketch: {
+      problemId: 'g1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'g1',
@@ -1627,6 +1891,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'Kurose & Ross Ch. 1', kind: 'textbook' }],
     deliverables: ['Cumulative delay log'],
     selfCheck: ['network-path demo'],
+    solutionSketch: {
+      problemId: 'n1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'n1',
@@ -1654,6 +1924,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'PLAI / EOPL selected', kind: 'textbook' }],
     deliverables: ['Eval order notes'],
     selfCheck: ['(2+3)*4 → 20'],
+    solutionSketch: {
+      problemId: 'e1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'e1',
@@ -1681,6 +1957,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'Sommerville — process', kind: 'textbook' }],
     deliverables: ['State map table'],
     selfCheck: ['Metaphor only — not Jira'],
+    solutionSketch: {
+      problemId: 's1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 's1',
@@ -1711,6 +1993,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'DB textbook — B+ trees', kind: 'textbook' }],
     deliverables: ['Leaf contents after each insert batch'],
     selfCheck: ['bplus-insert toy — leaves only'],
+    solutionSketch: {
+      problemId: 'b1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'b1',
@@ -1739,6 +2027,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'Rosen — graphs', kind: 'textbook' }],
     deliverables: ['Discovery order list', 'Reachability set'],
     selfCheck: ['DFS not BFS', 'Campus graph'],
+    solutionSketch: {
+      problemId: 'd1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'd1',
@@ -1767,6 +2061,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'Rosen / Algorithms — distances', kind: 'notes' }],
     deliverables: ['Distance table for city-6'],
     selfCheck: ['Dijkstra distances', 'Not hop counts only'],
+    solutionSketch: {
+      problemId: 's1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 's1',
@@ -1795,6 +2095,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'MIT 6.042 / CLRS mergesort', kind: 'textbook' }],
     deliverables: ['Recursion-tree sketch', 'Level work notes'],
     selfCheck: ['algoId merge n=8', 'Linked to T(n)=2T(n/2)+Θ(n)'],
+    solutionSketch: {
+      problemId: 'm1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'm1',
@@ -1822,6 +2128,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'Sipser Ch. 1', kind: 'textbook' }],
     deliverables: ['State trace table for 11001'],
     selfCheck: ['dfa-ends01', 'Final accept/reject'],
+    solutionSketch: {
+      problemId: 'e1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'e1',
@@ -1849,6 +2161,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'Sipser Ch. 2', kind: 'textbook' }],
     deliverables: ['Sentential forms list', 'Parse tree sketch'],
     selfCheck: ['cfg-anbn aabb', 'S→aSb|ε'],
+    solutionSketch: {
+      problemId: 'c1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'c1',
@@ -1911,6 +2229,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'Sipser Ch. 3', kind: 'textbook' }],
     deliverables: ['Tape snapshots after each pass', 'High-level TM description'],
     selfCheck: ['tm-anbn on □aabb□', 'Two mark passes for n=2'],
+    solutionSketch: {
+      problemId: 't1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 't1',
@@ -1976,6 +2300,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'Kurose — congestion control', kind: 'textbook' }],
     deliverables: ['cwnd table by RTT', 'SS vs CA comparison'],
     selfCheck: ['tcp-aimd demo', 'Loss event recorded'],
+    solutionSketch: {
+      problemId: 'a1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'a1',
@@ -2006,6 +2336,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'DB textbook — hash indexes', kind: 'textbook' }],
     deliverables: ['Bucket occupancy notes'],
     selfCheck: ['hash-insert', 'Collisions observed'],
+    solutionSketch: {
+      problemId: 'h1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'h1',
@@ -2034,6 +2370,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'DB textbook — joins', kind: 'textbook' }],
     deliverables: ['Probe count + result set'],
     selfCheck: ['nl-join demo', '9 probes'],
+    solutionSketch: {
+      problemId: 'j1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'j1',
@@ -2062,6 +2404,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'DB textbook — buffer pool', kind: 'textbook' }],
     deliverables: ['Fault count + frame map'],
     selfCheck: ['page-fifo as buffer metaphor'],
+    solutionSketch: {
+      problemId: 'b1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'b1',
@@ -2089,6 +2437,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'Kurose — CDN/caching', kind: 'textbook' }],
     deliverables: ['Hit/miss log'],
     selfCheck: ['cache-direct metaphor', 'Not real HTTP keys'],
+    solutionSketch: {
+      problemId: 'c1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'c1',
@@ -2116,6 +2470,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'Kurose — ARQ', kind: 'textbook' }],
     deliverables: ['Phase comparison notes'],
     selfCheck: ['sliding-window demo'],
+    solutionSketch: {
+      problemId: 'a1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'a1',
@@ -2143,6 +2503,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'Kurose — link state', kind: 'textbook' }],
     deliverables: ['Distance / next-hop notes'],
     selfCheck: ['Dijkstra city-6', 'LS piece only'],
+    solutionSketch: {
+      problemId: 'r1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'r1',
@@ -2171,6 +2537,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'PL calling conventions landscape', kind: 'notes' }],
     deliverables: ['Frame order at max depth'],
     selfCheck: ['stack-calls'],
+    solutionSketch: {
+      problemId: 's1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 's1',
@@ -2199,6 +2571,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'PLAI — environments', kind: 'textbook' }],
     deliverables: ['Lookup table x/y/z'],
     selfCheck: ['env-lookup', 'Shadowing x'],
+    solutionSketch: {
+      problemId: 'e1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'e1',
@@ -2226,6 +2604,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'PL — algebraic lists', kind: 'textbook' }],
     deliverables: ['Cons spine sketch'],
     selfCheck: ['list-append', 'Immutable mental model'],
+    solutionSketch: {
+      problemId: 'l1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'l1',
@@ -2253,6 +2637,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'SE flow / process landscape', kind: 'notes' }],
     deliverables: ['Ticket map + convoy note'],
     selfCheck: ['Metaphor — not Jira'],
+    solutionSketch: {
+      problemId: 'f1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'f1',
@@ -2281,6 +2671,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'WIP limits / lean (public)', kind: 'other' }],
     deliverables: ['Slice-switch count + WIP argument'],
     selfCheck: ['schedule-rr metaphor'],
+    solutionSketch: {
+      problemId: 'r1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'r1',
@@ -2309,6 +2705,12 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'SE testing / debugging', kind: 'other' }],
     deliverables: ['Test seam note'],
     selfCheck: ['stack-calls as incident artifact'],
+    solutionSketch: {
+      problemId: 't1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 't1',
@@ -2329,6 +2731,203 @@ export const labMeat: MeatPack[] = [
         points: 30,
         prompt:
           'For your chosen unit test, state the oracle: expected return value or property (e.g. pure function f(x)=y for x=3).',
+      },
+    ],
+  },
+  // --- Gap-closure wave labs ---
+  {
+    workId: 'm3-quicksort-lab',
+    timeEstimate: '40 min',
+    sources: [{ label: 'CLRS Ch. 7', kind: 'textbook' }],
+    deliverables: ['Partition pivot log', 'Worst-case note'],
+    selfCheck: ['algoId quicksort', 'Lomuto last pivot'],
+    solutionSketch: {
+      problemId: 'q1',
+      sketch: 'Each partition places pivot in final index; recursive calls on < and > sides. Sorted ascending adversarial order often yields Θ(n²) with last-pivot Lomuto.',
+    },
+    problems: [
+      {
+        id: 'q1',
+        title: 'P1 · Pivots',
+        points: 40,
+        prompt: 'quicksort lab n=12: list pivot values (or indices) after each partition until sorted. How many partitions?',
+      },
+      {
+        id: 'q2',
+        title: 'P2 · Compares',
+        points: 30,
+        prompt: 'Record approximate compare count from the lab metrics. Is it closer to n log n or n² for this shuffle?',
+      },
+      {
+        id: 'q3',
+        title: 'P3 · Worst case',
+        points: 30,
+        prompt: 'Give an array of length 6 that forces Θ(n²) Lomuto-last-pivot behavior and one sentence why.',
+      },
+    ],
+  },
+  {
+    workId: 'toc-m1-lab-mod3',
+    timeEstimate: '30 min',
+    sources: [{ label: 'Sipser Ch. 1', kind: 'textbook' }],
+    deliverables: ['State table for 1101'],
+    selfCheck: ['dfa-mod3', 'final r=1'],
+    solutionSketch: {
+      problemId: 'm1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
+    problems: [
+      {
+        id: 'm1',
+        title: 'P1 · Trace',
+        points: 40,
+        prompt: 'dfa-mod3 on 1101: table (symbol, r before, r after) using r:=(2r+b) mod 3.',
+      },
+      {
+        id: 'm2',
+        title: 'P2 · Check',
+        points: 30,
+        prompt: 'Confirm 1101₂ = 13₁₀ and 13 mod 3 equals final state index.',
+      },
+      {
+        id: 'm3',
+        title: 'P3 · Design',
+        points: 30,
+        prompt: 'How many states for mod k in general? Answer: k. Why is the update 2r+b (binary left shift)?',
+      },
+    ],
+  },
+  {
+    workId: 'net-m3-lab-gbn',
+    timeEstimate: '30 min',
+    sources: [{ label: 'Kurose — GBN', kind: 'textbook' }],
+    deliverables: ['Event timeline', 'Rexmit list'],
+    selfCheck: ['gbn-loss', 'window=3'],
+    solutionSketch: {
+      problemId: 'g1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
+    problems: [
+      {
+        id: 'g1',
+        title: 'P1 · Loss',
+        points: 40,
+        prompt: 'gbn-loss lab: which DATA is lost? After timeout, which sequence numbers retransmit?',
+      },
+      {
+        id: 'g2',
+        title: 'P2 · Window',
+        points: 30,
+        prompt: 'What is N=3 maximum outstanding? After ACK0, what is the new base?',
+      },
+      {
+        id: 'g3',
+        title: 'P3 · SR contrast',
+        points: 30,
+        prompt: 'Under Selective Repeat, which packets would retransmit after DATA1 loss? One sentence vs GBN.',
+      },
+    ],
+  },
+  {
+    workId: 'db-m5-lab-hj',
+    timeEstimate: '30 min',
+    sources: [{ label: 'DB textbook — hash join', kind: 'textbook' }],
+    deliverables: ['Build buckets', 'Probe log'],
+    selfCheck: ['hash-join', '3 probes'],
+    solutionSketch: {
+      problemId: 'h1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
+    problems: [
+      {
+        id: 'h1',
+        title: 'P1 · Build/probe',
+        points: 40,
+        prompt: 'hash-join lab: list build buckets for R and each S probe hit/miss. Final join arity (expect 2 tuples)?',
+      },
+      {
+        id: 'h2',
+        title: 'P2 · Cost',
+        points: 30,
+        prompt: 'Compare probe count to nl-join’s 9 on the same tables. When is hash join Θ(|R|+|S|)?',
+      },
+      {
+        id: 'h3',
+        title: 'P3 · Memory',
+        points: 30,
+        prompt:
+          'Name one reason hash join falls back to partition/grace-hash when |R| exceeds memory (e.g. spill to disk). Cite Θ(|R|+|S|) when it fits.',
+      },
+    ],
+  },
+  {
+    workId: 'pl-m3-lab-sos',
+    timeEstimate: '25 min',
+    sources: [{ label: 'SOS notes', kind: 'textbook' }],
+    deliverables: ['Reduction sequence'],
+    selfCheck: ['pl-small-step', '(2+3)*4'],
+    solutionSketch: {
+      problemId: 's1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
+    problems: [
+      {
+        id: 's1',
+        title: 'P1 · Steps',
+        points: 40,
+        prompt: 'pl-small-step: write the term after each reduction of (2+3)*4 until a value.',
+      },
+      {
+        id: 's2',
+        title: 'P2 · Contrast',
+        points: 30,
+        prompt: 'How does this differ from big-step pl-eval-tree (one judgment to value)? ≤4 sentences.',
+      },
+      {
+        id: 's3',
+        title: 'P3 · Congruence',
+        points: 30,
+        prompt: 'Why reduce 2+3 before multiplying by 4? Name the congruence/context rule idea.',
+      },
+    ],
+  },
+  {
+    workId: 'se-m4-pyramid',
+    timeEstimate: '40 min',
+    sources: [{ label: 'SE testing practice', kind: 'other' }],
+    deliverables: ['Pyramid table with counts', 'Runtime budget'],
+    selfCheck: ['Non-metaphor numbers', 'Risks named'],
+    solutionSketch: {
+      problemId: 'p1',
+      sketch: 'Example: 40 unit / 12 integration / 4 E2E; unit <1min CI, E2E nightly; risk = auth+payments on integration.',
+    },
+    problems: [
+      {
+        id: 'p1',
+        title: 'P1 · Counts',
+        points: 40,
+        prompt:
+          'For a 4-person team shipping password-reset REST: propose unit/integration/E2E test counts (integers) and justify ratios.',
+      },
+      {
+        id: 'p2',
+        title: 'P2 · Budgets',
+        points: 30,
+        prompt: 'Give CI runtime budgets: unit suite ≤? min, integration ≤? min, E2E ≤? min. What runs on every PR?',
+      },
+      {
+        id: 'p3',
+        title: 'P3 · Risk',
+        points: 30,
+        prompt: 'Name top 3 risks for this feature and which pyramid layer catches each (or “manual”).',
       },
     ],
   },

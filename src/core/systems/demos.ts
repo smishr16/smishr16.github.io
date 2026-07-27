@@ -1286,6 +1286,192 @@ function plEvalTree(): SystemsFrame[] {
   ]
 }
 
+/** DFA: binary string value mod 3. States q0,q1,q2 (remainder). Input 1101 = 13 ≡ 1. */
+function dfaMod3(): SystemsFrame[] {
+  const str = '1101'
+  let r = 0
+  const frames: SystemsFrame[] = []
+  const nodes = (cur: number) =>
+    [0, 1, 2].map((i) => ({
+      id: `q${i}`,
+      label: `q${i}`,
+      x: 0.2 + i * 0.3,
+      y: 0.45,
+      role: cur === i ? 'active' : 'default',
+    }))
+  frames.push({
+    kind: 'tree',
+    title: 'DFA · binary mod 3',
+    statusText: `Start q0 · input "${str}" (value mod 3)`,
+    treeNodes: nodes(0),
+    treeEdges: [
+      { from: 'q0', to: 'q0' },
+      { from: 'q0', to: 'q1' },
+      { from: 'q1', to: 'q2' },
+      { from: 'q1', to: 'q0' },
+      { from: 'q2', to: 'q1' },
+      { from: 'q2', to: 'q2' },
+    ],
+    metrics: 'δ(q,r,b)= (2r+b) mod 3',
+    panels: [
+      {
+        title: 'δ',
+        lines: [
+          'Reading bit b (0/1): r ← (2·r + b) mod 3',
+          'Accept remainder class (here we just report final r)',
+          `Target string ${str} = 13₁₀`,
+        ],
+      },
+    ],
+  })
+  for (let i = 0; i < str.length; i++) {
+    const b = Number(str[i])
+    const prev = r
+    r = (2 * r + b) % 3
+    frames.push({
+      kind: 'tree',
+      title: 'DFA · binary mod 3',
+      statusText: `Read '${b}' · q${prev} → q${r}`,
+      treeNodes: nodes(r),
+      treeEdges: [
+        { from: 'q0', to: 'q1' },
+        { from: 'q1', to: 'q2' },
+        { from: 'q2', to: 'q1' },
+      ],
+      metrics: `consumed "${str.slice(0, i + 1)}" · r=${r}`,
+      panels: [{ title: 'Update', lines: [`r := (2·${prev} + ${b}) mod 3 = ${r}`] }],
+    })
+  }
+  frames.push({
+    kind: 'tree',
+    title: 'DFA · binary mod 3',
+    statusText: `Final remainder q${r} · 13 mod 3 = ${13 % 3}`,
+    treeNodes: nodes(r).map((n) => ({ ...n, role: n.id === `q${r}` ? 'path' : 'default' })),
+    treeEdges: [],
+    metrics: `r=${r}`,
+  })
+  return frames
+}
+
+/** Go-Back-N with one loss: window=3, DATA1 lost → retransmit from 1. */
+function gbnLoss(): SystemsFrame[] {
+  const frames: SystemsFrame[] = []
+  const push = (status: string, outstanding: string, note: string[]) => {
+    frames.push({
+      kind: 'process',
+      title: 'GBN window=3 · loss',
+      statusText: status,
+      processes: [
+        { id: 'Snd', state: status.includes('wait') || status.includes('timeout') ? 'blocked' : 'running', role: 'sender' },
+        { id: 'Rcv', state: status.includes('ACK') ? 'running' : 'ready', role: 'receiver' },
+      ],
+      metrics: outstanding,
+      panels: [
+        { title: 'Wire / window', lines: [outstanding, ...note] },
+        {
+          title: 'GBN rule',
+          lines: ['Window size N=3', 'On loss/timeout: retransmit from base seq', 'Cumulative ACK'],
+        },
+      ],
+    })
+  }
+  push('Send DATA0, DATA1, DATA2 (window full)', 'out: 0,1,2', ['base=0'])
+  push('ACK0 arrives · slide base→1 · send DATA3', 'out: 1,2,3', ['DATA1 still in flight'])
+  push('LOSS: DATA1 dropped (no ACK1)', 'out: 1,2,3 · missing ACK1', ['timeout starts'])
+  push('Timeout · GBN retransmit DATA1, DATA2, DATA3', 'rexmit from base=1', ['not only DATA1'])
+  push('ACK1, ACK2, ACK3 · window advances', 'out: ∅', ['done'])
+  return frames
+}
+
+/** Hash join build R then probe S on attribute a. */
+function hashJoin(): SystemsFrame[] {
+  const R = [
+    { a: 1, b: 'x' },
+    { a: 2, b: 'y' },
+    { a: 3, b: 'z' },
+  ]
+  const S = [
+    { a: 2, c: 10 },
+    { a: 3, c: 20 },
+    { a: 4, c: 30 },
+  ]
+  const frames: SystemsFrame[] = []
+  frames.push({
+    kind: 'process',
+    title: 'Hash join R ⋈ S on a',
+    statusText: 'Build phase: hash R by a',
+    processes: R.map((r) => ({ id: `R${r.a}`, state: 'ready' as const, role: `R a=${r.a}` })),
+    metrics: 'build',
+    panels: [{ title: 'Build', lines: R.map((r) => `bucket h(${r.a}): (${r.a},${r.b})`) }],
+  })
+  const buckets: Record<number, string[]> = { 1: ['(1,x)'], 2: ['(2,y)'], 3: ['(3,z)'] }
+  frames.push({
+    kind: 'process',
+    title: 'Hash join R ⋈ S on a',
+    statusText: 'Build complete · 3 buckets',
+    processes: R.map((r) => ({ id: `R${r.a}`, state: 'terminated' as const, role: `R a=${r.a}` })),
+    metrics: 'build done',
+    panels: [{ title: 'Hash table', lines: Object.entries(buckets).map(([k, v]) => `${k} → ${v.join(' ')}`) }],
+  })
+  const matches: string[] = []
+  for (const s of S) {
+    const hit = buckets[s.a]
+    if (hit) matches.push(`(${s.a},…,${s.c})`)
+    frames.push({
+      kind: 'process',
+      title: 'Hash join R ⋈ S on a',
+      statusText: hit ? `Probe S a=${s.a} · HIT emit join` : `Probe S a=${s.a} · miss`,
+      processes: [
+        ...R.map((r) => ({
+          id: `R${r.a}`,
+          state: (r.a === s.a ? 'running' : 'ready') as 'running' | 'ready',
+          role: `R a=${r.a}`,
+        })),
+        { id: `S${s.a}`, state: hit ? ('blocked' as const) : ('running' as const), role: `S a=${s.a}` },
+      ],
+      metrics: `matches ${matches.length}`,
+      panels: [{ title: 'Result so far', lines: matches.length ? matches : ['∅'] }],
+    })
+  }
+  frames.push({
+    kind: 'process',
+    title: 'Hash join R ⋈ S on a',
+    statusText: `Done · ${matches.length} tuples · probes = |S| = 3`,
+    processes: S.map((s) => ({ id: `S${s.a}`, state: 'terminated' as const, role: `S a=${s.a}` })),
+    metrics: 'O(|R|+|S|) expected',
+    panels: [
+      {
+        title: 'vs NLJ',
+        lines: ['NLJ did 9 probes on same tables', 'Hash join: build |R| + probe |S|', 'Wins when hash fits memory'],
+      },
+    ],
+  })
+  return frames
+}
+
+/** Small-step: (2+3)*4 reduces one redex at a time. */
+function plSmallStep(): SystemsFrame[] {
+  const steps = [
+    { term: '(2+3)*4', note: 'initial program' },
+    { term: '5*4', note: 'β: 2+3 → 5 (left redex)' },
+    { term: '20', note: 'β: 5*4 → 20 · value' },
+  ]
+  return steps.map((s, i) => ({
+    kind: 'tree' as const,
+    title: 'Small-step SOS',
+    statusText: s.note,
+    treeNodes: [{ id: 't', label: s.term, x: 0.5, y: 0.45, role: i === steps.length - 1 ? 'path' : 'active' }],
+    treeEdges: [],
+    metrics: `step ${i}/${steps.length - 1}`,
+    panels: [
+      {
+        title: 'Rules (sketch)',
+        lines: ['E-Add: n1+n2 → n1+n2 if numbers', 'E-Mul similar', 'Congruence: reduce left of * first here'],
+      },
+    ],
+  }))
+}
+
 export const systemsDemos: ISystemsDemo[] = [
   {
     id: 'schedule-fcfs',
@@ -1398,6 +1584,34 @@ export const systemsDemos: ISystemsDemo[] = [
     description: 'Slow start + congestion avoidance with one loss event (cwnd/ssthresh).',
     category: 'cpu',
     generate: tcpAimd,
+  },
+  {
+    id: 'gbn-loss',
+    label: 'GBN + loss',
+    description: 'Go-Back-N window=3 with DATA1 loss and retransmit-from-base.',
+    category: 'cpu',
+    generate: gbnLoss,
+  },
+  {
+    id: 'dfa-mod3',
+    label: 'DFA mod 3',
+    description: 'Binary string as number mod 3 on input 1101 (13).',
+    category: 'ai',
+    generate: dfaMod3,
+  },
+  {
+    id: 'hash-join',
+    label: 'Hash join',
+    description: 'Build hash on R then probe S for equality join on a.',
+    category: 'memory',
+    generate: hashJoin,
+  },
+  {
+    id: 'pl-small-step',
+    label: 'Small-step',
+    description: 'Small-step reduction of (2+3)*4 to value 20.',
+    category: 'ai',
+    generate: plSmallStep,
   },
   {
     id: 'nl-join',

@@ -12,7 +12,8 @@ export function renderLearn(): string {
         .map((a) => `<span class="chip chip-sm">${a}</span>`)
         .join(' ')
 
-      return `<a class="course-card course-card-lg" href="${AppRoutes.course(c.id)}" data-status="${c.status}">
+      const hay = `${c.title} ${c.blurb} ${c.track} ${(c.cs2023Areas ?? []).join(' ')}`.toLowerCase()
+      return `<a class="course-card course-card-lg" href="${AppRoutes.course(c.id)}" data-status="${c.status}" data-search="${hay.replace(/"/g, '')}">
         <div class="card-meta">
           ${statusBadgeHtml(c.status)}
           <span class="muted track">${c.track}</span>
@@ -36,16 +37,34 @@ export function renderLearn(): string {
         Twelve foundational courses after intro programming — Algorithms and AI/ML as separate tracks.
         Every course has a full syllabus and problem packs; interactive depth varies by badge.
       </p>
+      <label class="search-field muted">
+        Search catalog
+        <input type="search" id="catalog-search" placeholder="e.g. graphs, OS, ML…" autocomplete="off" />
+      </label>
       <ul class="legend-row" aria-label="Status legend">
         <li>${statusBadgeHtml('live')} ≥4 openable labs — best interactive experience</li>
         <li>${statusBadgeHtml('partial')} 1–3 labs — mix of instruments and paper</li>
         <li>${statusBadgeHtml('soon')} Syllabus + paper packs — instruments later</li>
       </ul>
     </header>
-    <div class="course-grid course-grid-lg" aria-label="Course catalog">
+    <div class="course-grid course-grid-lg" aria-label="Course catalog" id="catalog-grid">
       ${cards}
     </div>
   </main>
   ${renderFooter()}
   `
+}
+
+/** Client filter for catalog search (call after inject). */
+export function bindLearnSearch(root: ParentNode = document): void {
+  const input = root.querySelector<HTMLInputElement>('#catalog-search')
+  const grid = root.querySelector('#catalog-grid')
+  if (!input || !grid) return
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase()
+    grid.querySelectorAll<HTMLElement>('[data-search]').forEach((card) => {
+      const hay = card.dataset.search ?? ''
+      card.hidden = Boolean(q) && !hay.includes(q)
+    })
+  })
 }

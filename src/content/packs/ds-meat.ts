@@ -47,6 +47,12 @@ export const dataStructuresMeat: MeatPack[] = [
     timeEstimate: '50 min',
     deliverables: ['Cost table', 'Workload recommendation paragraph'],
     selfCheck: ['Index costs distinguished from insert costs', 'Θ notation used consistently'],
+    solutionSketch: {
+      problemId: 'l1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'l1',
@@ -76,6 +82,12 @@ export const dataStructuresMeat: MeatPack[] = [
     timeEstimate: '70 min',
     deliverables: ['Trees drawn', 'Height analysis'],
     selfCheck: ['BST property holds in drawings'],
+    solutionSketch: {
+      problemId: 't1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 't1',
@@ -104,6 +116,12 @@ export const dataStructuresMeat: MeatPack[] = [
     timeEstimate: '55 min',
     deliverables: ['Heap diagrams', 'Extract-min trace'],
     selfCheck: ['Heap property after each sift', 'Array indices consistent (0- or 1-based stated)'],
+    solutionSketch: {
+      problemId: 'h1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'h1',
@@ -130,6 +148,12 @@ export const dataStructuresMeat: MeatPack[] = [
     timeEstimate: '60 min',
     deliverables: ['Numeric α calculations', 'Clustering explanation with table'],
     selfCheck: ['Load factor formula correct', 'Chains match h(k)=k mod 7 inserts'],
+    solutionSketch: {
+      problemId: 'ha1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'ha1',
@@ -193,6 +217,12 @@ export const dataStructuresMeat: MeatPack[] = [
     sources: [{ label: 'Standard DS text — binary trees chapter', kind: 'textbook' }],
     deliverables: ['Traversal lists', 'Inductive size/height argument'],
     selfCheck: ['Pre/in/post orders all listed for the same tree', 'Induction has base + inductive step'],
+    solutionSketch: {
+      problemId: 'tr1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'tr1',
@@ -229,6 +259,12 @@ export const dataStructuresMeat: MeatPack[] = [
     ],
     deliverables: ['Array after each insert', 'Two sift-up swap sequences'],
     selfCheck: ['structureDemo heap-insert; values [9,4,7,1,6,3]', 'Root is minimum after all inserts'],
+    solutionSketch: {
+      problemId: 'hl1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'hl1',
@@ -259,6 +295,12 @@ export const dataStructuresMeat: MeatPack[] = [
     sources: [{ label: 'Berkeley 61B — hashing', kind: 'curriculum' }],
     deliverables: ['Chain diagram at m=7', 'Load-factor table', 'Resize threshold note'],
     selfCheck: ['structureDemo hash-insert; values [10,3,17,24,31,8,15]', 'α = n/m used correctly'],
+    solutionSketch: {
+      problemId: 'hlab1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'hlab1',
@@ -289,6 +331,12 @@ export const dataStructuresMeat: MeatPack[] = [
     sources: [{ label: 'CLRS — elementary graph representations', kind: 'textbook' }],
     deliverables: ['Representation choice table', 'BFS/DFS sketches on a concrete graph'],
     selfCheck: ['Space in Θ of V,E stated', 'Traversal visits each vertex once in connected graph'],
+    solutionSketch: {
+      problemId: 'g1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'g1',
@@ -319,6 +367,12 @@ export const dataStructuresMeat: MeatPack[] = [
     sources: [{ label: 'Cross-link: Algorithms M4 graph labs', kind: 'notes' }],
     deliverables: ['Representation cost table', 'Traversal plan on a fixed instance'],
     selfCheck: ['Adj list vs matrix costs numeric', 'BFS/DFS distinguished by frontier ADT'],
+    solutionSketch: {
+      problemId: 'gl1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'gl1',
@@ -349,6 +403,12 @@ export const dataStructuresMeat: MeatPack[] = [
     sources: [{ label: 'CLRS — B-trees / union-find surveys', kind: 'textbook' }],
     deliverables: ['One-page structure map', 'Use-case + M1–M7 prereq links'],
     selfCheck: ['Concrete system named', 'At least two M1–M7 topics cited as prerequisites'],
+    solutionSketch: {
+      problemId: 'r1',
+      sketch:
+        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+    },
+
     problems: [
       {
         id: 'r1',
