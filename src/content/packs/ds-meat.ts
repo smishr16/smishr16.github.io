@@ -152,6 +152,11 @@ export const dataStructuresMeat: MeatPack[] = [
     sources: [{ label: 'Berkeley 61B — lists unit (concepts)', kind: 'curriculum' }],
     deliverables: ['Append trace table for values [4,8,2,9,1]', 'Insert-at-front cost paragraph'],
     selfCheck: ['structureDemo list-append used', 'Final index of value 2 stated'],
+    solutionSketch: {
+      problemId: 'la2',
+      sketch:
+        'Final order [4,8,2,9,1]; value 2 is at index 2. Contiguous array access[i] is Θ(1). Insert-front shifts all elements → Θ(n); linked list insert-front is Θ(1) with a head pointer.',
+    },
     problems: [
       {
         id: 'la1',

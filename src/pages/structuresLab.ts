@@ -114,8 +114,14 @@ export function mountStructuresLab(
             <div class="pane-label"><span class="pane-title">Structure · 2D</span></div>
             <div class="viz-wrap">
               <canvas class="viz-canvas" id="viz" role="img" aria-label="Data structure visualization"></canvas>
+              <div class="lab-empty-hint" id="empty-hint">Press <strong>Run</strong> to build the structure, then Play / Step.</div>
               <div class="viz-status" id="viz-status" aria-live="polite">Ready.</div>
               <div class="viz-stats" id="stats"></div>
+              <div class="viz-legend" aria-hidden="true">
+                <span class="lg-active">focus</span>
+                <span class="lg-path">new / path</span>
+                <span class="lg-default">nodes</span>
+              </div>
             </div>
           </section>
         </div>
@@ -221,6 +227,8 @@ export function mountStructuresLab(
 
     const frames = demo.generate(values)
     engine.load(frames)
+    const empty = root.querySelector('#empty-hint') as HTMLElement | null
+    if (empty) empty.hidden = true
     statsEl.textContent = `${demo.label} · ${frames.length} frames · n≈${values.length}`
     consoleEl.textContent = `Reference · ${demo.label} on [${values.join(', ')}]`
     updateConcept()

@@ -156,6 +156,11 @@ export const databasesMeat: MeatPack[] = [
       'Splits preserve sorted order and parent separators',
       'Max keys per node consistent with stated order',
     ],
+    solutionSketch: {
+      problemId: 'b1',
+      sketch:
+        'Order d=2 (max 4 keys): first split often when 5th key arrives (e.g. after 10,20,30,40 then 50). Leaf chain remains sorted L→R; parent gets separator key. Compare toy bplus-insert (order-3 leaves only) for packing intuition only.',
+    },
     problems: [
       {
         id: 'b1',
@@ -1561,6 +1566,11 @@ export const labMeat: MeatPack[] = [
     sources: [{ label: 'Sipser Ch. 1', kind: 'textbook' }],
     deliverables: ['State trace table'],
     selfCheck: ['Input 01001'],
+    solutionSketch: {
+      problemId: 'd2',
+      sketch:
+        '01001 has three 0s (odd) → ends in O → REJECT. Accepting state is E (even zeros). Odd # of 1s would need a different DFA (track parity of 1s).',
+    },
     problems: [
       {
         id: 'd1',

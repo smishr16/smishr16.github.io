@@ -149,16 +149,30 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
             <div class="pane-label"><span class="pane-title" id="label-a">Visualizer · 2D</span></div>
             <div class="viz-wrap">
               <canvas class="viz-canvas" id="viz-a" role="img" aria-label="Sorting visualization A"></canvas>
+              <div class="lab-empty-hint" id="empty-a">Press <strong>Run</strong> to generate frames, then Play / Step.</div>
               <div class="viz-status" id="viz-status-a" aria-live="polite">Ready.</div>
               <div class="viz-stats" id="stats-a" aria-label="Algorithm A stats"></div>
+              <div class="viz-legend" aria-hidden="true">
+                <span class="lg-default">bars</span>
+                <span class="lg-compare">compare</span>
+                <span class="lg-active">active</span>
+                <span class="lg-sorted">sorted</span>
+              </div>
             </div>
           </section>
           <section class="viz-pane compare-only" aria-label="Visualization B" id="pane-viz-b" ${compareMode ? '' : 'hidden'}>
             <div class="pane-label"><span class="pane-title" id="label-b">Visualizer B</span></div>
             <div class="viz-wrap">
               <canvas class="viz-canvas" id="viz-b" role="img" aria-label="Sorting visualization B"></canvas>
+              <div class="lab-empty-hint" id="empty-b">Compare pane — Run both sides.</div>
               <div class="viz-status" id="viz-status-b" aria-live="polite">Ready.</div>
               <div class="viz-stats" id="stats-b" aria-label="Algorithm B stats"></div>
+              <div class="viz-legend" aria-hidden="true">
+                <span class="lg-default">bars</span>
+                <span class="lg-compare">compare</span>
+                <span class="lg-active">active</span>
+                <span class="lg-sorted">sorted</span>
+              </div>
             </div>
           </section>
         </div>
@@ -263,6 +277,13 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
     summaryEl.innerHTML = `<strong>Same array n=${data.length}</strong> · ${cmpWinner} · ${stepWinner}`
   }
 
+  function hideEmptyHints(): void {
+    const a = root.querySelector('#empty-a') as HTMLElement | null
+    const b = root.querySelector('#empty-b') as HTMLElement | null
+    if (a) a.hidden = true
+    if (b) b.hidden = true
+  }
+
   function loadReferenceSingle(): void {
     const algo = getAlgorithm(algoId) as ISortingAlgorithm
     const steps = algo.generateSteps(data)
@@ -271,6 +292,7 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
     setStats(statsAEl, algo, steps)
     statsBEl.textContent = ''
     summaryEl.hidden = true
+    hideEmptyHints()
     logConsole(`Reference · ${algo.label} · ${formatStats(countStepStats(steps))} · n=${data.length}`)
   }
 
@@ -290,6 +312,7 @@ export function mountSortingLab(root: HTMLElement, options: SortingLabOptions = 
     setStats(statsBEl, b, stepsB)
     updateCompareSummary(a, stepsA, b, stepsB)
     summaryEl.hidden = false
+    hideEmptyHints()
     ;(root.querySelector('#label-a') as HTMLElement).textContent = `A · ${a.label}`
     ;(root.querySelector('#label-b') as HTMLElement).textContent = `B · ${b.label}`
     logConsole(

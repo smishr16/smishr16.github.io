@@ -269,6 +269,7 @@ export function renderCourse(courseId: string): string | null {
         ${statusBadgeHtml(course.status)}
       </div>
       <p class="status-hint muted">${courseStatusHint(course.status, course.liveLabCount)}</p>
+      <p class="progress-summary muted" data-progress-summary>Progress loads locally…</p>
       ${course.academicNote ? `<p class="academic-note">${course.academicNote}</p>` : ''}
       <p class="cs2023-line"><span class="muted">CS2023:</span> ${ka}</p>
       <p class="lede">${course.overview}</p>

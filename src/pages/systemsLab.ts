@@ -86,8 +86,15 @@ export function mountSystemsLab(
             <div class="pane-label"><span class="pane-title">Systems · instrument</span></div>
             <div class="viz-wrap">
               <canvas class="viz-canvas" id="viz" role="img" aria-label="Systems visualization"></canvas>
+              <div class="lab-empty-hint" id="empty-hint">Press <strong>Run</strong> to load the demo, then Play / Step.</div>
               <div class="viz-status" id="viz-status" aria-live="polite">Ready.</div>
               <div class="viz-stats" id="stats"></div>
+              <div class="viz-legend" aria-hidden="true">
+                <span class="lg-active">active</span>
+                <span class="lg-path">result / path</span>
+                <span class="lg-visited">done</span>
+                <span class="lg-default">idle</span>
+              </div>
             </div>
           </section>
         </div>
@@ -119,8 +126,10 @@ export function mountSystemsLab(
       const demo = getSystemsDemo(demoId)
       const frames = demo.generate()
       engine.load(frames)
+      const empty = root.querySelector('#empty-hint') as HTMLElement | null
+      if (empty) empty.hidden = true
       conceptEl.innerHTML = `<strong>${demo.label}</strong> · ${demo.category}<br/>${demo.description}<br/>
-        <span class="muted">Teaching toy — fixed instances for fair comparison. Switch tabs to compare FCFS / SJF / RR or FIFO / LRU on the same data.</span>`
+        <span class="muted">Teaching toy — fixed instances for fair comparison. Switch tabs to explore demos; some are cross-course (automata, networks, PL, joins).</span>`
       statsEl.textContent = `${demo.label} · ${frames.length} frames`
       consoleEl.textContent = `Loaded ${demo.label}`
     } catch (e) {

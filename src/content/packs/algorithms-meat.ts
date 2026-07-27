@@ -60,6 +60,11 @@ export const algorithmsMeat: MeatPack[] = [
     sources: [{ label: 'CLRS Ch. 4', kind: 'textbook' }],
     deliverables: ['Recurrence solutions with named method', 'At least one full substitution proof'],
     selfCheck: ['Base cases explicit', 'Induction hypothesis used correctly'],
+    solutionSketch: {
+      problemId: 'b1',
+      sketch:
+        '2T(n/2)+n → case 2 → Θ(n log n). 2T(n/2)+n² → case 3 → Θ(n²). 4T(n/2)+n → case 1 → Θ(n²). T(n/2)+1 → Θ(log n). 3T(n/3)+n log n → borderline/case 2-ish with log factors — state regularity carefully.',
+    },
     problems: [
       {
         id: 'b1',

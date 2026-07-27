@@ -13,6 +13,11 @@ export const discreteMeat: MeatPack[] = [
     ],
     deliverables: ['Four written proofs', 'Logic translations'],
     selfCheck: ['Quantifier order correct when negating'],
+    solutionSketch: {
+      problemId: 'p1',
+      sketch:
+        'n=2k+1 ⇒ n²=4k²+4k+1=2(2k²+2k)+1 odd. Contrapositive of “n² even ⇒ n even” is “n odd ⇒ n² odd” (same calculation). √2: assume p/q reduced, 2q²=p² ⇒ p even ⇒ contradiction on reduction.',
+    },
     problems: [
       {
         id: 'p1',

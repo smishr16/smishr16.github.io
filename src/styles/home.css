@@ -615,6 +615,11 @@ a.course-card:hover {
   accent-color: var(--accent);
 }
 
+.progress-summary {
+  margin: 0.25rem 0 0;
+  font-size: var(--text-sm);
+}
+
 .work-card h4 {
   margin: 0 0 var(--space-2);
   font-size: var(--text-md);

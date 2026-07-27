@@ -37,14 +37,30 @@ export function toggleWorkDone(courseId: string, workId: string): boolean {
   return cur.has(workId)
 }
 
+export function progressCounts(courseId: string, totalWork: number): { done: number; total: number } {
+  const done = getDoneWork(courseId).size
+  return { done, total: totalWork }
+}
+
 export function bindCourseProgress(courseId: string, root: ParentNode = document): void {
   const done = getDoneWork(courseId)
+  const summary = root.querySelector<HTMLElement>('[data-progress-summary]')
+  const total = root.querySelectorAll<HTMLInputElement>('[data-progress-work]').length
+
+  const refreshSummary = () => {
+    if (!summary) return
+    const n = getDoneWork(courseId).size
+    summary.textContent = `${n} / ${total} marked done (local only)`
+  }
+
   root.querySelectorAll<HTMLInputElement>('[data-progress-work]').forEach((el) => {
     const id = el.dataset.progressWork
     if (!id) return
     el.checked = done.has(id)
     el.addEventListener('change', () => {
       toggleWorkDone(courseId, id)
+      refreshSummary()
     })
   })
+  refreshSummary()
 }

@@ -122,8 +122,15 @@ export function mountGraphLab(root: HTMLElement, options: GraphLabOptions = { co
             <div class="pane-label"><span class="pane-title" id="label-a">Graph · search</span></div>
             <div class="viz-wrap">
               <canvas class="viz-canvas" id="viz" role="img" aria-label="Graph search visualization"></canvas>
+              <div class="lab-empty-hint" id="empty-hint">Press <strong>Run</strong>, then Play / Step through search.</div>
               <div class="viz-status" id="viz-status" aria-live="polite">Ready.</div>
               <div class="viz-stats" id="stats" aria-label="Search metrics"></div>
+              <div class="viz-legend" aria-hidden="true">
+                <span class="lg-frontier">frontier</span>
+                <span class="lg-visited">visited</span>
+                <span class="lg-path">path</span>
+                <span class="lg-active">current</span>
+              </div>
             </div>
           </section>
         </div>
@@ -233,6 +240,8 @@ export function mountGraphLab(root: HTMLElement, options: GraphLabOptions = { co
 
     const frames = algo.generate(graph, start, goal)
     engine.load(frames)
+    const empty = root.querySelector('#empty-hint') as HTMLElement | null
+    if (empty) empty.hidden = true
     statsEl.textContent = `${algo.label} · ${frames.length} frames · ${graph.name}`
     consoleEl.textContent = `Reference · ${algo.label} on ${graph.name}: ${start} → ${goal}`
     updateConcept()
