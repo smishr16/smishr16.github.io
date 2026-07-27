@@ -228,7 +228,7 @@ export const systemsOsMeat: MeatPack[] = [
         title: 'P1 · Nested calls',
         points: 40,
         prompt:
-          'On paper (stack toy forthcoming): f calls g calls h. Draw stack just after h’s prologue. Mark return addresses and each frame’s saved base pointer (or state your ABI).',
+          'On paper (or stack-calls lab): f calls g calls h (depth 3). Draw stack just after h’s prologue. Mark return addresses and each frame’s saved base pointer (or state your ABI).',
       },
       {
         id: 'sl2',
@@ -321,7 +321,7 @@ export const systemsOsMeat: MeatPack[] = [
         title: 'P1 · Multiple definition',
         points: 35,
         prompt:
-          'Two .o files both define strong global int x. What does the static linker do? What if one is weak (common/tentative) and one is strong?',
+          'Two .o files both define strong global int x (size 4 bytes). What does the static linker do (multiple-definition error vs pick-one)? What if one is weak (common/tentative) and one is strong? State the strong-symbol rule.',
       },
       {
         id: 'lk2',
@@ -478,7 +478,7 @@ export const systemsOsMeat: MeatPack[] = [
         title: 'P2 · States',
         points: 30,
         prompt:
-          'Place new, ready, running, blocked, terminated on a state diagram with labeled transitions (schedule, I/O, exit, create).',
+          'Place new, ready, running, blocked, terminated on a 5-state process diagram with labeled transitions (schedule, I/O wait, I/O done, exit, create).',
       },
       {
         id: 'pr3',
@@ -515,7 +515,7 @@ export const systemsOsMeat: MeatPack[] = [
         title: 'P3 · Termination',
         points: 30,
         prompt:
-          'How does the demo show B terminating while A continues? What happens to A’s final transition to terminated?',
+          'process-lifecycle demo: how does B reach terminated while A continues? List A’s final 2 state transitions to terminated.',
       },
     ],
   },

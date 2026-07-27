@@ -1021,7 +1021,7 @@ export const mlMeat: MeatPack[] = [
         title: 'P2 · Failure modes',
         points: 40,
         prompt:
-          'Identify two realistic failure modes (distribution shift, label noise, spurious correlation, thresholding on imbalance, etc.). For each: how would the reported metric look “fine” while users suffer? Propose one evaluation addition.',
+          'Identify two realistic failure modes (distribution shift, label noise, spurious correlation, thresholding on class imbalance 1:99, etc.). For each: how would accuracy look “fine” while users suffer? Propose one evaluation addition (e.g. per-class F1).',
       },
       {
         id: 'cr3',

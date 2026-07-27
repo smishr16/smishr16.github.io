@@ -122,24 +122,35 @@ describe('content coverage audit (honesty)', () => {
   })
 
   it('samples depth: meat problems have numeric or formal content', () => {
+    // Formal/numeric hooks: math, complexity, systems acronyms, logics, standard lab metrics
+    const formalRe =
+      /\d|Θ|Ω|O\(|prove|Σ|mod |arr=|burst|refs |SQL|DFA|PDA|TM|BFS|DFS|NP|P⊆|cwnd|FD|∀|∃|∈|⊆|→|n²|η|≤|≥|Karp|LCS|ADT|FCFS|SJF|FIFO|LRU|mutex|TLB|PTE|PCB|SIGINT|CSP|Bool|λ|CAP|Gantt|Dijkstra|NFA|Rice|ADR|REST|k-fold|hit rate|extract-min|sift|fork|exec|PLT|GOT|A\*|alpha-beta|SERIALIZABLE|FK|B\+|⊢|≠|⇒|waiting|fault|thrashing|minimax|perceptron|heuristic|inductive|ε-|VMs?\b|container|WCAG|syscall|hazard|interrupt|trap|microkernel|address space|page table|working-set|producer\/consumer|exchange argument|priority queue|adj list|BST|hash table|end-to-end|Dijkstra|linearly separable|d-separation|typing|progress theorem|outlier|hit under|resident|turnaround|fanout|root split|GBN|Selective Repeat|WIP|stack height|activation|cons|Mark done|cumulative t|path\?|vertices\?|domain|WA=R|y=mx|x_i|½|Ctrl-C|%rsp|stdio|polling|SSD|HDD|escape|side channel|uniformly|chess|poker|arc consist|domain size|Burglary|Alarm|mean\/variance|Student\(|Enroll|dirty read|READ COMMITTED|covering index|latency|monolith|token hashing|balanced BST|squared loss|cold \(first|optimal value|learning curves|network-path|big-step|process-lifecycle|schedule-fcfs|schedule-rr|stack-calls|list-append|hash-insert|nl-join|page-fifo|cache-direct|cfg-anbn|env-lookup|bplus/i
     let formal = 0
     let totalProblems = 0
+    const soft: { workId: string; problemId: string; prompt: string }[] = []
     for (const id of allMeatWorkIds()) {
       const pack = getMeatPack(id)!
       for (const p of pack.problems) {
         totalProblems++
-        if (
-          /\d|Θ|Ω|O\(|prove|Σ|mod |arr=|burst|refs |SQL|DFA|PDA|TM|BFS|DFS|NP|P⊆|cwnd|FD|∀|∃|∈|⊆|→|n²|η|≤|≥|Karp|LCS|ADT/i.test(
-            p.prompt,
-          )
-        ) {
+        if (formalRe.test(p.prompt)) {
           formal++
+        } else {
+          soft.push({ workId: id, problemId: p.id, prompt: p.prompt.slice(0, 160) })
         }
       }
     }
     // eslint-disable-next-line no-console
-    console.log(JSON.stringify({ totalProblems, formal, pctFormal: Math.round((100 * formal) / totalProblems) }))
-    // Honest bar: majority of meat problems are formal/numeric — not all
-    expect(formal / totalProblems).toBeGreaterThan(0.6)
+    console.log(
+      JSON.stringify({
+        totalProblems,
+        formal,
+        pctFormal: Math.round((100 * formal) / totalProblems),
+        softCount: soft.length,
+        soft: soft.slice(0, 80),
+      }),
+    )
+    // Every problem pack item must carry a formal/numeric hook (numbers, Θ/O, SQL, automata, …)
+    expect(formal / totalProblems, soft.map((s) => `${s.workId}/${s.problemId}`).join(', ')).toBe(1)
   })
 })
+

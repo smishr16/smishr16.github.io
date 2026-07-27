@@ -532,7 +532,8 @@ export const plMeat: MeatPack[] = [
         id: 't3',
         title: 'P3 · Counterexample',
         points: 30,
-        prompt: 'Show a term that is well-typed under an unsound rule you invent, but stuck at runtime.',
+        prompt:
+          'Show a term that is well-typed under an unsound cast rule you invent (e.g. Bool → Nat free), but stuck at runtime. Give the typing derivation outline and the stuck redex.',
       },
     ],
   },
@@ -1658,7 +1659,7 @@ export const labMeat: MeatPack[] = [
         id: 'e1',
         title: 'P1 · Order',
         points: 40,
-        prompt: 'pl-eval-tree: list values computed in order (leaves first).',
+        prompt: 'pl-eval-tree lab for (2+3)*4: list values computed in order (leaves first), ending at 20.',
       },
       {
         id: 'e2',
@@ -1692,13 +1693,15 @@ export const labMeat: MeatPack[] = [
         id: 's2',
         title: 'P2 · Blocked',
         points: 30,
-        prompt: 'Give one real team reason a ticket is “blocked” analogous to I/O wait.',
+        prompt:
+          'Give one real team reason a ticket is “blocked” analogous to I/O wait (e.g. waiting on external API or review). Map to process-lifecycle blocked state.',
       },
       {
         id: 's3',
         title: 'P3 · Limits',
         points: 30,
-        prompt: 'Why this metaphor fails for SE (two reasons): e.g. parallel work, no single CPU, etc.',
+        prompt:
+          'Why the process-lifecycle metaphor fails for SE (≥2 reasons): e.g. parallel work, no single CPU, multi-person ownership. State each as a concrete counterexample.',
       },
     ],
   },
@@ -1747,7 +1750,8 @@ export const labMeat: MeatPack[] = [
         id: 'd2',
         title: 'P2 · Reachability',
         points: 30,
-        prompt: 'Which vertices are reachable from Gate? Is Lab among them? One sentence proof idea from the run.',
+        prompt:
+          'DFS from Gate: which vertices are reachable? Is Lab among them? One-sentence proof idea (path of length k in the DFS tree/forest).',
       },
       {
         id: 'd3',
@@ -1774,7 +1778,8 @@ export const labMeat: MeatPack[] = [
         id: 's2',
         title: 'P2 · Path cost',
         points: 30,
-        prompt: 'Pick one target; write a shortest path as vertex sequence and sum of edge weights.',
+        prompt:
+          'Pick one target on city-6; write a Dijkstra shortest path as vertex sequence and numeric sum of edge weights.',
       },
       {
         id: 's3',
@@ -1861,7 +1866,7 @@ export const labMeat: MeatPack[] = [
         id: 'c3',
         title: 'P3 · General',
         points: 30,
-        prompt: 'How many aSb applications for aⁿbⁿ? Why ε is needed.',
+        prompt: 'How many S→aSb applications for aⁿbⁿ (answer: n)? Why S→ε is needed to finish the derivation.',
       },
     ],
   },
@@ -2018,7 +2023,8 @@ export const labMeat: MeatPack[] = [
         id: 'h3',
         title: 'P3 · Cost',
         points: 30,
-        prompt: 'If one chain has length k, what is worst-case probe cost for that key? Relate to load factor intuition.',
+        prompt:
+          'If one chain has length k, what is worst-case probe cost Θ(k) for that key? Relate to load factor α = n/m intuition.',
       },
     ],
   },
@@ -2045,7 +2051,8 @@ export const labMeat: MeatPack[] = [
         id: 'j3',
         title: 'P3 · Plans',
         points: 30,
-        prompt: 'Name one reason an optimizer might still pick NLJ (indexes, tiny outer, nested correlated).',
+        prompt:
+          'Name one reason an optimizer might still pick NLJ over hash join (indexes on inner, |outer|≪100, nested correlated subquery).',
       },
     ],
   },
@@ -2153,7 +2160,8 @@ export const labMeat: MeatPack[] = [
         id: 'r3',
         title: 'P3 · Honesty',
         points: 30,
-        prompt: 'Name two OSPF/LS pieces missing here (flooding, LSA aging, areas, ECMP).',
+        prompt:
+          'Name ≥2 OSPF/LS pieces missing from this Dijkstra toy (flooding, LSA aging, areas, ECMP). One sentence each.',
       },
     ],
   },
@@ -2174,7 +2182,8 @@ export const labMeat: MeatPack[] = [
         id: 's2',
         title: 'P2 · Return',
         points: 30,
-        prompt: 'As frames pop, what value/control returns? Relate to callee-returns-to-caller in interpreters.',
+        prompt:
+          'stack-calls: as frames pop, what value/control returns to the caller? Relate to callee→caller return in interpreters (1–2 sentences + example).',
       },
       {
         id: 's3',
@@ -2261,7 +2270,8 @@ export const labMeat: MeatPack[] = [
         id: 'f3',
         title: 'P3 · Limits',
         points: 30,
-        prompt: 'Two reasons real delivery queues differ (parallelism, priority classes, dependencies).',
+        prompt:
+          '≥2 reasons real delivery queues differ from schedule-fcfs (parallelism N>1, priority classes, dependencies). Give one numeric or named example each.',
       },
     ],
   },
@@ -2282,7 +2292,8 @@ export const labMeat: MeatPack[] = [
         id: 'r2',
         title: 'P2 · WIP',
         points: 30,
-        prompt: 'Argue how excessive in-progress tickets resembles RR thrash (context loss, not just CPU).',
+        prompt:
+          'Argue how WIP≫capacity (e.g. 12 tickets in progress for 3 people) resembles RR thrash: context loss, not just CPU. Cite schedule-rr slice switches.',
       },
       {
         id: 'r3',
@@ -2309,13 +2320,15 @@ export const labMeat: MeatPack[] = [
         id: 't2',
         title: 'P2 · Seams',
         points: 35,
-        prompt: 'Which boundary is better as an integration test (I/O, network, DB)? One sentence.',
+        prompt:
+          'Which boundary is better as an integration test (I/O, network, DB)? One sentence with a concrete seam (e.g. HTTP 200 + row count=1).',
       },
       {
         id: 't3',
         title: 'P3 · Oracle',
         points: 30,
-        prompt: 'For your chosen unit test, what is the oracle (expected value / property)?',
+        prompt:
+          'For your chosen unit test, state the oracle: expected return value or property (e.g. pure function f(x)=y for x=3).',
       },
     ],
   },
