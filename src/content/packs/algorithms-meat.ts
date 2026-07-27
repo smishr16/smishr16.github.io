@@ -14,7 +14,7 @@ export const algorithmsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'a4',
       sketch:
-        'Σ i = n(n+1)/2 = Θ(n²). Σ i² = n(n+1)(2n+1)/6 = Θ(n³). Σ 2^i = 2^{n+1}-1 = Θ(2^n). Σ i 2^i = (n-1)2^{n+1}+2 = Θ(n 2^n).',
+        'Growth order: n! ≫ 2ⁿ ≫ n³/log n ≫ n² ≫ n log n ≫ √n. Adjacent pair via lim f/g. Nested loops: (i) Θ(n²); (ii) Θ(n³); (iii) Θ(n). Sums: Σi=n(n+1)/2=Θ(n²); Σ2^i=Θ(2ⁿ).',
     },
     problems: [
       {
@@ -63,7 +63,7 @@ export const algorithmsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'b1',
       sketch:
-        '2T(n/2)+n → case 2 → Θ(n log n). 2T(n/2)+n² → case 3 → Θ(n²). 4T(n/2)+n → case 1 → Θ(n²). T(n/2)+1 → Θ(log n). 3T(n/3)+n log n → borderline/case 2-ish with log factors — state regularity carefully.',
+        'Master: a=2,b=2,f=n → case 2 → Θ(n log n). Substitution: guess cn log n; check base; absorb floors with n≥n₀. Recursion tree for T(n)=T(n/3)+T(2n/3)+n: depth Θ(log n), level cost ≤ n ⇒ Θ(n log n).',
     },
     problems: [
       {
@@ -105,7 +105,7 @@ export const algorithmsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'q2',
       sketch:
-        'Adversary: always pick min as pivot → partition sizes (0,n−1). T(n)=T(n−1)+Θ(n) ⇒ T(n)=Θ(n²). Family: sorted ascending with Lomuto-last, or reverse depending on pivot rule. Random pivot: E[T(n)] ≤ 2n ln n + O(n) via indicator X_{ij} that i,j are compared (prob 2/(|j−i|+1)).',
+        'Adversary always min/max pivot → T(n)=T(n−1)+Θ(n)=Θ(n²). Random pivot: E[X_{ij}]=2/(|j−i|+1) ⇒ E[compares]≤2n ln n+O(n). Introsort caps depth ~2 log n then heapsort.',
     },
 
     problems: [
@@ -151,7 +151,7 @@ export const algorithmsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'h1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Build-heap Θ(n); each of n extract-max is O(log n) ⇒ Θ(n log n). Unstable (long-range swaps). PQ connection: heapsort = repeated extract-max into sorted suffix.',
     },
 
     problems: [
@@ -186,7 +186,7 @@ export const algorithmsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'g2',
       sketch:
-        'BFS from A, alpha ties on neighbors: A; then B,C (dist 1); from B: D,E; from C: F → order A,B,C,D,E,F. Dist: A0 B1 C1 D2 E2 F2.',
+        'Adj list space Θ(n+m); matrix Θ(n²). BFS from A on {AB,AC,BD,BE,CF,EF}: distances A0, B/C1, D/E2, F2. Dijkstra nonneg weights; settle order nondecreasing dist.',
     },
     problems: [
       {
@@ -231,7 +231,7 @@ export const algorithmsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'gr1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Interval scheduling: sort by finish time; exchange: first disagreement swap preserves feasibility and |OPT|. Counterexample for earliest-start greedy: long early job blocks many short ones.',
     },
 
     problems: [
@@ -267,7 +267,7 @@ export const algorithmsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'd1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'LCS: dp[i][j]=dp[i-1][j-1]+1 if equal else max(left,up). Backtrack from dp[m][n]. Knapsack 0/1: dp[w]=max(dp[w], dp[w−wᵢ]+vᵢ) reverse weight loop.',
     },
 
     problems: [
@@ -316,7 +316,7 @@ export const algorithmsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'r1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'For P1 · Choose & cite: instantiate the prompt’s concrete values; show one full trace or closed form; end with the claim (Θ / accept / table). Expand fully on paper.',
     },
 
     problems: [
@@ -352,7 +352,7 @@ export const algorithmsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'n1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'NP: poly certificate + verifier. Karp reduction f in poly time: x∈A ⇔ f(x)∈B. SAT ≤ₚ 3SAT via clause splitting. If P=NP then poly algorithms for all NP search (crypto intuition collapses).',
     },
 
     problems: [

@@ -10,7 +10,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 's1',
       sketch:
-        '8-bit: −1=0xFF, −128=0x80, 127=0x7F. 100+50=150 → 150−256=−106 if interpreted as signed 8-bit (overflow).',
+        '8-bit TC: −1=0xFF, −128=0x80, 127=0x7F. 100+50=150 → signed wrap −106. Float 0.1+0.2≠0.3 binary. Little-endian 0x12345678 → 78 56 34 12 at ascending addresses.',
     },
     problems: [
       {
@@ -49,7 +49,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'm1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Networks (P1 · Stack frame): plug numbers into L/R or d/s or cwnd rules; state units. Function f calls g(a,b). Draw stack just after g’s prologue (locals: one int). M…',
     },
 
     problems: [
@@ -84,7 +84,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'c1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'For P1 · AMAT: instantiate the prompt’s concrete values; show one full trace or closed form; end with the claim (Θ / accept / table). Expand fully on paper.',
     },
 
     problems: [
@@ -119,7 +119,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'o1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Systems/OS (P1 · Dual mode): use the fixed lab instance; fill Gantt or frame table; compute waiting/faults with formulas. Why can’t user code disable interrupts or rewrite page tables directly? What mec…',
     },
 
     problems: [
@@ -155,7 +155,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'sch1',
       sketch:
-        'Jobs P1(0,5) P2(1,3) P3(2,8) P4(3,2). FCFS run order P1→P2→P3→P4; waiting = start−arrival. SJF among arrived picks shortest ready job (often P4 before P3). RR q=2 slices each ready job; more context switches, better response for short P4. Avg waiting: SJF ≤ FCFS typically; RR trades throughput for fairness.',
+        'P1(0,5) P2(1,3) P3(2,8) P4(3,2). FCFS convoy: short waits behind long. SJF among ready often runs P4 before P3. RR q=2 improves response for short jobs, more switches.',
     },
 
     problems: [
@@ -192,7 +192,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'c1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'SE (P1 · Race): give measurable numbers (counts, ms, %) or a 3-part ADR (context/decision/consequences). counter=0; two threads each do for i in 1..100000: counter++. Why final value ma…',
     },
 
     problems: [
@@ -228,7 +228,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'v1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Systems/OS (P1 · FIFO): use the fixed lab instance; fill Gantt or frame table; compute waiting/faults with formulas. 3 frames, refs 1,2,3,2,4,1,5,2,1,3. FIFO: list faults and final frames.…',
     },
 
     problems: [
@@ -261,7 +261,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'sl1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Call depth f→g→h: three frames; return addr below locals (ABI-dependent). After h returns, %rsp must restore caller frame for next ret.',
     },
 
     problems: [
@@ -297,7 +297,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'p1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Systems/OS (P1 · Ideal speedup): use the fixed lab instance; fill Gantt or frame table; compute waiting/faults with formulas. Describe stack height after h returns, then g returns, back in f. What must be t…',
     },
 
     problems: [
@@ -336,7 +336,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'pf1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'FIFO 3 frames on given refs: count faults; hits when page still resident. Temporal locality explains re-hit of recently used pages under LRU better than FIFO sometimes.',
     },
 
     problems: [
@@ -372,7 +372,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'lk1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Systems/OS (P3 · Scope honesty): use the fixed lab instance; fill Gantt or frame table; compute waiting/faults with formulas. This lab is page replacement, not cache geometry (sets/ways/lines). In ≤6 senten…',
     },
 
     problems: [
@@ -408,7 +408,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'ec1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'For P3 · Shared library: instantiate the prompt’s concrete values; show one full trace or closed form; end with the claim (Θ / accept / table). Expand fully on paper.',
     },
 
     problems: [
@@ -444,7 +444,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'vm1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Systems/OS (P3 · Signals): use the fixed lab instance; fill Gantt or frame table; compute waiting/faults with formulas. User types Ctrl-C in a terminal job. Sketch path from keyboard interrupt to defa…',
     },
 
     problems: [
@@ -480,7 +480,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'pl1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Systems/OS (P3 · TLB): use the fixed lab instance; fill Gantt or frame table; compute waiting/faults with formulas. On first touch of a demand-zero heap page: what does the kernel allocate, what g…',
     },
 
     problems: [
@@ -516,7 +516,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'io1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Systems/OS (P2 · Causes): use the fixed lab instance; fill Gantt or frame table; compute waiting/faults with formulas. Map three transitions to causes: (i) ready→running, (ii) running→blocked, (iii) …',
     },
 
     problems: [
@@ -552,7 +552,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'pr1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'SE (P2 · Buffering): give measurable numbers (counts, ms, %) or a 3-part ADR (context/decision/consequences). Explain how user-space stdio buffering can make “write one byte at a time” look …',
     },
 
     problems: [
@@ -588,7 +588,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'ol1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Systems/OS (P2 · States): use the fixed lab instance; fill Gantt or frame table; compute waiting/faults with formulas. Place new, ready, running, blocked, terminated on a 5-state process diagram with…',
     },
 
     problems: [
@@ -666,7 +666,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'sj1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'SJF non-preemptive among arrived: after P1, pick shortest ready (P2 then P4 then P3 typically). Compare avg waiting to FCFS numerically.',
     },
 
     problems: [
@@ -705,7 +705,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'ff1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        '3 frames FIFO: fault when page not in memory; victim = oldest. Count faults on lab ref string; list final residents.',
     },
 
     problems: [
@@ -744,7 +744,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'lr1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'LRU evicts least-recently used; often fewer faults than FIFO on looping refs. Clock approximates with reference bit.',
     },
 
     problems: [
@@ -780,7 +780,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'fs1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Systems/OS (P1 · LRU trace): use the fixed lab instance; fill Gantt or frame table; compute waiting/faults with formulas. Run systemsDemo page-lru (3 frames) on refs 1,2,3,2,4,1,5,2,1,3. List faults and…',
     },
 
     problems: [
@@ -816,7 +816,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'ioa',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Instantiate the prompt’s numbers/instance; show one full trace or closed form; end with the claim (Θ, accept/reject, or table). Expand on paper.',
     },
 
     problems: [
@@ -859,7 +859,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'sec1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Networks (P1 · Read path): plug numbers into L/R or d/s or cwnd rules; state units. Trace read(fd, buf, n) from app through syscall, file system, block layer, and d…',
     },
 
     problems: [

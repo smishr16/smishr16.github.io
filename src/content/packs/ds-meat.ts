@@ -9,7 +9,7 @@ export const dataStructuresMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'd4',
       sketch:
-        'Aggregate: n appends with doubling cost 1+2+4+…+n ≤ 2n → amortized O(1). Worst single append is Θ(n) when resizing.',
+        'Stack/queue array: Θ(1) push/pop at end; insert-front Θ(n). Dictionary: balanced BST Θ(log n) worst; hash average Θ(1), worst Θ(n). Doubling: aggregate 1+2+…+n ≤ 2n ⇒ amortized O(1).',
     },
     problems: [
       {
@@ -50,7 +50,7 @@ export const dataStructuresMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'l1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Systems/OS (P1 · Cost table): use the fixed lab instance; fill Gantt or frame table; compute waiting/faults with formulas. Fill a table for array vs singly linked list: access[i], insert at head, insert …',
     },
 
     problems: [
@@ -85,7 +85,7 @@ export const dataStructuresMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 't1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'SE (P1 · Insert sequence): give measurable numbers (counts, ms, %) or a 3-part ADR (context/decision/consequences). Insert 7,3,11,1,9,5 into an empty BST. Draw the tree. List inorder.…',
     },
 
     problems: [
@@ -119,7 +119,7 @@ export const dataStructuresMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'h1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Insert 9,4,7,1 min-heap: root ends as 1 after sifts. extract-min: swap last to root, sift-down. PQ use: Dijkstra keys=dist; Huffman keys=freq.',
     },
 
     problems: [
@@ -151,7 +151,7 @@ export const dataStructuresMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'ha1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'SE (P3 · PQ use): give measurable numbers (counts, ms, %) or a 3-part ADR (context/decision/consequences). Name two algorithms (from Algorithms course) that use a priority queue and what …',
     },
 
     problems: [
@@ -185,7 +185,7 @@ export const dataStructuresMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'la2',
       sketch:
-        'Final order [4,8,2,9,1]; value 2 is at index 2. Contiguous array access[i] is Θ(1). Insert-front shifts all elements → Θ(n); linked list insert-front is Θ(1) with a head pointer.',
+        'Append [4,8,2,9,1] → indices 0..4; value 2 at index 2; access[i] Θ(1) contiguous. Insert-front shifts all ⇒ Θ(n); linked-list head insert Θ(1).',
     },
     problems: [
       {
@@ -220,7 +220,7 @@ export const dataStructuresMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'tr1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Systems/OS (P1 · Traversals): use the fixed lab instance; fill Gantt or frame table; compute waiting/faults with formulas. Explain in ≥5 sentences why insert-at-front on a dynamic array is Θ(n) while app…',
     },
 
     problems: [
@@ -262,7 +262,7 @@ export const dataStructuresMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'hl1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'PL (P3 · Expression tree): write the judgment or reduction sequence; name the rule (T-App, E-Add, …). Build an expression tree for (2+3)*(7−4). Give postorder (RPN) and evaluate it. …',
     },
 
     problems: [
@@ -298,7 +298,7 @@ export const dataStructuresMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'hlab1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Hash chaining h(k)=k mod m; record chains after inserts; load α=n/m; rehash when α>0.75 costs Θ(n) once, amortized O(1) under geometric growth.',
     },
 
     problems: [
@@ -334,7 +334,7 @@ export const dataStructuresMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'g1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'SE (P3 · Resize policy): give measurable numbers (counts, ms, %) or a 3-part ADR (context/decision/consequences). If you resize when α > 0.75, would you resize during this lab sequence? At what …',
     },
 
     problems: [
@@ -370,7 +370,7 @@ export const dataStructuresMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'gl1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Campus BFS then DFS from Gate: contrast discovery order; adj-list iterate neighbors Θ(deg(v)); matrix edge test Θ(1) space Θ(n²).',
     },
 
     problems: [
@@ -406,7 +406,7 @@ export const dataStructuresMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'r1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Algorithms (P3 · DFS contrast): run the named algorithm on the given instance; record order/distances; give Θ where asked. On paper use edges {0-1,1-2,2-3,3-0,0-2}. Prefer list or matrix for n=4? Run BFS…',
     },
 
     problems: [

@@ -16,7 +16,7 @@ export const discreteMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'p1',
       sketch:
-        'n=2k+1 ⇒ n²=4k²+4k+1=2(2k²+2k)+1 odd. Contrapositive of “n² even ⇒ n even” is “n odd ⇒ n² odd” (same calculation). √2: assume p/q reduced, 2q²=p² ⇒ p even ⇒ contradiction on reduction.',
+        'Direct: n=2k+1⇒n² odd. Contrapositive of even-square. √2 irrational p/q. Goldbach formalization ∀ even n>2 ∃p,q primes. Flawed induction fails at n=1→2.',
     },
     problems: [
       {
@@ -61,7 +61,7 @@ export const discreteMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'i1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'For P1 · Sum: instantiate the prompt’s concrete values; show one full trace or closed form; end with the claim (Θ / accept / table). Expand fully on paper.',
     },
 
     problems: [
@@ -93,7 +93,7 @@ export const discreteMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'c1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'For P1 · Choices: instantiate the prompt’s concrete values; show one full trace or closed form; end with the claim (Θ / accept / table). Expand fully on paper.',
     },
 
     problems: [
@@ -139,7 +139,7 @@ export const discreteMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 's1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'SE (P1 · Set identity): give measurable numbers (counts, ms, %) or a 3-part ADR (context/decision/consequences). Prove A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C) by double inclusion (x∈LHS ⇒ x∈RHS and con…',
     },
 
     problems: [
@@ -182,7 +182,7 @@ export const discreteMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'g1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Algorithms (P1 · Handshaking): run the named algorithm on the given instance; record order/distances; give Θ where asked. Graph G has degree sequence 3,3,2,2,2. Does a simple graph with this sequence ex…',
     },
 
     problems: [
@@ -225,7 +225,7 @@ export const discreteMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'r1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Systems/OS (P1 · Unroll): use the fixed lab instance; fill Gantt or frame table; compute waiting/faults with formulas. Solve T(n)=T(n−1)+3 with T(1)=2 by unrolling. Give closed form and check T(5) tw…',
     },
 
     problems: [
@@ -268,7 +268,7 @@ export const discreteMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'pr1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'SE (P1 · Conditional): give measurable numbers (counts, ms, %) or a 3-part ADR (context/decision/consequences). Without full Master proof: classify T(n)=3T(n/2)+n and T(n)=2T(n/2)+n² as root-h…',
     },
 
     problems: [
@@ -310,7 +310,7 @@ export const discreteMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'rd1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'For P1 · Algorithm pick: instantiate the prompt’s concrete values; show one full trace or closed form; end with the claim (Θ / accept / table). Expand fully on paper.',
     },
 
     problems: [
@@ -349,7 +349,7 @@ export const theoryMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 't1',
       sketch:
-        'Even #0s: 2 states E/O, δ flip on 0, stay on 1, F={E}. Ends with 01: track last bits (S / saw0 / Acc). Product construction for intersection: Q×Q′. Always test ε, shortest accept, shortest reject.',
+        'Even #0s: E/O flip on 0. Ends-with-01: S/Saw0/Acc. Always test ε, shortest accept, shortest reject. Product for intersection.',
     },
 
     problems: [
@@ -381,7 +381,7 @@ export const theoryMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'r1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Pumping: |xy|≤p, |y|≥1, ∀k xyᵏz∈L. {0ⁿ1ⁿ} not regular. Closure: if L regular and L∩R non-regular careful — use homomorphisms carefully.',
     },
 
     problems: [
@@ -414,7 +414,7 @@ export const theoryMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'n1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Theory (P3 · Closure use): draw automaton or write production; test ε + one accept + one reject; state the formal claim. Prove {0ⁿ1ⁿ | n≥0} is not regular via pumping lemma.…',
     },
 
     problems: [
@@ -447,7 +447,7 @@ export const theoryMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'cf1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'CFG S→aSb|ε for aⁿbⁿ. PDA push A on a, pop on b. CFL pumping for {aⁿbⁿcⁿ}.',
     },
 
     problems: [
@@ -483,7 +483,7 @@ export const theoryMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'tm1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Theory (P3 · Non-CFL): draw automaton or write production; test ε + one accept + one reject; state the formal claim. Prove {a^n b^n c^n | n≥0} is not context-free using the CFL pumping lemma (choos…',
     },
 
     problems: [
@@ -519,7 +519,7 @@ export const theoryMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'u1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Theory (P3 · Variants): draw automaton or write production; test ε + one accept + one reject; state the formal claim. Explain why multi-tape TMs decide the same class of languages as single-tape TMs…',
     },
 
     problems: [
@@ -555,7 +555,7 @@ export const theoryMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'ad1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Theory (P3 · Rice landscape): draw automaton or write production; test ε + one accept + one reject; state the formal claim. State Rice’s theorem in one sentence. Apply it (or explain why it applies) to sh…',
     },
 
     problems: [
@@ -594,7 +594,7 @@ export const aiMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'a1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Algorithms (P3 · Synthesis): run the named algorithm on the given instance; record order/distances; give Θ where asked. One paragraph: how automata/computability (M1–M5) differ in flavor from complexi…',
     },
 
     problems: [
@@ -628,7 +628,7 @@ export const aiMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 's1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Algorithms (P2 · Formulation): run the named algorithm on the given instance; record order/distances; give Θ where asked. Formulate 8-puzzle as a search problem: state, initial, actions, transition, goa…',
     },
 
     problems: [
@@ -662,7 +662,7 @@ export const aiMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'g1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Algorithms (P2 · A* heuristic): run the named algorithm on the given instance; record order/distances; give Θ where asked. For grid pathfinding, is Manhattan distance admissible if moves are 4-connected?…',
     },
 
     problems: [
@@ -696,7 +696,7 @@ export const aiMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'ls1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'For P1 · Minimax: instantiate the prompt’s concrete values; show one full trace or closed form; end with the claim (Θ / accept / table). Expand fully on paper.',
     },
 
     problems: [
@@ -735,7 +735,7 @@ export const aiMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'csp1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'SE (P2 · SA schedule): give measurable numbers (counts, ms, %) or a 3-part ADR (context/decision/consequences). Simulated annealing accepts a worse move of ΔE=+2 with probability e^{−ΔE/T}. Co…',
     },
 
     problems: [
@@ -774,7 +774,7 @@ export const aiMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'cl1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'A=R ⇒ B={G}; C={R} after ≠ constraints. Toy AC not full AC-3 queue.',
     },
 
     problems: [
@@ -817,7 +817,7 @@ export const aiMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'lg1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'For P2 · Wipeout: instantiate the prompt’s concrete values; show one full trace or closed form; end with the claim (Θ / accept / table). Expand fully on paper.',
     },
 
     problems: [
@@ -856,7 +856,7 @@ export const aiMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'bn1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'SE (P2 · Resolution): give measurable numbers (counts, ms, %) or a 3-part ADR (context/decision/consequences). KB: (P∨Q), (¬P∨R), (¬Q∨R). Prove R by resolution (show clause sequence). Then: a…',
     },
 
     problems: [
@@ -895,7 +895,7 @@ export const aiMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'br1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Algorithms (P2 · Independence): run the named algorithm on the given instance; record order/distances; give Θ where asked. In the same graph: is JohnCalls independent of Burglary given Alarm? Is Burglary…',
     },
 
     problems: [
@@ -968,7 +968,7 @@ export const mlMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'r1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'ML (P1 · Gradient step): report the numeric metric from the lab/prompt; state underfit/overfit or update equation. Data (x,y): (1,2),(2,3),(3,5). Model y=mx+b. Start m=0,b=0, η=0.1, squared loss …',
     },
 
     problems: [
@@ -1002,7 +1002,7 @@ export const mlMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'c1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'For P1 · Boundary: instantiate the prompt’s concrete values; show one full trace or closed form; end with the claim (Θ / accept / table). Expand fully on paper.',
     },
 
     problems: [
@@ -1035,7 +1035,7 @@ export const mlMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'e1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'ML (P1 · CV): report the numeric metric from the lab/prompt; state underfit/overfit or update equation. Explain k-fold CV. Why not tune hyperparameters on the test set?…',
     },
 
     problems: [
@@ -1072,7 +1072,7 @@ export const mlMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'bv1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Low d: high bias underfit (train+test high). High d: train↓ test↑ overfit. Pick d by validation min. Larger λ ⇒ simpler model (higher bias).',
     },
 
     problems: [
@@ -1106,9 +1106,9 @@ export const mlMeat: MeatPack[] = [
     deliverables: ['Hand-built tree', 'k-NN region sketch', 'Ensemble intuition paragraph'],
     selfCheck: ['Splits use training labels only', 'k-NN distance metric stated'],
     solutionSketch: {
-      problemId: 'tr1',
+      problemId: 'e1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'k-fold: rotate holdout; never tune on final test. Leak: fitting scaler on full data including test — fit on train fold only.',
     },
 
     problems: [
@@ -1144,9 +1144,9 @@ export const mlMeat: MeatPack[] = [
     deliverables: ['Numeric forward/backward tables', 'Honest compute note'],
     selfCheck: ['Chain rule factors match graph', 'Activations applied elementwise'],
     solutionSketch: {
-      problemId: 'nn1',
+      problemId: 'c1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Confusion matrix cells; precision=TP/(TP+FP), recall=TP/(TP+FN). Imbalance: accuracy can look high while minority fails — report F1/AUPRC.',
     },
 
     problems: [
@@ -1185,7 +1185,7 @@ export const mlMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'cr1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'For P1 · Forward: instantiate the prompt’s concrete values; show one full trace or closed form; end with the claim (Θ / accept / table). Expand fully on paper.',
     },
 
     problems: [
