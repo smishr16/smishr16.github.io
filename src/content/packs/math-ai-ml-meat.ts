@@ -349,7 +349,7 @@ export const theoryMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 't1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Even #0s: 2 states E/O, δ flip on 0, stay on 1, F={E}. Ends with 01: track last bits (S / saw0 / Acc). Product construction for intersection: Q×Q′. Always test ε, shortest accept, shortest reject.',
     },
 
     problems: [

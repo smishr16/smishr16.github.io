@@ -20,11 +20,24 @@ export type SystemsDemoId =
   | 'gbn-loss'
   | 'dfa-mod3'
   | 'hash-join'
+  | 'join-compare'
   | 'pl-small-step'
+  | 'pl-type-stlc'
+  | 'csp-ac'
   | 'nl-join'
   | 'env-lookup'
   | 'network-path'
   | 'pl-eval-tree'
+
+/** Optional runtime knobs for interactive systems demos. */
+export type SystemsDemoOpts = {
+  /** Binary/string input for automata demos */
+  input?: string
+  /** GBN window size */
+  windowSize?: number
+  /** Seq number that is lost (GBN) */
+  lossSeq?: number
+}
 
 export type SystemsJob = {
   id: string
@@ -59,5 +72,7 @@ export interface ISystemsDemo {
   label: string
   description: string
   category: 'scheduling' | 'memory' | 'process' | 'cpu' | 'ai'
-  generate(): SystemsFrame[]
+  /** When true, systems lab shows an input field (default string = opts.input or built-in). */
+  acceptsInput?: boolean
+  generate(opts?: SystemsDemoOpts): SystemsFrame[]
 }

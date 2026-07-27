@@ -65,5 +65,18 @@ describe('systems demos', () => {
     const sos = getSystemsDemo('pl-small-step').generate()
     expect(sos[sos.length - 1]!.treeNodes?.[0]?.label).toMatch(/20/)
   })
+
+  it('interactive opts: custom DFA input and GBN window', () => {
+    const mod = getSystemsDemo('dfa-mod3')
+    expect(mod.acceptsInput).toBe(true)
+    const f = mod.generate({ input: '11' }) // 3 mod 3 = 0
+    expect(f[f.length - 1]!.statusText).toMatch(/q0|mod 3 = 0/)
+    const g = getSystemsDemo('gbn-loss').generate({ windowSize: 4, lossSeq: 2 })
+    expect(g.some((x) => /DATA2|window=4/i.test(x.statusText + (x.title ?? '')))).toBe(true)
+    expect(getSystemsDemo('join-compare').generate().length).toBeGreaterThan(2)
+    expect(getSystemsDemo('pl-type-stlc').generate().length).toBeGreaterThan(2)
+    expect(getSystemsDemo('csp-ac').generate().length).toBeGreaterThan(3)
+  })
 })
+
 

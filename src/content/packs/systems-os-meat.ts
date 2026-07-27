@@ -155,7 +155,7 @@ export const systemsOsMeat: MeatPack[] = [
     solutionSketch: {
       problemId: 'sch1',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Jobs P1(0,5) P2(1,3) P3(2,8) P4(3,2). FCFS run order P1→P2→P3→P4; waiting = start−arrival. SJF among arrived picks shortest ready job (often P4 before P3). RR q=2 slices each ready job; more context switches, better response for short P4. Avg waiting: SJF ≤ FCFS typically; RR trades throughput for fairness.',
     },
 
     problems: [
@@ -625,9 +625,9 @@ export const systemsOsMeat: MeatPack[] = [
       'Jobs P1(0,5) P2(1,3) P3(2,8) P4(3,2)',
     ],
     solutionSketch: {
-      problemId: 'fc1',
+      problemId: 'fc2',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'FCFS: P1 [0,5), P2 [5,8), P3 [8,16), P4 [16,18). Turnaround_i = finish−arrival; waiting_i = turnaround−burst. Convoy: short P4 waits behind long P3.',
     },
 
     problems: [

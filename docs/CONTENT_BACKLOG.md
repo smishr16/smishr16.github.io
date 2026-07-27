@@ -32,10 +32,17 @@
 
 ## Later (optional)
 
-- Coursera UI polish pass
 - Accounts / cloud progress
-- WASM SQL, full CSP instrument
-- Configurable interactive inputs on more demos
+- WASM SQL engine
+- Playwright smoke suite
+- Upgrade remaining bulk outline sketches to showcase quality
+
+## Done after gap-closure (2026-07-27)
+
+- Coursera polish (syllabus sticky, sketch fold, mobile lab CSS)
+- Instrument depth (editable DFA, GBN knobs, join-compare, STLC, CSP-AC, quick vs merge)
+- Pedagogy (showcase sketches Alg/OS/TOC; midterms Alg/OS/TOC)
+- Audit: `docs/superpowers/specs/2026-07-27-post-impl-audit-polish-depth.md`
 
 ## Factory history
 

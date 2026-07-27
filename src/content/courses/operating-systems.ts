@@ -363,6 +363,13 @@ Prereq systems exposure (Computer Systems / CSAPP-style) is strongly recommended
         { label: 'MIT 6.828 advanced materials (selected public)', kind: 'curriculum', url: 'https://pdos.csail.mit.edu/6.828/' },
       ],
       work: [
+        analysisWork(
+          'os-midterm',
+          'Midterm: processes + scheduling + memory',
+          'Cumulative exam spanning process model, FCFS/SJF/RR, and page replacement on the fixed lab job/ref sets.',
+          'Timed 90 min practice · paper + optional lab demos for verification.',
+          'partial',
+        ),
         readingWork(
           'os-m8-reading',
           'Reading: isolation case study',

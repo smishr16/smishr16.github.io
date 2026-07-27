@@ -48,8 +48,10 @@
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
   border-bottom: 1px solid var(--border);
-  background: linear-gradient(90deg, rgba(125, 211, 192, 0.08), transparent 70%);
+  background: linear-gradient(90deg, rgba(125, 211, 192, 0.1), rgba(61, 139, 253, 0.06) 55%, transparent 90%);
   flex-shrink: 0;
+  max-height: 40vh;
+  overflow-y: auto;
 }
 
 .assignment-banner .eyebrow {
@@ -621,12 +623,67 @@
 @media (max-width: 480px) {
   .ide-top {
     padding: var(--space-2);
+    gap: var(--space-1);
+  }
+
+  .algo-tabs {
+    max-width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
   }
 
   .algo-tabs button {
     font-size: var(--text-xs);
     padding: 0.25rem 0.4rem;
+    white-space: nowrap;
   }
+
+  .transport-bar {
+    padding: var(--space-2);
+  }
+
+  .transport {
+    gap: var(--space-1);
+  }
+
+  .transport .btn {
+    padding: 0.35rem 0.5rem;
+    font-size: var(--text-xs);
+  }
+
+  .assignment-banner {
+    max-height: 28vh;
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .demo-input-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.demo-input-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+  font-size: var(--text-sm);
+}
+
+.demo-input-row input,
+.demo-input-row select {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 4px;
+  padding: 0.35rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  min-width: 8rem;
 }
 
 @media (max-height: 640px) {

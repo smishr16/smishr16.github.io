@@ -73,7 +73,7 @@ function renderProblemPack(w: CourseWork): string {
       .join('')
     return `
       <details class="handout" open>
-        <summary>Problem pack · ${meat.timeEstimate} · ${meat.problems.length} problems</summary>
+        <summary>Problem pack · ${meat.timeEstimate} · ${meat.problems.length} problems · assignment body</summary>
         <div class="handout-body">
           <ol class="problem-cards">${cards}</ol>
           <h5 class="subhead">Deliverables</h5>
@@ -82,8 +82,10 @@ function renderProblemPack(w: CourseWork): string {
           <ul class="handout-meta-list">${meat.selfCheck.map((d) => `<li>${d}</li>`).join('')}</ul>
           ${
             meat.solutionSketch
-              ? `<h5 class="subhead">Solution sketch (not full answers)</h5>
-                 <p class="problem-card-prompt"><strong>${meat.solutionSketch.problemId}:</strong> ${meat.solutionSketch.sketch}</p>`
+              ? `<details class="sketch-fold">
+                  <summary>Solution sketch (outline — not full answers)</summary>
+                  <p class="problem-card-prompt"><strong>${meat.solutionSketch.problemId}:</strong> ${meat.solutionSketch.sketch}</p>
+                </details>`
               : ''
           }
         </div>
@@ -141,11 +143,16 @@ export function renderCourse(courseId: string): string | null {
   const outline = course.modules
     .map((mod) => {
       const st = moduleStatus(mod.work)
+      const labsN = mod.work.filter(
+        (w) => w.status === 'live' && w.labId && w.config,
+      ).length
+      const workN = mod.work.length
       return `<li>
         <a href="#${mod.id}">
           <span class="module-code">${mod.code}</span>
-          <span>${mod.title}</span>
+          <span class="outline-title">${mod.title}</span>
           ${statusBadgeHtml(st)}
+          <span class="outline-meta muted">${labsN} lab · ${workN} work</span>
         </a>
       </li>`
     })
@@ -298,9 +305,13 @@ export function renderCourse(courseId: string): string | null {
 
     <div class="course-layout">
       <aside class="syllabus-nav" aria-label="Syllabus outline">
-        <h2 class="subhead">On this page</h2>
+        <h2 class="subhead">Syllabus</h2>
+        <p class="muted outline-hint">Jump to a module · sticky on desktop</p>
         <ol class="outline-list">${outline}</ol>
-        <p class="license-note">${course.licenseNote}</p>
+        <div class="syllabus-nav-foot">
+          <a class="btn btn-sm" href="#main">↑ Top</a>
+          <p class="license-note">${course.licenseNote}</p>
+        </div>
       </aside>
 
       <div class="course-main">

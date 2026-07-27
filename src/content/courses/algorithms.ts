@@ -341,6 +341,19 @@ It is **not** a “sorting course.” Sorting and order statistics form **M3** a
           config: { algoId: 'quicksort', arraySize: 12 },
           sources: [{ label: 'CLRS Ch. 7', kind: 'textbook' }],
         },
+        {
+          id: 'm3-quick-vs-merge-lab',
+          title: 'Lab: quicksort vs mergesort (dual-run)',
+          kind: 'lab',
+          status: 'live',
+          labId: 'sorting',
+          objective:
+            'Dual-run quicksort vs merge on the same array; compare compare-counts and interpret with theory.',
+          brief:
+            'compare mode: algoId quicksort, algoBId merge, n=16. Prefer compares over wall-clock. One caveat on pivot randomness.',
+          config: { algoId: 'quicksort', algoBId: 'merge', arraySize: 16, compare: true },
+          sources: [{ label: 'CLRS Ch. 2 & 7', kind: 'textbook' }],
+        },
         analysisWork(
           'm4-heapsort-sketch',
           'Analysis: heapsort',
@@ -592,6 +605,13 @@ It is **not** a “sorting course.” Sorting and order statistics form **M3** a
           'Write a one-page map of one advanced topic to prerequisites in M1–M6.',
           'Self-directed from a standard Algorithms text chapter.',
           'live',
+        ),
+        analysisWork(
+          'alg-midterm',
+          'Midterm: asymptotic + divide-and-conquer + graphs',
+          'Cumulative exam-style set spanning M1–M4 (growth, recurrences, sorting, BFS/Dijkstra).',
+          'Timed 90 min practice · paper · no lab required.',
+          'partial',
         ),
       ],
     }),

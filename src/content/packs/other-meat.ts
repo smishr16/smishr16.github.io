@@ -2931,4 +2931,224 @@ export const labMeat: MeatPack[] = [
       },
     ],
   },
+  {
+    workId: 'm3-quick-vs-merge-lab',
+    timeEstimate: '45 min',
+    sources: [{ label: 'CLRS Ch. 2 & 7', kind: 'textbook' }],
+    deliverables: ['Compare-count table', 'Theory interpretation'],
+    selfCheck: ['Same array dual-run', 'quicksort vs merge'],
+    solutionSketch: {
+      problemId: 'd2',
+      sketch:
+        'Merge always Θ(n log n) compares (up to constants). Quicksort expected ~1.4 n ln n but can spike. On one shuffle, if quicksort compares >> merge, note pivot quality; do not overclaim from one n.',
+    },
+    problems: [
+      {
+        id: 'd1',
+        title: 'P1 · Setup',
+        points: 30,
+        prompt: 'Dual-run quicksort vs merge, n=16, same shuffle. Record compare counts for both algorithms.',
+      },
+      {
+        id: 'd2',
+        title: 'P2 · Interpret',
+        points: 40,
+        prompt: 'Which won on compares? Relate to Θ(n log n) merge guarantee vs quicksort expected/worst cases (one paragraph).',
+      },
+      {
+        id: 'd3',
+        title: 'P3 · Caveat',
+        points: 30,
+        prompt: 'Name two reasons one trial is not enough (constants, pivot randomness, n small). What n would you try next?',
+      },
+    ],
+  },
+  {
+    workId: 'db-m5-lab-join-cost',
+    timeEstimate: '30 min',
+    sources: [{ label: 'DB textbook — joins', kind: 'textbook' }],
+    deliverables: ['Cost table', 'Workload pick'],
+    selfCheck: ['join-compare demo', '9 vs 6 toy'],
+    problems: [
+      {
+        id: 'c1',
+        title: 'P1 · Toy',
+        points: 35,
+        prompt: 'join-compare: state NLJ probe count and hash build+probe count for |R|=|S|=3.',
+      },
+      {
+        id: 'c2',
+        title: 'P2 · Scale',
+        points: 35,
+        prompt: 'For |R|=|S|=1000, give order-of-magnitude NLJ vs hash ops. When does hash need partitioning?',
+      },
+      {
+        id: 'c3',
+        title: 'P3 · Optimizer',
+        points: 30,
+        prompt: 'Name one workload where NLJ still wins (indexed inner, outer size n<=10). One sentence.',
+      },
+    ],
+  },
+  {
+    workId: 'pl-m4-lab-stlc',
+    timeEstimate: '30 min',
+    sources: [{ label: 'TAPL Ch. 9', kind: 'textbook' }],
+    deliverables: ['Paper derivation tree'],
+    selfCheck: ['pl-type-stlc', 'Γ explicit'],
+    problems: [
+      {
+        id: 't1',
+        title: 'P1 · Goal',
+        points: 30,
+        prompt: 'pl-type-stlc: write the final judgment ⊢ (λx:Bool. x) true : Bool with empty Γ.',
+      },
+      {
+        id: 't2',
+        title: 'P2 · Tree',
+        points: 40,
+        prompt: 'On paper, expand T-Abs and T-App nodes (include Γ,x:Bool ⊢ x:Bool).',
+      },
+      {
+        id: 't3',
+        title: 'P3 · Unsound',
+        points: 30,
+        prompt: 'Invent one unsound cast rule and show a term that types but gets stuck (≤5 sentences).',
+      },
+    ],
+  },
+  {
+    workId: 'ai-m4-lab',
+    timeEstimate: '30 min',
+    sources: [{ label: 'AIMA CSP', kind: 'textbook' }],
+    deliverables: ['Domain table after each step'],
+    selfCheck: ['csp-ac', 'A=R then AC'],
+    solutionSketch: {
+      problemId: 'c2',
+      sketch: 'After A=R, B loses R (≠A) ⇒ B={G}. Then C≠B removes G; C≠A allows R ⇒ C={R}. Assignment A=R,B=G,C=R.',
+    },
+    problems: [
+      {
+        id: 'c1',
+        title: 'P1 · Domains',
+        points: 40,
+        prompt: 'csp-ac lab: list domains of A,B,C after assign A=R and after full AC (table).',
+      },
+      {
+        id: 'c2',
+        title: 'P2 · Solution',
+        points: 30,
+        prompt: 'Give one complete coloring consistent with the final domains. Is it unique up to renaming?',
+      },
+      {
+        id: 'c3',
+        title: 'P3 · Honesty',
+        points: 30,
+        prompt: 'Name two AC-3 features missing (queue of arcs, revision count, Australia map).',
+      },
+    ],
+  },
+  {
+    workId: 'alg-midterm',
+    timeEstimate: '90 min',
+    sources: [{ label: 'CLRS Ch. 2–4, 22–24', kind: 'textbook' }],
+    deliverables: ['Full written exam responses'],
+    selfCheck: ['Show work', 'Θ claims justified'],
+    solutionSketch: {
+      problemId: 'm2',
+      sketch:
+        'Master: T(n)=2T(n/2)+n → Θ(n log n). BFS layers give unweighted distances. Dijkstra needs nonneg weights; settle order is nondecreasing distance.',
+    },
+    problems: [
+      {
+        id: 'm1',
+        title: 'P1 · Growth',
+        points: 25,
+        prompt:
+          'Order by growth (slowest→fastest): n log n, 2^n, n², n!, √n. Justify one adjacent pair with a limit.',
+      },
+      {
+        id: 'm2',
+        title: 'P2 · Recurrence + graph',
+        points: 40,
+        prompt:
+          '(a) Solve T(n)=2T(n/2)+n via Master (state case). (b) On undirected edges {AB,AC,BD,CD}, BFS from A: distances to B,C,D.',
+      },
+      {
+        id: 'm3',
+        title: 'P3 · Sorting design',
+        points: 35,
+        prompt:
+          'When prefer mergesort over quicksort? When the reverse? Mention stability, worst-case Θ, and extra memory (≤8 sentences).',
+      },
+    ],
+  },
+  {
+    workId: 'os-midterm',
+    timeEstimate: '90 min',
+    sources: [{ label: 'OSTEP scheduling & VM', kind: 'textbook', url: 'https://ostep.org/' }],
+    deliverables: ['Gantts + page table', 'Short essays'],
+    selfCheck: ['Use lab job set where relevant'],
+    solutionSketch: {
+      problemId: 'o1',
+      sketch:
+        'FCFS vs SJF waiting on P1–P4 lab set; thrashing = high fault rate + low useful CPU. Working set keeps hot pages resident.',
+    },
+    problems: [
+      {
+        id: 'o1',
+        title: 'P1 · Scheduling',
+        points: 40,
+        prompt:
+          'Jobs P1(0,5) P2(1,3) P3(2,8) P4(3,2): compute average waiting under FCFS and non-preemptive SJF. Which is lower?',
+      },
+      {
+        id: 'o2',
+        title: 'P2 · Memory',
+        points: 35,
+        prompt:
+          '3 frames, refs 1 2 3 2 4 1 5: count FIFO faults. Define thrashing in one sentence with a metric.',
+      },
+      {
+        id: 'o3',
+        title: 'P3 · Isolation',
+        points: 25,
+        prompt:
+          'Why user code cannot rewrite page tables directly? Name the trap/kernel mechanism (≤5 sentences).',
+      },
+    ],
+  },
+  {
+    workId: 'toc-midterm',
+    timeEstimate: '90 min',
+    sources: [{ label: 'Sipser Ch. 1–3', kind: 'textbook' }],
+    deliverables: ['Diagrams + proofs'],
+    selfCheck: ['Test strings for every automaton'],
+    solutionSketch: {
+      problemId: 't1',
+      sketch:
+        'DFA for ends-with-01: 3 states. Pumping: |xy|≤p, |y|≥1, xy^k z must stay in L. a^n b^n needs stack (PDA) / CFG S→aSb|ε.',
+    },
+    problems: [
+      {
+        id: 't1',
+        title: 'P1 · DFA',
+        points: 30,
+        prompt: 'Build a DFA for { w ∈ {0,1}* | w ends with 01 }. Give δ table and test 3 strings.',
+      },
+      {
+        id: 't2',
+        title: 'P2 · Pumping',
+        points: 35,
+        prompt: 'Prove {0^n 1^n | n≥0} is not regular via pumping lemma (careful case split).',
+      },
+      {
+        id: 't3',
+        title: 'P3 · CFG/TM',
+        points: 35,
+        prompt:
+          '(a) CFG for a^n b^n. (b) In one paragraph: recognizer vs decider for TMs; give one language that is recognizable but not decidable (name only OK).',
+      },
+    ],
+  },
 ]

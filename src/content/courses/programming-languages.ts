@@ -222,6 +222,17 @@ Expect interpreters-on-paper, type derivations, and careful definitions. Runtime
           'Written.',
           'partial',
         ),
+        {
+          id: 'pl-m4-lab-stlc',
+          title: 'Lab: STLC typing tree',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective: 'Step the typing derivation sketch for (λx:Bool. x) true : Bool; write Γ on paper.',
+          brief: 'systemsDemo pl-type-stlc. Honest: sketch not a full interactive proof assistant.',
+          config: { systemsDemo: 'pl-type-stlc' },
+          sources: [{ label: 'Pierce TAPL Ch. 9', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({

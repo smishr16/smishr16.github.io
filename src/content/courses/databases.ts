@@ -264,6 +264,17 @@ Written design work and SQL-on-paper remain first-class. Live instruments cover 
           config: { systemsDemo: 'hash-join' },
           sources: [{ label: 'DB textbook — hash join', kind: 'textbook' }],
         },
+        {
+          id: 'db-m5-lab-join-cost',
+          title: 'Lab: NLJ vs hash cost',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective: 'Compare NLJ vs hash join costs on toy |R|=|S|=3 and scaled 1000; name when each wins.',
+          brief: 'systemsDemo join-compare. Then open nl-join / hash-join for step detail.',
+          config: { systemsDemo: 'join-compare' },
+          sources: [{ label: 'DB textbook — join algorithms', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({

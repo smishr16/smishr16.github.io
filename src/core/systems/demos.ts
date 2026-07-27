@@ -481,8 +481,9 @@ function minimaxTree(): SystemsFrame[] {
 }
 
 /** DFA for even number of 0s on {0,1}*. States E (even/accept), O (odd). */
-function dfaEven0(): SystemsFrame[] {
-  const str = '01001'
+function dfaEven0(opts?: { input?: string }): SystemsFrame[] {
+  const raw = (opts?.input ?? '01001').replace(/[^01]/g, '') || '01001'
+  const str = raw.slice(0, 24)
   const frames: SystemsFrame[] = []
   let state: 'E' | 'O' = 'E'
   const nodes = (cur: string) => [
@@ -1286,9 +1287,11 @@ function plEvalTree(): SystemsFrame[] {
   ]
 }
 
-/** DFA: binary string value mod 3. States q0,q1,q2 (remainder). Input 1101 = 13 ≡ 1. */
-function dfaMod3(): SystemsFrame[] {
-  const str = '1101'
+/** DFA: binary string value mod 3. States q0,q1,q2 (remainder). */
+function dfaMod3(opts?: { input?: string }): SystemsFrame[] {
+  const raw = (opts?.input ?? '1101').replace(/[^01]/g, '') || '1101'
+  const str = raw.slice(0, 24)
+  const decimal = parseInt(str, 2)
   let r = 0
   const frames: SystemsFrame[] = []
   const nodes = (cur: number) =>
@@ -1319,7 +1322,7 @@ function dfaMod3(): SystemsFrame[] {
         lines: [
           'Reading bit b (0/1): r ← (2·r + b) mod 3',
           'Accept remainder class (here we just report final r)',
-          `Target string ${str} = 13₁₀`,
+          `Target string ${str} = ${decimal}₁₀`,
         ],
       },
     ],
@@ -1345,7 +1348,7 @@ function dfaMod3(): SystemsFrame[] {
   frames.push({
     kind: 'tree',
     title: 'DFA · binary mod 3',
-    statusText: `Final remainder q${r} · 13 mod 3 = ${13 % 3}`,
+    statusText: `Final remainder q${r} · ${decimal} mod 3 = ${decimal % 3}`,
     treeNodes: nodes(r).map((n) => ({ ...n, role: n.id === `q${r}` ? 'path' : 'default' })),
     treeEdges: [],
     metrics: `r=${r}`,
@@ -1353,16 +1356,22 @@ function dfaMod3(): SystemsFrame[] {
   return frames
 }
 
-/** Go-Back-N with one loss: window=3, DATA1 lost → retransmit from 1. */
-function gbnLoss(): SystemsFrame[] {
+/** Go-Back-N with one loss; windowSize and lossSeq configurable. */
+function gbnLoss(opts?: { windowSize?: number; lossSeq?: number }): SystemsFrame[] {
+  const N = Math.min(5, Math.max(2, opts?.windowSize ?? 3))
+  const loss = Math.min(N - 1, Math.max(0, opts?.lossSeq ?? 1))
   const frames: SystemsFrame[] = []
   const push = (status: string, outstanding: string, note: string[]) => {
     frames.push({
       kind: 'process',
-      title: 'GBN window=3 · loss',
+      title: `GBN window=${N} · loss`,
       statusText: status,
       processes: [
-        { id: 'Snd', state: status.includes('wait') || status.includes('timeout') ? 'blocked' : 'running', role: 'sender' },
+        {
+          id: 'Snd',
+          state: status.includes('Timeout') || status.includes('LOSS') ? 'blocked' : 'running',
+          role: 'sender',
+        },
         { id: 'Rcv', state: status.includes('ACK') ? 'running' : 'ready', role: 'receiver' },
       ],
       metrics: outstanding,
@@ -1370,16 +1379,171 @@ function gbnLoss(): SystemsFrame[] {
         { title: 'Wire / window', lines: [outstanding, ...note] },
         {
           title: 'GBN rule',
-          lines: ['Window size N=3', 'On loss/timeout: retransmit from base seq', 'Cumulative ACK'],
+          lines: [
+            `Window size N=${N}`,
+            `Loss on DATA${loss}`,
+            'On timeout: retransmit from base seq (not only lost pkt)',
+            'Cumulative ACK',
+          ],
         },
       ],
     })
   }
-  push('Send DATA0, DATA1, DATA2 (window full)', 'out: 0,1,2', ['base=0'])
-  push('ACK0 arrives · slide base→1 · send DATA3', 'out: 1,2,3', ['DATA1 still in flight'])
-  push('LOSS: DATA1 dropped (no ACK1)', 'out: 1,2,3 · missing ACK1', ['timeout starts'])
-  push('Timeout · GBN retransmit DATA1, DATA2, DATA3', 'rexmit from base=1', ['not only DATA1'])
-  push('ACK1, ACK2, ACK3 · window advances', 'out: ∅', ['done'])
+  const first = Array.from({ length: N }, (_, i) => i)
+  push(`Send DATA${first.join(', DATA')} (window full)`, `out: ${first.join(',')}`, ['base=0'])
+  if (loss > 0) {
+    push(`ACK${loss - 1} arrives · slide · send more if any`, `out: ${loss}… · missing ACK${loss}`, [
+      `DATA${loss} still outstanding`,
+    ])
+  }
+  push(`LOSS: DATA${loss} dropped (no ACK${loss})`, `out: base=${loss} · missing ACK${loss}`, ['timeout starts'])
+  const rexmit = Array.from({ length: N }, (_, i) => loss + i)
+  push(
+    `Timeout · GBN retransmit DATA${rexmit.join(', DATA')}`,
+    `rexmit from base=${loss}`,
+    ['not only the lost packet'],
+  )
+  push(`ACK${loss}… cumulative · window advances`, 'out: ∅', ['done'])
+  return frames
+}
+
+/** Side-by-side cost story: NLJ vs hash join on same |R|,|S|. */
+function joinCompare(): SystemsFrame[] {
+  return [
+    {
+      kind: 'process',
+      title: 'Join cost · NLJ vs hash',
+      statusText: 'Same R,S: |R|=|S|=3 equality on a',
+      processes: [
+        { id: 'NLJ', state: 'ready', role: '9 probes' },
+        { id: 'HJ', state: 'ready', role: 'build 3 + probe 3' },
+      ],
+      metrics: 'setup',
+      panels: [
+        {
+          title: 'Cardinalities',
+          lines: ['|R|=3, |S|=3', 'NLJ comparisons = |R|·|S| = 9', 'Hash: build |R| + probe |S| = 6 ops'],
+        },
+      ],
+    },
+    {
+      kind: 'process',
+      title: 'Join cost · NLJ vs hash',
+      statusText: 'Scale: |R|=|S|=1000 → NLJ 10⁶ vs hash ~2000',
+      processes: [
+        { id: 'NLJ', state: 'running', role: '10⁶' },
+        { id: 'HJ', state: 'running', role: '~2·10³' },
+      ],
+      metrics: 'scaled',
+      panels: [
+        {
+          title: 'When hash loses',
+          lines: [
+            'Build table does not fit memory → grace/partition hash',
+            'Tiny outer + indexed inner → NLJ/index nested-loop can win',
+            'Open nl-join and hash-join demos for step detail',
+          ],
+        },
+      ],
+    },
+    {
+      kind: 'process',
+      title: 'Join cost · NLJ vs hash',
+      statusText: 'Takeaway: optimizer chooses by stats + memory',
+      processes: [
+        { id: 'NLJ', state: 'terminated', role: 'simple' },
+        { id: 'HJ', state: 'terminated', role: 'default at scale' },
+      ],
+      metrics: 'done',
+      panels: [{ title: 'Deliverable', lines: ['State one workload for each algorithm', 'Cite the 9 vs 6 probe toy numbers'] }],
+    },
+  ]
+}
+
+/** STLC typing derivation sketch for (λx:Bool. x) true. */
+function plTypeStlc(): SystemsFrame[] {
+  return [
+    {
+      kind: 'tree',
+      title: 'STLC typing',
+      statusText: 'Goal: ⊢ (λx:Bool. x) true : Bool',
+      treeNodes: [
+        { id: 'root', label: 'app', x: 0.5, y: 0.2, role: 'active' },
+        { id: 'abs', label: 'λx:Bool.x', x: 0.3, y: 0.5, role: 'default' },
+        { id: 'tr', label: 'true', x: 0.7, y: 0.5, role: 'default' },
+      ],
+      treeEdges: [
+        { from: 'root', to: 'abs' },
+        { from: 'root', to: 'tr' },
+      ],
+      panels: [{ title: 'Rules', lines: ['T-Abs, T-Var, T-App, T-True', 'Context Γ,x:Bool ⊢ x:Bool'] }],
+    },
+    {
+      kind: 'tree',
+      title: 'STLC typing',
+      statusText: 'T-Abs: Γ ⊢ λx:Bool.x : Bool→Bool',
+      treeNodes: [
+        { id: 'root', label: 'Bool→Bool', x: 0.5, y: 0.2, role: 'done' },
+        { id: 'abs', label: 'λx:Bool.x', x: 0.3, y: 0.5, role: 'path' },
+        { id: 'tr', label: 'true:Bool', x: 0.7, y: 0.5, role: 'done' },
+      ],
+      treeEdges: [
+        { from: 'root', to: 'abs' },
+        { from: 'root', to: 'tr' },
+      ],
+      metrics: 'fun type',
+    },
+    {
+      kind: 'tree',
+      title: 'STLC typing',
+      statusText: 'T-App: (Bool→Bool) Bool ⇒ Bool · derivation complete',
+      treeNodes: [
+        { id: 'root', label: ': Bool', x: 0.5, y: 0.2, role: 'path' },
+        { id: 'abs', label: 'λ…', x: 0.3, y: 0.5, role: 'done' },
+        { id: 'tr', label: 'true', x: 0.7, y: 0.5, role: 'done' },
+      ],
+      treeEdges: [
+        { from: 'root', to: 'abs' },
+        { from: 'root', to: 'tr' },
+      ],
+      metrics: 'well-typed',
+      panels: [{ title: 'Paper', lines: ['Write full tree with Γ', 'Compare to TAPL Ch. 9'] }],
+    },
+  ]
+}
+
+/** Tiny CSP arc consistency on 3 variables A-B-C cycle, domains {R,G}. */
+function cspAc(): SystemsFrame[] {
+  type Dom = Record<string, string[]>
+  let d: Dom = { A: ['R', 'G'], B: ['R', 'G'], C: ['R', 'G'] }
+  const snap = (status: string, note: string[]) => ({
+    kind: 'process' as const,
+    title: 'CSP · arc consistency (toy)',
+    statusText: status,
+    processes: Object.entries(d).map(([id, vals]) => ({
+      id,
+      state: (vals.length === 0 ? 'terminated' : vals.length === 1 ? 'running' : 'ready') as
+        | 'terminated'
+        | 'running'
+        | 'ready',
+      role: `{${vals.join(',')}}`,
+    })),
+    metrics: `domains ${Object.values(d)
+      .map((v) => v.length)
+      .join(',')}`,
+    panels: [{ title: 'Domains', lines: [...Object.entries(d).map(([k, v]) => `${k}={${v.join(',')}}`), ...note] }],
+  })
+  const frames = [
+    snap('Map A—B—C—A, domains {R,G}, ≠ constraints', ['No assignment yet']),
+  ]
+  // Fix A=R
+  d = { A: ['R'], B: ['R', 'G'], C: ['R', 'G'] }
+  frames.push(snap('Assign A=R', ['Propagate arc (B,A): remove R from B if needed']))
+  d = { A: ['R'], B: ['G'], C: ['R', 'G'] }
+  frames.push(snap('AC: B≠A ⇒ B={G}', ['Next C≠B and C≠A']))
+  d = { A: ['R'], B: ['G'], C: ['R'] }
+  frames.push(snap('AC: C≠B ⇒ drop G; C≠A still allows R', ['Solution A=R,B=G,C=R']))
+  frames.push(snap('Consistent assignment found', ['Honest: 3-var toy, not full AC-3 queue']))
   return frames
 }
 
@@ -1539,8 +1703,9 @@ export const systemsDemos: ISystemsDemo[] = [
   {
     id: 'dfa-even0',
     label: 'DFA (even 0s)',
-    description: 'Run a 2-state DFA for even number of zeros on string 01001.',
+    description: 'Run a 2-state DFA for even number of zeros (editable binary input).',
     category: 'ai',
+    acceptsInput: true,
     generate: dfaEven0,
   },
   {
@@ -1588,15 +1753,17 @@ export const systemsDemos: ISystemsDemo[] = [
   {
     id: 'gbn-loss',
     label: 'GBN + loss',
-    description: 'Go-Back-N window=3 with DATA1 loss and retransmit-from-base.',
+    description: 'Go-Back-N with configurable window and lost seq; retransmit-from-base.',
     category: 'cpu',
+    acceptsInput: true,
     generate: gbnLoss,
   },
   {
     id: 'dfa-mod3',
     label: 'DFA mod 3',
-    description: 'Binary string as number mod 3 on input 1101 (13).',
+    description: 'Binary string as number mod 3 (editable input; default 1101).',
     category: 'ai',
+    acceptsInput: true,
     generate: dfaMod3,
   },
   {
@@ -1607,11 +1774,32 @@ export const systemsDemos: ISystemsDemo[] = [
     generate: hashJoin,
   },
   {
+    id: 'join-compare',
+    label: 'Join cost',
+    description: 'NLJ vs hash join probe counts on toy and scaled cardinalities.',
+    category: 'memory',
+    generate: joinCompare,
+  },
+  {
     id: 'pl-small-step',
     label: 'Small-step',
     description: 'Small-step reduction of (2+3)*4 to value 20.',
     category: 'ai',
     generate: plSmallStep,
+  },
+  {
+    id: 'pl-type-stlc',
+    label: 'STLC types',
+    description: 'Typing derivation sketch for (λx:Bool. x) true : Bool.',
+    category: 'ai',
+    generate: plTypeStlc,
+  },
+  {
+    id: 'csp-ac',
+    label: 'CSP AC',
+    description: 'Tiny map-coloring arc consistency on A–B–C with domains {R,G}.',
+    category: 'ai',
+    generate: cspAc,
   },
   {
     id: 'nl-join',

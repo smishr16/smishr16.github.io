@@ -103,9 +103,9 @@ export const algorithmsMeat: MeatPack[] = [
     deliverables: ['Expected-time argument sketch', 'Worst-case family', 'Hybrid note'],
     selfCheck: ['Randomization model stated', 'No claim that average = best'],
     solutionSketch: {
-      problemId: 'q1',
+      problemId: 'q2',
       sketch:
-        'Outline: state assumptions, show key equation or trace step, conclude with Θ/complexity or accept/reject claim. Expand on paper.',
+        'Adversary: always pick min as pivot → partition sizes (0,n−1). T(n)=T(n−1)+Θ(n) ⇒ T(n)=Θ(n²). Family: sorted ascending with Lomuto-last, or reverse depending on pivot rule. Random pivot: E[T(n)] ≤ 2n ln n + O(n) via indicator X_{ij} that i,j are compared (prob 2/(|j−i|+1)).',
     },
 
     problems: [

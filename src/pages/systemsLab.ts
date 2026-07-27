@@ -75,6 +75,12 @@ export function mountSystemsLab(
         <div class="spacer"></div>
         <button type="button" class="btn btn-primary" id="btn-run">Run</button>
       </div>
+      <div class="demo-input-row" id="demo-opts" hidden>
+        <label class="muted">Input / knobs
+          <input type="text" id="demo-input" placeholder="e.g. 1101 or window=3,loss=1" spellcheck="false" />
+        </label>
+        <span class="muted" id="demo-opts-hint"></span>
+      </div>
       <div class="ide-main">
         <section class="ide-pane editor-pane">
           <div class="pane-label"><span class="pane-title">Notes</span></div>
@@ -123,23 +129,59 @@ export function mountSystemsLab(
   const statsEl = root.querySelector('#stats') as HTMLElement
   const panelsEl = root.querySelector('#panels') as HTMLElement
 
+  const optsRow = root.querySelector('#demo-opts') as HTMLElement
+  const inputEl = root.querySelector('#demo-input') as HTMLInputElement
+  const optsHint = root.querySelector('#demo-opts-hint') as HTMLElement
+
+  function parseOpts(demoIdCur: string, raw: string): { input?: string; windowSize?: number; lossSeq?: number } {
+    const t = raw.trim()
+    if (!t) return {}
+    if (demoIdCur === 'gbn-loss') {
+      // formats: "3" or "3,1" or "window=3,loss=1"
+      const w = t.match(/(?:window=)?(\d+)/)
+      const loss = t.match(/loss[=,](\d+)/) || t.match(/^\d+[, ](\d+)$/)
+      return {
+        windowSize: w ? Number(w[1]) : undefined,
+        lossSeq: loss ? Number(loss[1]) : t.includes(',') ? Number(t.split(/[, ]+/)[1]) : undefined,
+      }
+    }
+    return { input: t }
+  }
+
+  function syncOptsUi(): void {
+    const demo = systemsDemos.find((d) => d.id === demoId)
+    const show = Boolean(demo?.acceptsInput)
+    optsRow.hidden = !show
+    if (!show) return
+    if (demoId === 'gbn-loss') {
+      optsHint.textContent = 'Format: window,lossSeq e.g. 3,1 or window=4,loss=2'
+      if (!inputEl.value) inputEl.value = '3,1'
+      inputEl.placeholder = '3,1'
+    } else {
+      optsHint.textContent = 'Binary string {0,1}* (max 24 bits)'
+      if (!inputEl.value || inputEl.value.includes(',')) inputEl.value = demoId === 'dfa-mod3' ? '1101' : '01001'
+      inputEl.placeholder = '01001'
+    }
+  }
+
   function run(): void {
     try {
       const demo = getSystemsDemo(demoId)
-      const frames = demo.generate()
+      const opts = demo.acceptsInput ? parseOpts(demoId, inputEl.value) : undefined
+      const frames = demo.generate(opts)
       engine.load(frames)
       const empty = root.querySelector('#empty-hint') as HTMLElement | null
       if (empty) empty.hidden = true
-      // Deep-link: optional ?step=N after load
       if (startStep > 0) {
         for (let i = 0; i < Math.min(startStep, frames.length - 1); i++) engine.step()
       }
       const share = `?systemsDemo=${encodeURIComponent(demoId)}`
       conceptEl.innerHTML = `<strong>${demo.label}</strong> · ${demo.category}<br/>${demo.description}<br/>
-        <span class="muted">Teaching toy — fixed instances. Deep-link: <code>${share}</code> (optional <code>&amp;step=N</code>).</span>`
+        <span class="muted">Teaching toy. Deep-link: <code>${share}</code>${
+          demo.acceptsInput ? ' · edit knobs above then Run' : ''
+        }.</span>`
       statsEl.textContent = `${demo.label} · ${frames.length} frames`
       consoleEl.textContent = `Loaded ${demo.label}${startStep ? ` · stepped to ~${startStep}` : ''}`
-      // Keep URL in sync when free visualizer
       if (options.context === 'visualizer' && typeof history !== 'undefined') {
         const u = new URL(location.href)
         u.searchParams.set('systemsDemo', demoId)
@@ -161,10 +203,15 @@ export function mountSystemsLab(
       root.querySelectorAll('[data-demo]').forEach((b) => {
         b.setAttribute('aria-selected', String((b as HTMLElement).dataset.demo === demoId))
       })
+      syncOptsUi()
       run()
     })
   })
   root.querySelector('#btn-run')!.addEventListener('click', () => run())
+  inputEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') run()
+  })
+  syncOptsUi()
   root.querySelector('#btn-play')!.addEventListener('click', () => engine.play())
   root.querySelector('#btn-pause')!.addEventListener('click', () => engine.pause())
   root.querySelector('#btn-step')!.addEventListener('click', () => engine.step())

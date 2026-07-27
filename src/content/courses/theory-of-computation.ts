@@ -270,6 +270,13 @@ Expect heavy written proofs. Interactive automata toys may arrive later; syllabu
           'Written proof-heavy set.',
           'partial',
         ),
+        analysisWork(
+          'toc-midterm',
+          'Midterm: automata + CFLs + TM models',
+          'Cumulative exam: DFA/NFA design, pumping for regular, CFG/PDA, TM vs decidable.',
+          'Timed 90 min practice · paper; use dfa-* labs for intuition only.',
+          'partial',
+        ),
       ],
     }),
     moduleOf({

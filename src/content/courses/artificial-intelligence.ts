@@ -3,7 +3,7 @@ import {
   type CourseDetail,
   type CourseMeta,
 } from '../../contracts'
-import { analysisWork, labSoon, moduleOf, readingWork } from '../scaffold'
+import { analysisWork, moduleOf, readingWork } from '../scaffold'
 
 export const artificialIntelligenceMeta: CourseMeta = {
   id: 'artificial-intelligence',
@@ -248,13 +248,19 @@ Interactive instruments (search visualizer, CSP propagation) are planned; writte
           'Written.',
           'partial',
         ),
-        labSoon(
-          'ai-m4-lab',
-          'Lab: CSP propagation',
-          'graphs',
-          'Visualize domain wipeouts under AC-style propagation on map-coloring scale problems.',
-          'CSP instrument planned.',
-        ),
+        {
+          id: 'ai-m4-lab',
+          title: 'Lab: CSP arc consistency (toy)',
+          kind: 'lab',
+          status: 'live',
+          labId: 'systems',
+          objective:
+            'Step AC-style domain reduction on A–B–C map with {R,G}; record domains after assign A=R.',
+          brief:
+            'systemsDemo csp-ac. Honest: 3-variable toy, not full AC-3 queue or Australia map.',
+          config: { systemsDemo: 'csp-ac' },
+          sources: [{ label: 'AIMA — CSP chapter', kind: 'textbook' }],
+        },
       ],
     }),
     moduleOf({
