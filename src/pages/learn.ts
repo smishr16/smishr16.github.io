@@ -1,30 +1,28 @@
 import { AppRoutes } from '../contracts'
 import { courses } from '../content/courses'
 import { renderFooter, renderHeader } from '../ui/siteChrome'
-import { levelLabel, statusBadgeHtml, statusLabel } from '../ui/status'
+import { courseStatusHint, levelLabel, statusBadgeHtml } from '../ui/status'
 
 export function renderLearn(): string {
   const cards = courses
     .map((c) => {
-      const cta =
-        c.status === 'soon'
-          ? `<span class="card-cta muted">Coming soon · syllabus scaffold</span>`
-          : `<span class="card-cta">${c.moduleCount} modules · enter course →</span>`
+      const hint = courseStatusHint(c.status, c.liveLabCount)
+      const ka = (c.cs2023Areas ?? [])
+        .slice(0, 3)
+        .map((a) => `<span class="chip chip-sm">${a}</span>`)
+        .join(' ')
 
-      const inner = `
+      return `<a class="course-card course-card-lg" href="${AppRoutes.course(c.id)}" data-status="${c.status}">
         <div class="card-meta">
           ${statusBadgeHtml(c.status)}
           <span class="muted track">${c.track}</span>
         </div>
         <h3>${c.title}</h3>
         <p class="level-line muted">${levelLabel(c.level, 'long')}</p>
+        ${ka ? `<p class="ka-row">${ka}</p>` : ''}
         <p>${c.blurb}</p>
-        ${cta}`
-
-      if (c.status === 'soon') {
-        return `<div class="course-card soon course-card-lg" aria-label="${c.title} (${statusLabel(c.status)})">${inner}</div>`
-      }
-      return `<a class="course-card live course-card-lg" href="${AppRoutes.course(c.id)}">${inner}</a>`
+        <span class="card-cta">${c.moduleCount} modules · ${c.liveLabCount} live labs · ${hint} →</span>
+      </a>`
     })
     .join('')
 
@@ -32,12 +30,17 @@ export function renderLearn(): string {
   ${renderHeader('learn')}
   <main class="page-shell" id="main">
     <header class="page-intro">
-      <p class="eyebrow">Learn</p>
-      <h1>Core curriculum</h1>
+      <p class="eyebrow">Courses</p>
+      <h1>Core CSE catalog</h1>
       <p class="lede">
-        Courses match foundational CSE requirements after intro programming.
-        Instruments live under Lab; coursework deep-links them preconfigured.
+        Twelve foundational courses after intro programming — Algorithms and AI/ML as separate tracks.
+        Every course has a full syllabus and problem packs; interactive depth varies by badge.
       </p>
+      <ul class="legend-row" aria-label="Status legend">
+        <li>${statusBadgeHtml('live')} ≥4 openable labs — best interactive experience</li>
+        <li>${statusBadgeHtml('partial')} 1–3 labs — mix of instruments and paper</li>
+        <li>${statusBadgeHtml('soon')} Syllabus + paper packs — instruments later</li>
+      </ul>
     </header>
     <div class="course-grid course-grid-lg" aria-label="Course catalog">
       ${cards}

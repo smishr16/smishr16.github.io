@@ -4,6 +4,14 @@ export const AppRoutes = {
   lab: '/lab',
   /** Free sorting visualizer (instrument — not a course) */
   labSorting: '/lab/sorting',
+  /** Graph / search visualizer */
+  labGraphs: '/lab/graphs',
+  /** Data structures visualizer */
+  labStructures: '/lab/structures',
+  /** Systems / OS visualizer */
+  labSystems: '/lab/systems',
+  /** ML playground */
+  labMl: '/lab/ml',
   /** Course detail: /learn/algorithms, /learn/data-structures, … */
   course: (courseId: string) => `/learn/${courseId}`,
   /** Open lab with coursework preconfiguration */

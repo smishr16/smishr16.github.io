@@ -1,54 +1,62 @@
 :root {
   color-scheme: dark;
 
-  /* Surfaces */
-  --bg: #0a0d12;
-  --bg-elevated: #121820;
-  --bg-panel: #0d1117;
-  --bg-overlay: rgba(10, 13, 18, 0.72);
-  --border: #1e2a38;
-  --border-strong: #2a3a4d;
+  /*
+   * Palette inspired by best-in-class course shells (Coursera density +
+   * Canvas syllabus rail + Brilliant tool clarity) — not a copy.
+   * Priorities: contrast AA on body text, calm surfaces, one accent.
+   */
+  --bg: #0b0f14;
+  --bg-elevated: #141b24;
+  --bg-panel: #101820;
+  --bg-sunken: #080b10;
+  --bg-overlay: rgba(8, 11, 16, 0.85);
+  --bg-card-hover: #1a2330;
+  --border: #243041;
+  --border-strong: #35465c;
+  --border-subtle: #1a2433;
 
-  /* Text */
-  --text: #d7dde8;
-  --text-muted: #9aa6b8;
-  --text-inverse: #0a0d12;
+  --text: #e8eef6;
+  --text-muted: #a8b4c4;
+  --text-faint: #7a8799;
+  --text-inverse: #0b0f14;
 
-  /* Brand / status */
-  --accent: #7dd3c0;
-  --accent-dim: #1a3a32;
-  --danger: #f07178;
-  --warning: #f0b429;
-  --warning-dim: rgba(240, 180, 41, 0.12);
-  --success: #2f8f7a;
-  --info: #3d8bfd;
+  --accent: #5eead4;
+  --accent-hover: #99f6e4;
+  --accent-dim: rgba(94, 234, 212, 0.12);
+  --accent-border: rgba(94, 234, 212, 0.35);
 
-  /* Viz */
+  --danger: #f87171;
+  --warning: #fbbf24;
+  --warning-dim: rgba(251, 191, 36, 0.12);
+  --success: #34d399;
+  --success-dim: rgba(52, 211, 153, 0.12);
+  --info: #60a5fa;
+  --info-dim: rgba(96, 165, 250, 0.12);
+
   --bar: var(--info);
   --bar-compare: var(--warning);
   --bar-sorted: var(--success);
 
-  /* Type */
-  --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-sans: "Segoe UI", system-ui, -apple-system, "Inter", sans-serif;
   --font-mono: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
-  --text-md: 0.95rem;
+  --text-md: 0.9375rem;
   --text-base: 1rem;
   --text-lg: 1.125rem;
   --text-xl: 1.25rem;
-  --text-2xl: clamp(1.75rem, 3.5vw, 2.25rem);
-  --text-display: clamp(2rem, 4.5vw, 2.75rem);
-  --leading-tight: 1.2;
-  --leading-normal: 1.5;
-  --leading-relaxed: 1.6;
+  --text-2xl: clamp(1.65rem, 3vw, 2.1rem);
+  --text-display: clamp(2rem, 4vw, 2.75rem);
+  --leading-tight: 1.25;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.7;
   --weight-normal: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
-  --tracking-wide: 0.06em;
+  --tracking-wide: 0.08em;
 
-  /* Spacing (4px base) */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -58,43 +66,42 @@
   --space-8: 2rem;
   --space-10: 2.5rem;
   --space-12: 3rem;
+  --space-16: 4rem;
 
-  /* Layout */
-  --content-max: 68.75rem; /* 1100px */
-  --rail-width: 3.5rem;
+  --content-max: 72rem;
+  --course-max: 78rem;
+  --rail-width: 3.75rem;
+  --syllabus-width: 16.5rem;
   --bp-sm: 480px;
   --bp-md: 720px;
-  --bp-lg: 900px;
-  --bp-xl: 1100px;
-  --bp-2xl: 1440px;
+  --bp-lg: 960px;
+  --bp-xl: 1200px;
 
-  /* Radius */
   --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 10px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
   --radius-full: 999px;
   --radius: var(--radius-md);
 
-  /* Elevation */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.45);
   --focus: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
 
-  /* Z-index */
   --z-base: 0;
   --z-sticky: 100;
+  --z-header: 200;
   --z-skip: 1000;
 
-  /* Motion — default 1; reduce media must come AFTER and override */
   --motion: 1;
-  --duration-fast: calc(120ms * var(--motion));
-  --duration-normal: calc(200ms * var(--motion));
+  --duration-fast: calc(140ms * var(--motion));
+  --duration-normal: calc(220ms * var(--motion));
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* Controls */
   --opacity-disabled: 0.45;
-  --control-pad-y: 0.45rem;
-  --control-pad-x: 0.85rem;
+  --control-pad-y: 0.5rem;
+  --control-pad-x: 1rem;
+  --header-h: 3.5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

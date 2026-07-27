@@ -1,16 +1,21 @@
 import type { ContentStatus } from '../contracts'
 
-/** Single status vocabulary for the whole product. */
+/**
+ * Product vocabulary:
+ * - live: substantial interactive labs (≥4 openable for courses)
+ * - partial: some interactive labs (1–3)
+ * - soon: syllabus-only (enterable outline, no instruments yet)
+ */
 export function statusLabel(status: ContentStatus | string): string {
   if (status === 'live') return 'Live'
   if (status === 'partial') return 'Partial'
-  return 'Soon'
+  return 'Syllabus' // was "Soon" — honest for full outlines without labs
 }
 
 export function statusBadgeClass(status: ContentStatus | string): string {
   if (status === 'live') return 'badge badge-live'
   if (status === 'partial') return 'badge badge-partial'
-  return 'badge'
+  return 'badge badge-syllabus'
 }
 
 export function statusBadgeHtml(status: ContentStatus | string): string {
@@ -23,4 +28,10 @@ export function levelLabel(level: string, style: 'short' | 'long' = 'long'): str
   }
   if (level === 'graduate') return style === 'short' ? 'Grad' : 'Graduate'
   return style === 'short' ? 'UG' : 'Undergraduate'
+}
+
+export function courseStatusHint(status: ContentStatus | string, liveLabCount: number): string {
+  if (status === 'live') return `${liveLabCount} live labs · full syllabus`
+  if (status === 'partial') return `${liveLabCount} live lab${liveLabCount === 1 ? '' : 's'} · syllabus + instruments`
+  return 'Full syllabus · instruments forthcoming'
 }

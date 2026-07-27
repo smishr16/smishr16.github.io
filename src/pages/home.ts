@@ -1,54 +1,71 @@
 import { AppRoutes } from '../contracts'
 import { courses } from '../content/courses'
 import { renderFooter, renderHeader } from '../ui/siteChrome'
-import { levelLabel, statusBadgeHtml, statusLabel } from '../ui/status'
+import { courseStatusHint, levelLabel, statusBadgeHtml } from '../ui/status'
 
 export function renderHome(): string {
-  const cards = courses
-    .map((c) => {
-      const cta =
-        c.status === 'soon'
-          ? `<span class="card-cta muted">Coming soon · syllabus scaffold</span>`
-          : `<span class="card-cta">${c.moduleCount} modules · ${c.liveLabCount} live labs →</span>`
+  const live = courses.filter((c) => c.status === 'live')
+  const partial = courses.filter((c) => c.status === 'partial')
+  const syllabus = courses.filter((c) => c.status === 'soon')
 
-      const inner = `
-        <div class="card-meta">
-          ${statusBadgeHtml(c.status)}
-          <span class="muted track">${c.track}</span>
-          <span class="muted track">${levelLabel(c.level, 'short')}</span>
-        </div>
-        <h3>${c.title}</h3>
-        <p>${c.blurb}</p>
-        ${cta}`
-
-      if (c.status === 'soon') {
-        return `<div class="course-card soon" aria-label="${c.title} (${statusLabel(c.status)})">${inner}</div>`
-      }
-      return `<a class="course-card live" href="${AppRoutes.course(c.id)}">${inner}</a>`
-    })
-    .join('')
+  const card = (c: (typeof courses)[0]) => {
+    const hint = courseStatusHint(c.status, c.liveLabCount)
+    return `<a class="course-card" href="${AppRoutes.course(c.id)}" data-status="${c.status}">
+      <div class="card-meta">
+        ${statusBadgeHtml(c.status)}
+        <span class="muted track">${c.track}</span>
+        <span class="muted track">${levelLabel(c.level, 'short')}</span>
+      </div>
+      <h3>${c.title}</h3>
+      <p>${c.blurb}</p>
+      <span class="card-cta">${c.moduleCount} modules · ${hint} →</span>
+    </a>`
+  }
 
   return `
   ${renderHeader('home')}
   <main class="page-shell" id="main">
     <section class="hero">
-      <h1>Core CSE courses, made interactive.</h1>
+      <p class="eyebrow">Interactive CSE curriculum</p>
+      <h1>Learn by running the algorithm — not only reading about it.</h1>
       <p class="lede">
-        Degree-path courses—Data Structures, Algorithms, systems, AI, ML—with instrumented labs.
-        Not intro programming; not one micro-course per algorithm.
+        Degree-path courses with instrumented labs: sorting, graphs, structures, systems, and ML toys.
+        Honest readiness labels so you always know what is interactive vs paper-first.
       </p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="${AppRoutes.learn}">Course catalog →</a>
-        <a class="btn" href="${AppRoutes.lab}">Lab instruments</a>
+        <a class="btn btn-primary" href="${AppRoutes.learn}">Browse courses →</a>
+        <a class="btn" href="${AppRoutes.lab}">Open labs</a>
+        <a class="btn" href="${AppRoutes.course('algorithms')}">Start Algorithms</a>
       </div>
     </section>
+
     <section class="section-block">
       <div class="section-head">
-        <h2>Foundational courses</h2>
-        <p class="muted">Same grain as a CSE degree audit. Topics like sorting live inside Algorithms.</p>
+        <h2>Ready to run</h2>
+        <p class="muted">Live = multiple instruments. Jump in for the fullest experience.</p>
       </div>
-      <div class="course-grid" aria-label="Courses">
-        ${cards}
+      <div class="course-grid" aria-label="Live courses">
+        ${live.map(card).join('') || '<p class="muted">None yet.</p>'}
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-head">
+        <h2>Partial — labs on some units</h2>
+        <p class="muted">Full syllabus and problem packs; instruments on a subset of modules.</p>
+      </div>
+      <div class="course-grid" aria-label="Partial courses">
+        ${partial.map(card).join('') || '<p class="muted">None.</p>'}
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-head">
+        <h2>Syllabus-ready — paper first</h2>
+        <p class="muted">Structured courses with midterm-style packs; dedicated instruments still forthcoming.</p>
+      </div>
+      <div class="course-grid" aria-label="Syllabus courses">
+        ${syllabus.map(card).join('') || '<p class="muted">None.</p>'}
       </div>
     </section>
   </main>

@@ -36,7 +36,8 @@ export function renderLabHub(): string {
       <h1>Instruments</h1>
       <p class="lede">
         Shared visualizers for the core curriculum—not courses themselves.
-        Explore freely, or open preconfigured from course work.
+        Explore freely, or open preconfigured from coursework. All five instruments below are live:
+        sorting, graphs, structures, systems, and ML toys.
       </p>
     </header>
     <div class="course-grid course-grid-lg" aria-label="Labs">

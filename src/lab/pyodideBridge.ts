@@ -1,5 +1,3 @@
-import type { IPyodideBridge, PythonLabHooks } from '../contracts'
-
 type PyodideInterface = {
   runPythonAsync: (code: string) => Promise<unknown>
   globals: { set: (k: string, v: unknown) => void }
@@ -17,7 +15,7 @@ const PYODIDE_INDEX = 'https://cdn.jsdelivr.net/pyodide/v0.27.5/full/'
  * Lazy Pyodide loader. Importing this module does NOT load Pyodide.
  * Only `load()` fetches the runtime (must not be called from the home route).
  */
-export class PyodideBridge implements IPyodideBridge {
+export class PyodideBridge {
   private py: PyodideInterface | null = null
   private loading: Promise<void> | null = null
 
@@ -36,14 +34,14 @@ export class PyodideBridge implements IPyodideBridge {
     }
   }
 
-  async run(code: string, hooks: PythonLabHooks): Promise<void> {
+  /** Bind arbitrary callables into Python globals and run code. */
+  async runWithGlobals(code: string, globals: Record<string, unknown>): Promise<void> {
     await this.load()
     if (!this.py) throw new Error('Pyodide failed to initialize')
 
-    this.py.globals.set('get_array', () => hooks.get_array())
-    this.py.globals.set('compare', (i: number, j: number) => hooks.compare(i, j))
-    this.py.globals.set('swap', (i: number, j: number) => hooks.swap(i, j))
-    this.py.globals.set('log', (msg: string) => hooks.log(String(msg)))
+    for (const [k, v] of Object.entries(globals)) {
+      this.py.globals.set(k, v)
+    }
 
     const timeoutMs = 8000
     await Promise.race([
@@ -52,6 +50,24 @@ export class PyodideBridge implements IPyodideBridge {
         setTimeout(() => reject(new Error(`Python run timed out after ${timeoutMs}ms`)), timeoutMs),
       ),
     ])
+  }
+
+  /** Sorting lab convenience — compare/swap hooks. */
+  async run(
+    code: string,
+    hooks: {
+      get_array(): number[]
+      compare(i: number, j: number): number
+      swap(i: number, j: number): void
+      log(message: string): void
+    },
+  ): Promise<void> {
+    await this.runWithGlobals(code, {
+      get_array: () => hooks.get_array(),
+      compare: (i: number, j: number) => hooks.compare(i, j),
+      swap: (i: number, j: number) => hooks.swap(i, j),
+      log: (msg: string) => hooks.log(String(msg)),
+    })
   }
 
   private async doLoad(): Promise<void> {

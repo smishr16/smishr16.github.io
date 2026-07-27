@@ -6,7 +6,7 @@ import { renderLearn } from '../pages/learn'
 import { renderCourse } from '../pages/course'
 import { renderLabHub } from '../pages/labHub'
 import { renderNotFound } from '../pages/notFound'
-import { mountSortingLab, type LabCleanup } from '../pages/sortingLab'
+import type { LabCleanup } from '../pages/sortingLab'
 
 function queryParams(): URLSearchParams {
   return new URLSearchParams(window.location.search)
@@ -22,7 +22,6 @@ function setDocumentTitle(parts: string[]): void {
 function afterRoute(app: HTMLElement, titleParts: string[]): void {
   setDocumentTitle(titleParts)
   window.scrollTo(0, 0)
-  // Programmatic focus for SPA views (skip target is #app)
   app.setAttribute('tabindex', '-1')
   try {
     app.focus({ preventScroll: true })
@@ -31,13 +30,27 @@ function afterRoute(app: HTMLElement, titleParts: string[]): void {
   }
 }
 
+function mountLabHost(app: HTMLElement): HTMLElement {
+  app.innerHTML = ''
+  const host = document.createElement('div')
+  host.id = 'lab-root'
+  app.appendChild(host)
+  return host
+}
+
+function showLabLoading(host: HTMLElement, label: string): void {
+  host.innerHTML = `<div class="page-shell" style="padding:2rem"><p class="muted">Loading ${label}…</p></div>`
+}
+
 export function bootstrap(app: HTMLElement): () => void {
   bindLinkInterception(document)
   let labCleanup: LabCleanup | null = null
+  let routeGen = 0
 
   const stopRouter = startRouter((path) => {
     labCleanup?.()
     labCleanup = null
+    const gen = ++routeGen
 
     if (path === AppRoutes.home || path === '') {
       app.innerHTML = renderHome()
@@ -76,31 +89,140 @@ export function bootstrap(app: HTMLElement): () => void {
       }
     }
 
+    const assignmentId = queryParams().get('assignment')
+
     if (path === AppRoutes.labSorting || path === '/lab/sorting') {
-      const assignmentId = queryParams().get('assignment')
-      app.innerHTML = ''
-      const host = document.createElement('div')
-      host.id = 'lab-root'
-      app.appendChild(host)
-
-      if (assignmentId) {
-        const found = findAssignmentById(assignmentId)
-        if (found) {
-          const mod = found.course.modules.find((m) => m.id === found.moduleId)
-          labCleanup = mountSortingLab(host, {
-            context: 'assignment',
-            assignment: found.assignment,
-            courseTitle: found.course.title,
-            moduleTitle: mod ? `${mod.code} ${mod.title}` : undefined,
-            config: found.assignment.config,
-          })
-          afterRoute(app, [found.assignment.title, 'Lab'])
-          return
+      const host = mountLabHost(app)
+      showLabLoading(host, 'sorting lab')
+      void import('../pages/sortingLab').then(({ mountSortingLab }) => {
+        if (gen !== routeGen) return
+        host.innerHTML = ''
+        if (assignmentId) {
+          const found = findAssignmentById(assignmentId)
+          if (found) {
+            const mod = found.course.modules.find((m) => m.id === found.moduleId)
+            labCleanup = mountSortingLab(host, {
+              context: 'assignment',
+              assignment: found.assignment,
+              courseTitle: found.course.title,
+              moduleTitle: mod ? `${mod.code} ${mod.title}` : undefined,
+              config: found.assignment.config,
+            })
+            afterRoute(app, [found.assignment.title, 'Lab'])
+            return
+          }
         }
-      }
+        labCleanup = mountSortingLab(host, { context: 'visualizer' })
+        afterRoute(app, ['Sorting visualizer', 'Lab'])
+      })
+      return
+    }
 
-      labCleanup = mountSortingLab(host, { context: 'visualizer' })
-      afterRoute(app, ['Sorting visualizer', 'Lab'])
+    if (path === AppRoutes.labGraphs || path === '/lab/graphs') {
+      const host = mountLabHost(app)
+      showLabLoading(host, 'graph lab')
+      void import('../pages/graphLab').then(({ mountGraphLab }) => {
+        if (gen !== routeGen) return
+        host.innerHTML = ''
+        if (assignmentId) {
+          const found = findAssignmentById(assignmentId)
+          if (found) {
+            const mod = found.course.modules.find((m) => m.id === found.moduleId)
+            labCleanup = mountGraphLab(host, {
+              context: 'assignment',
+              assignment: found.assignment,
+              courseTitle: found.course.title,
+              moduleTitle: mod ? `${mod.code} ${mod.title}` : undefined,
+              config: found.assignment.config,
+            })
+            afterRoute(app, [found.assignment.title, 'Lab'])
+            return
+          }
+        }
+        labCleanup = mountGraphLab(host, { context: 'visualizer' })
+        afterRoute(app, ['Graph & search', 'Lab'])
+      })
+      return
+    }
+
+    if (path === AppRoutes.labStructures || path === '/lab/structures') {
+      const host = mountLabHost(app)
+      showLabLoading(host, 'structures lab')
+      void import('../pages/structuresLab').then(({ mountStructuresLab }) => {
+        if (gen !== routeGen) return
+        host.innerHTML = ''
+        if (assignmentId) {
+          const found = findAssignmentById(assignmentId)
+          if (found) {
+            const mod = found.course.modules.find((m) => m.id === found.moduleId)
+            labCleanup = mountStructuresLab(host, {
+              context: 'assignment',
+              assignment: found.assignment,
+              courseTitle: found.course.title,
+              moduleTitle: mod ? `${mod.code} ${mod.title}` : undefined,
+              config: found.assignment.config,
+            })
+            afterRoute(app, [found.assignment.title, 'Lab'])
+            return
+          }
+        }
+        labCleanup = mountStructuresLab(host, { context: 'visualizer' })
+        afterRoute(app, ['Data structures', 'Lab'])
+      })
+      return
+    }
+
+    if (path === AppRoutes.labSystems || path === '/lab/systems') {
+      const host = mountLabHost(app)
+      showLabLoading(host, 'systems lab')
+      void import('../pages/systemsLab').then(({ mountSystemsLab }) => {
+        if (gen !== routeGen) return
+        host.innerHTML = ''
+        if (assignmentId) {
+          const found = findAssignmentById(assignmentId)
+          if (found) {
+            const mod = found.course.modules.find((m) => m.id === found.moduleId)
+            labCleanup = mountSystemsLab(host, {
+              context: 'assignment',
+              assignment: found.assignment,
+              courseTitle: found.course.title,
+              moduleTitle: mod ? `${mod.code} ${mod.title}` : undefined,
+              config: found.assignment.config,
+            })
+            afterRoute(app, [found.assignment.title, 'Lab'])
+            return
+          }
+        }
+        labCleanup = mountSystemsLab(host, { context: 'visualizer' })
+        afterRoute(app, ['Systems', 'Lab'])
+      })
+      return
+    }
+
+    if (path === AppRoutes.labMl || path === '/lab/ml') {
+      const host = mountLabHost(app)
+      showLabLoading(host, 'ML lab')
+      void import('../pages/mlLab').then(({ mountMlLab }) => {
+        if (gen !== routeGen) return
+        host.innerHTML = ''
+        if (assignmentId) {
+          const found = findAssignmentById(assignmentId)
+          if (found) {
+            const mod = found.course.modules.find((m) => m.id === found.moduleId)
+            labCleanup = mountMlLab(host, {
+              context: 'assignment',
+              assignment: found.assignment,
+              courseTitle: found.course.title,
+              moduleTitle: mod ? `${mod.code} ${mod.title}` : undefined,
+              config: found.assignment.config,
+            })
+            afterRoute(app, [found.assignment.title, 'Lab'])
+            return
+          }
+        }
+        labCleanup = mountMlLab(host, { context: 'visualizer' })
+        afterRoute(app, ['ML playground', 'Lab'])
+      })
       return
     }
 

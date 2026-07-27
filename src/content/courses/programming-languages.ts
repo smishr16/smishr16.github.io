@@ -1,0 +1,274 @@
+import {
+  DEFAULT_LICENSE_NOTE,
+  type CourseDetail,
+  type CourseMeta,
+} from '../../contracts'
+import { analysisWork, moduleOf, readingWork } from '../scaffold'
+
+export const programmingLanguagesMeta: CourseMeta = {
+  id: 'programming-languages',
+  title: 'Programming Languages',
+  status: 'partial',
+  track: 'Core / languages',
+  level: 'undergraduate+graduate',
+  moduleCount: 7,
+  liveLabCount: 0,
+  academicNote: 'Foundations of languages · not “learn framework X”',
+  blurb:
+    'Syntax, semantics, types, and implementation ideas — how languages shape what we can say and check.',
+  cs2023Areas: ['FPL'],
+}
+
+export const programmingLanguagesCourse: CourseDetail = {
+  ...programmingLanguagesMeta,
+  peerAnchors: [
+    {
+      school: 'Stanford',
+      courseCode: 'CS242',
+      title: 'Programming Languages',
+      note: 'Grad/undergrad PL principles',
+    },
+    {
+      school: 'CMU',
+      courseCode: '15-312 / 15-150',
+      title: 'Foundations of Programming Languages / FP',
+      note: 'Varies by track; principles over syntax tourism',
+    },
+    {
+      school: 'Northeastern / Brown',
+      courseCode: 'PAPL / PLAI tradition',
+      title: 'Programming languages literature',
+      note: 'Interpreters-as-specification pedagogy',
+    },
+  ],
+  licenseNote: DEFAULT_LICENSE_NOTE,
+  cs2023Areas: ['FPL'],
+  overview: `**Programming Languages** is about models of computation expressed as languages: syntax, operational semantics, type systems, and implementation strategies. It is **not** a survey of industry frameworks.
+
+Expect interpreters-on-paper, type derivations, and careful definitions. Runtime toys may appear later.`,
+  prerequisites: [
+    'Data Structures',
+    'Discrete Math (proofs)',
+    'Comfort learning a functional language for examples',
+  ],
+  learningGoals: [
+    'Define abstract syntax and operational semantics for small languages',
+    'Prove simple type-safety style claims at undergrad depth',
+    'Contrast scoping, evaluation strategies, and type-system designs',
+    'Connect language features to implementation costs',
+  ],
+  modules: [
+    moduleOf({
+      id: 'pl-m1',
+      code: 'M1',
+      title: 'Abstract syntax & interpreters',
+      schedule: 'Weeks 1–2',
+      summary: 'ASTs as specifications; big-step interpreters.',
+      topics: ['Concrete vs abstract syntax', 'ASTs', 'Environments', 'Big-step evaluation', 'Errors as values'],
+      outcomes: [
+        'Define AST and eval rules for a tiny language',
+        'Trace evaluation with environments',
+      ],
+      lectureBeats: [
+        'Concrete syntax is for humans; abstract syntax is the real language',
+        'Interpreters-as-spec: eval rules define meaning before “the compiler”',
+        'Environments map variables to values; scope later refines which env',
+        'Big-step: expression evaluates directly to a value (or error)',
+        'Errors as stuck states vs error values — a design choice with consequences',
+      ],
+      readings: [
+        { label: 'PLAI / Essentials of Programming Languages (selected)', kind: 'textbook' },
+        { label: 'Course notes style: interpreters as specs', kind: 'notes' },
+      ],
+      work: [
+        analysisWork(
+          'pl-m1-ps',
+          'Problem set: tiny interpreter',
+          'Specify and hand-evaluate a mini-language; extend with one feature carefully.',
+          'Written / offline code optional.',
+          'partial',
+        ),
+      ],
+    }),
+    moduleOf({
+      id: 'pl-m2',
+      code: 'M2',
+      title: 'Functions, scope & closures',
+      schedule: 'Weeks 3–4',
+      summary: 'Static vs dynamic scope; first-class functions.',
+      topics: ['Static scope', 'Dynamic scope', 'Closures', 'Higher-order functions', 'Recursion bindings'],
+      outcomes: [
+        'Predict results under static vs dynamic scope',
+        'Explain closures as code + environment',
+      ],
+      lectureBeats: [
+        'Static (lexical) scope: free variables bind where the function is defined',
+        'Dynamic scope: free variables bind where the function is called',
+        'Closures package code with the defining environment',
+        'Higher-order functions: functions as arguments and results',
+        'Recursive bindings need special treatment (let rec / backpatch)',
+      ],
+      readings: [{ label: 'PL textbook — functions & scope', kind: 'textbook' }],
+      work: [
+        analysisWork(
+          'pl-m2-ps',
+          'Problem set: scope & closures',
+          'Evaluation traces under competing scoping rules.',
+          'Written.',
+          'partial',
+        ),
+      ],
+    }),
+    moduleOf({
+      id: 'pl-m3',
+      code: 'M3',
+      title: 'Operational semantics',
+      schedule: 'Weeks 5–6',
+      summary: 'Small-step vs big-step; SOS style rules.',
+      topics: ['Judgments', 'Inference rules', 'Small-step reduction', 'Big-step relation', 'Equivalence ideas'],
+      outcomes: [
+        'Write SOS rules for language features',
+        'Prove short multi-step reductions',
+      ],
+      lectureBeats: [
+        'Judgments and inference rules make evaluation precise',
+        'Small-step: one reduction at a time; congruence rules for contexts',
+        'Big-step: relate expression to final value in one judgment',
+        'Multi-step →* is the reflexive-transitive closure of →',
+        'Nontermination and errors distinguish the two styles of semantics',
+      ],
+      readings: [{ label: 'Harper PFPL / Winskel-style notes (selected)', kind: 'textbook' }],
+      work: [
+        analysisWork(
+          'pl-m3-ps',
+          'Problem set: semantics',
+          'Define rules and derive evaluation sequences.',
+          'Written proof-flavored set.',
+          'partial',
+        ),
+      ],
+    }),
+    moduleOf({
+      id: 'pl-m4',
+      code: 'M4',
+      title: 'Type systems',
+      schedule: 'Weeks 7–9',
+      summary: 'Simply typed lambda calculus and type safety ideas.',
+      topics: ['Types as propositions idea', 'STLC', 'Type rules', 'Progress & preservation landscape', 'Type inference intro'],
+      outcomes: [
+        'Derive typing judgments for STLC terms',
+        'State type safety at undergrad depth',
+      ],
+      lectureBeats: [
+        'Types classify terms; rules build derivations under context Γ',
+        'STLC: base types, →, abstraction and application rules',
+        'Progress: well-typed closed terms are values or can step',
+        'Preservation: steps keep well-typedness — together ≈ type safety',
+        'Unsound extensions (bad casts) break the theorems; find counterexamples',
+      ],
+      readings: [
+        { label: 'Pierce TAPL — early chapters', kind: 'textbook' },
+        { label: 'Stanford CS242 type systems unit (public materials vary)', kind: 'curriculum' },
+      ],
+      work: [
+        analysisWork(
+          'pl-m4-ps',
+          'Problem set: typing derivations',
+          'Complete typing derivations; find counterexamples to unsafe extensions.',
+          'Written.',
+          'partial',
+        ),
+      ],
+    }),
+    moduleOf({
+      id: 'pl-m5',
+      code: 'M5',
+      title: 'Data abstraction & polymorphism',
+      schedule: 'Week 10',
+      summary: 'Algebraic data, parametric polymorphism landscape.',
+      topics: ['ADTs / variants', 'Pattern matching', 'Parametric polymorphism', 'Modules/interfaces landscape'],
+      outcomes: [
+        'Model features with typed variants',
+        'Explain parametricity at intuition level',
+      ],
+      lectureBeats: [
+        'Variants/ADTs: introduce with constructors; eliminate with match',
+        'Exhaustiveness and nested patterns are part of the type discipline',
+        'Parametric polymorphism: ∀α — one code, many types',
+        'Parametricity: you cannot inspect α; free theorems follow',
+        'Modules/interfaces: abstract types hide representation choices',
+      ],
+      readings: [{ label: 'TAPL / PL textbooks — polymorphism intro', kind: 'textbook' }],
+      work: [
+        analysisWork(
+          'pl-m5-ps',
+          'Problem set: data & polymorphism',
+          'Design small typed languages with variants and polymorphic functions.',
+          'Written design + rules.',
+          'partial',
+        ),
+      ],
+    }),
+    moduleOf({
+      id: 'pl-m6',
+      code: 'M6',
+      title: 'Memory, mutability & effects',
+      schedule: 'Week 11',
+      summary: 'References, aliasing, and effect boundaries.',
+      topics: ['Mutable state', 'Aliasing', 'Evaluation order', 'Effects vs purity', 'GC landscape'],
+      outcomes: [
+        'Reason about aliasing bugs in small programs',
+        'Contrast pure and effectful designs',
+      ],
+      lectureBeats: [
+        'Refs/cells introduce a store; values can be locations',
+        'Aliasing: two names, one location — updates surprise callers',
+        'Evaluation order matters once side effects exist',
+        'Purity localizes reasoning; effects need boundaries and APIs',
+        'GC landscape: reclaim unreachable heap without manual free (trade-offs)',
+      ],
+      readings: [{ label: 'PL textbooks — state and effects', kind: 'textbook' }],
+      work: [
+        analysisWork(
+          'pl-m6-ps',
+          'Problem set: state & aliasing',
+          'Trace mutable programs; propose safer interfaces.',
+          'Written.',
+          'partial',
+        ),
+      ],
+    }),
+    moduleOf({
+      id: 'pl-m7',
+      code: 'M7',
+      title: 'Implementation landscape & course synthesis',
+      schedule: 'Week 12',
+      summary: 'Bytecode VMs, compilation pipeline survey, language design trade-offs.',
+      topics: ['Interpreters vs compilers', 'Bytecode VMs', 'Runtime representation', 'Language design axes', 'Synthesis'],
+      outcomes: [
+        'Map language features to implementation cost axes',
+        'Write a short design rationale for a language feature set',
+      ],
+      lectureBeats: [
+        'Tree-walk interpreters are specs; compilers shift work to ahead-of-time',
+        'Bytecode VMs: portable intermediate form + runtime services',
+        'Closures, objects, and GC shape runtime representation cost',
+        'Design axes: syntax, semantics, types, effects, tooling',
+        'Synthesis: every feature is a claim about what programmers can rely on',
+      ],
+      readings: [
+        { label: 'Selected compiler/PL implementation chapters', kind: 'textbook' },
+        { label: 'Cross-link: Computer Systems (calling conventions)', kind: 'notes' },
+      ],
+      work: [
+        readingWork(
+          'pl-m7-reading',
+          'Design essay: language feature trade-offs',
+          'Propose a tiny language for a domain; justify syntax/semantics/types against alternatives.',
+          'Cite course readings; original design — not a copy of university projects.',
+          'partial',
+        ),
+      ],
+    }),
+  ],
+}

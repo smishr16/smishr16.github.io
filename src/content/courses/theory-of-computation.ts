@@ -1,0 +1,264 @@
+import {
+  DEFAULT_LICENSE_NOTE,
+  type CourseDetail,
+  type CourseMeta,
+} from '../../contracts'
+import { analysisWork, moduleOf, readingWork } from '../scaffold'
+
+export const theoryOfComputationMeta: CourseMeta = {
+  id: 'theory-of-computation',
+  title: 'Theory of Computation',
+  status: 'partial',
+  track: 'Core / theory',
+  level: 'undergraduate+graduate',
+  moduleCount: 7,
+  liveLabCount: 0,
+  academicNote: 'Required or strong elective depending on program',
+  blurb:
+    'Automata, computability, and complexity — what can be computed and at what cost in principle.',
+  cs2023Areas: ['AL'],
+}
+
+export const theoryOfComputationCourse: CourseDetail = {
+  ...theoryOfComputationMeta,
+  peerAnchors: [
+    {
+      school: 'CMU',
+      courseCode: '15-251',
+      title: 'Great Ideas in Theoretical Computer Science',
+      note: 'Theory header for undergrad SCS paths',
+    },
+    {
+      school: 'MIT',
+      courseCode: '6.045J / 18.404J',
+      title: 'Automata, Computability, and Complexity',
+      note: 'Sipser-aligned tradition',
+    },
+    {
+      school: 'Stanford',
+      courseCode: 'CS154',
+      title: 'Introduction to Automata and Complexity Theory',
+      note: 'Undergrad theory',
+    },
+  ],
+  licenseNote: DEFAULT_LICENSE_NOTE,
+  cs2023Areas: ['AL'],
+  overview: `**Theory of Computation** asks what problems machines can solve and what resources they need. The course follows a classic automata → computability → complexity arc (Sipser-style), without claiming any university affiliation.
+
+Expect heavy written proofs. Interactive automata toys may arrive later; syllabus and problem-set shapes are complete now.`,
+  prerequisites: [
+    'Discrete Mathematics (proofs, sets, graphs)',
+    'Algorithms recommended (for complexity motivation)',
+  ],
+  learningGoals: [
+    'Design and prove correctness for finite automata and regular expressions',
+    'Use pumping lemmas and closure properties carefully',
+    'Explain decidability and reductions for classic languages',
+    'State P/NP and NP-completeness at rigorous undergrad level',
+  ],
+  modules: [
+    moduleOf({
+      id: 'toc-m1',
+      code: 'M1',
+      title: 'Languages & finite automata',
+      schedule: 'Weeks 1–2',
+      summary: 'DFAs, NFAs, and the languages they define.',
+      topics: ['Alphabets & languages', 'DFA', 'NFA', 'Equivalence idea', 'Regular operations'],
+      outcomes: [
+        'Construct DFAs/NFAs for regular patterns',
+        'Argue correctness of a small automaton',
+      ],
+      lectureBeats: [
+        'Alphabets, strings, languages as sets',
+        'DFA formal definition; accepting computation path',
+        'NFA and ε-moves; subset construction idea',
+        'Regular operations: union, concat, star via automata constructions',
+        'Correctness arguments: invariant on what state “means”',
+      ],
+      readings: [{ label: 'Sipser — Chapter 1', kind: 'textbook', locator: 'Ch. 1' }],
+      work: [
+        analysisWork(
+          'toc-m1-ps',
+          'Problem set: automata',
+          'Design automata and prove language claims for small examples.',
+          'Written proofs + diagrams.',
+          'partial',
+        ),
+      ],
+    }),
+    moduleOf({
+      id: 'toc-m2',
+      code: 'M2',
+      title: 'Regular expressions & pumping',
+      schedule: 'Weeks 3–4',
+      summary: 'Regex ↔ automata and non-regularity proofs.',
+      topics: ['Regular expressions', 'GNFA conversion idea', 'Pumping lemma', 'Closure properties', 'Myhill–Nerode landscape'],
+      outcomes: [
+        'Convert among regex/NFA/DFA at course depth',
+        'Prove non-regularity with pumping (carefully)',
+      ],
+      lectureBeats: [
+        'Regular expressions and equivalence with automata (GNFA sketch)',
+        'Pumping lemma statement: what you may choose vs adversary',
+        'Classic non-regular: {0ⁿ1ⁿ}; careful case analysis',
+        'Closure properties as a non-regularity tool',
+        'Myhill–Nerode landscape: infinite distinguishable prefixes',
+      ],
+      readings: [{ label: 'Sipser — Chapter 1 (cont.)', kind: 'textbook' }],
+      work: [
+        analysisWork(
+          'toc-m2-ps',
+          'Problem set: regular languages',
+          'Regex designs, closure arguments, and pumping proofs.',
+          'Written.',
+          'partial',
+        ),
+      ],
+    }),
+    moduleOf({
+      id: 'toc-m3',
+      code: 'M3',
+      title: 'Context-free languages',
+      schedule: 'Weeks 5–6',
+      summary: 'CFGs, PDAs, and the CFL landscape.',
+      topics: ['CFGs', 'Parse trees', 'PDA', 'Pumping for CFLs', 'Non-CFL examples'],
+      outcomes: [
+        'Write CFGs for classic languages',
+        'Prove non-context-freeness on standard examples',
+      ],
+      lectureBeats: [
+        'CFGs, derivations, and parse trees',
+        'Pushdown automata: stack as extra memory',
+        'CFL pumping lemma and {aⁿbⁿcⁿ}',
+        'Closure and non-closure highlights for CFLs',
+        'Inherent ambiguity landscape (survey)',
+      ],
+      readings: [{ label: 'Sipser — Chapter 2', kind: 'textbook', locator: 'Ch. 2' }],
+      work: [
+        analysisWork(
+          'toc-m3-ps',
+          'Problem set: CFLs',
+          'CFG/PDA constructions and pumping for CFLs.',
+          'Written.',
+          'partial',
+        ),
+      ],
+    }),
+    moduleOf({
+      id: 'toc-m4',
+      code: 'M4',
+      title: 'Turing machines & computability',
+      schedule: 'Weeks 7–8',
+      summary: 'TM model, variants, and Church–Turing thesis.',
+      topics: ['TM definition', 'Recognizers vs deciders', 'Multi-tape/nondeterminism landscape', 'Church–Turing thesis'],
+      outcomes: [
+        'Design simple TMs or high-level TM descriptions',
+        'Distinguish recognizable vs decidable carefully',
+      ],
+      lectureBeats: [
+        'TM definition: tape, head, transition function',
+        'Recognizers vs deciders; looping is not rejecting',
+        'High-level TM descriptions that still count as proofs of existence',
+        'Multi-tape and nondeterministic TM simulation ideas',
+        'Church–Turing thesis: claim about algorithms, not a theorem',
+      ],
+      readings: [{ label: 'Sipser — Chapter 3', kind: 'textbook', locator: 'Ch. 3' }],
+      work: [
+        analysisWork(
+          'toc-m4-ps',
+          'Problem set: Turing machines',
+          'High-level TM constructions and decidability classifications.',
+          'Written.',
+          'partial',
+        ),
+      ],
+    }),
+    moduleOf({
+      id: 'toc-m5',
+      code: 'M5',
+      title: 'Decidability & undecidability',
+      schedule: 'Weeks 9–10',
+      summary: 'Diagonalization, reductions, and classic undecidable problems.',
+      topics: ['Diagonalization', 'ATM / HALT', 'Mapping reductions', 'Rice’s theorem landscape', 'Undecidability examples'],
+      outcomes: [
+        'Prove undecidability via reduction sketches',
+        'State what Rice’s theorem implies at survey level',
+      ],
+      lectureBeats: [
+        'Diagonalization and undecidability of A_TM',
+        'HALT and friends; mapping reductions',
+        'Reduction polarity: known hard ≤ new language',
+        'Rice’s theorem: non-trivial semantic properties of L(M)',
+        'Recognizable vs co-recognizable examples',
+      ],
+      readings: [{ label: 'Sipser — Chapters 4–5', kind: 'textbook', locator: 'Ch. 4–5' }],
+      work: [
+        analysisWork(
+          'toc-m5-ps',
+          'Problem set: undecidability',
+          'Reduction-based undecidability arguments on classic languages.',
+          'Written proof-heavy set.',
+          'partial',
+        ),
+      ],
+    }),
+    moduleOf({
+      id: 'toc-m6',
+      code: 'M6',
+      title: 'Complexity: P, NP, NP-completeness',
+      schedule: 'Weeks 11–12',
+      summary: 'Time complexity classes and polynomial reductions.',
+      topics: ['TIME classes', 'P and NP', 'Polynomial reductions', 'NP-completeness', 'SAT and friends', 'Coping strategies'],
+      outcomes: [
+        'Prove NP membership and sketch hardness via reduction',
+        'Relate to Algorithms M8 hardness unit',
+      ],
+      lectureBeats: [
+        'TIME classes; P as poly-time decidable',
+        'NP: certificates and poly-time verifiers',
+        'Polynomial-time reductions and NP-hardness/completeness',
+        'SAT and classic NP-complete neighbors (sketch)',
+        'If P=NP: crypto and optimization intuition; Algorithms M8 link',
+      ],
+      readings: [
+        { label: 'Sipser — Chapter 7', kind: 'textbook', locator: 'Ch. 7' },
+        { label: 'Cross-link: Algorithms M8', kind: 'notes' },
+      ],
+      work: [
+        analysisWork(
+          'toc-m6-ps',
+          'Problem set: NP-completeness',
+          'NP membership proofs and reduction sketches among classic problems.',
+          'Written. Depth matches first full complexity unit.',
+          'partial',
+        ),
+      ],
+    }),
+    moduleOf({
+      id: 'toc-m7',
+      code: 'M7',
+      title: 'Selected advanced topics',
+      schedule: 'Week 13',
+      summary: 'Space complexity, approximation, or randomized classes — survey.',
+      topics: ['PSPACE landscape', 'Approximation idea', 'Randomized classes landscape', 'Course synthesis'],
+      outcomes: ['Place advanced classes relative to P/NP'],
+      lectureBeats: [
+        'PSPACE and TQBF landscape relative to NP',
+        'Approximation: when exact optimum is hard',
+        'Randomized classes (BPP) at survey depth',
+        'Course synthesis: automata → computability → complexity',
+        'What a one-page map should and should not claim',
+      ],
+      readings: [{ label: 'Sipser — selected later chapters', kind: 'textbook' }],
+      work: [
+        readingWork(
+          'toc-m7-reading',
+          'Reading: one advanced class',
+          'Write a one-page map of one advanced topic (e.g. PSPACE or approximation) to M1–M6.',
+          'Cite Sipser or equivalent.',
+          'partial',
+        ),
+      ],
+    }),
+  ],
+}
